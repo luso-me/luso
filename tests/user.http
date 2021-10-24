@@ -1,0 +1,87 @@
+###
+POST http://localhost:5000/users
+Accept: application/json
+Content-Type: application/json
+
+
+{
+  "first_name": "Darth",
+  "last_name": "Vader",
+  "items": []
+}
+
+###
+POST http://localhost:5000/users
+Accept: application/json
+Content-Type: application/json
+
+
+{
+  "first_name": "Darth",
+  "last_name": "Vader",
+  "items": [
+    {
+      "item_id": "6162ee1a5d04a8e8b2033669",
+      "name": "Apache Airflow",
+      "icon_link": "https://link.to.png",
+      "tags": [
+        "category:Tools"
+      ],
+      "user_rating": 1,
+      "score": 29,
+      "confidence": 30,
+      "notes": "i love it!",
+      "used": [
+        {
+          "from": "2010",
+          "to": "2012"
+        }
+      ]
+    }
+  ]
+}
+
+
+###
+
+GET http://localhost:5000/users
+Accept: application/json
+Content-Type: application/json
+
+###
+
+GET http://localhost:5000/users/6163c362ce07526d065b4aa7
+Accept: application/json
+Content-Type: application/json
+
+
+###
+
+PUT http://localhost:5000/users/6163c3d9b67f6be980f6d92b
+Accept: application/json
+Content-Type: application/json
+
+{
+  "first_name": "Darth",
+  "last_name": "Vader",
+  "items": [
+    {
+      "item_id": "6162ee1a5d04a8e8b2033669",
+      "name": "Apache Airflows",
+      "icon_link": "https://link.to.png",
+      "tags": [
+        "category:Tools"
+      ],
+      "user_rating": 3,
+      "score": 36,
+      "confidence": 37,
+      "notes": "i loved it!",
+      "used": [
+        {
+          "from": "2014",
+          "to": "2016"
+        }
+      ]
+    }
+  ]
+}
