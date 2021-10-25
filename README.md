@@ -1,5 +1,8 @@
 # Luso Server
-
+## Environment vars
+```shell
+MONGO_CONNECTION_URL=mongodb://localhost:27017
+```
 ## Dev Support
 
 ### Getting started
