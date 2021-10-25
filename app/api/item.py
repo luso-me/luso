@@ -10,7 +10,6 @@ from app.schema.item import Item, ItemInDB, ItemId
 log = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/items",
     tags=["items"],
     responses={404: {"description": "Not found"}},
 )
@@ -39,7 +38,7 @@ async def show_item(item_id: ItemId):
 @router.put("/{item_id}", response_description="Update a item", response_model=ItemInDB)
 async def update_item(item_id: ItemId, item: Item):
     if update_result := await item_crud.update_one(item_id, item):
-        if update_result.modified_count == 1:
+        if update_result.matched_count == 1:
             return await item_crud.find_by_id(item_id)
 
     raise HTTPException(status_code=404, detail=f"Item {item_id} not found")

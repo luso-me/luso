@@ -1,5 +1,5 @@
-from ..schema.user import User
 from app.database import client
+from ..schema.user import User
 
 db = client.luso
 collection = "users"

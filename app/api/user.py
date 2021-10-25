@@ -1,15 +1,16 @@
 from typing import List
 
-from fastapi import Body, HTTPException, status, APIRouter
+from fastapi import HTTPException, status, APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+
 from app.crud.user import db as user_db
 from app.schema.user import User
 
 router = APIRouter(
-        prefix="/users",
-        tags=["users"],
-        responses={404: {"description": "Not found"}},
+    prefix="/users",
+    tags=["users"],
+    responses={404: {"description": "Not found"}},
 )
 
 

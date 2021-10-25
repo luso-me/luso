@@ -1,6 +1,7 @@
 from bson import ObjectId
-from app.schema.base import PyObjectId
 from pydantic import BaseModel, Field
+
+from app.schema.base import PyObjectId
 
 
 class User(BaseModel):

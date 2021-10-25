@@ -3,9 +3,8 @@ from typing import Optional, List
 
 from bson import ObjectId
 
-from app.schema.item import Item, ItemInDB
 from app.database import client
-
+from app.schema.item import Item, ItemInDB
 
 item_collection = client.luso["item"]
 
@@ -27,9 +26,9 @@ async def find_items(limit: int = 100) -> List[ItemInDB]:
 
 
 async def update_one(item_id: ObjectId, item: Item):
-    if update_result := await item_collection.update_one({"_id": ObjectId(item_id)}, {"$set": item}):
+    if update_result := await item_collection.update_one({"_id": item_id}, {"$set": item.dict()}):
         log.info("Update result %s", update_result)
-        return await update_result
+        return update_result
 
 
 async def delete_one(item_id: ObjectId):

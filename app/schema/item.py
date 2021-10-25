@@ -9,7 +9,6 @@ class ItemId(PyObjectId):
 
 
 class Item(BaseModel):
-
     name: str = Field(...)
     description: str = Field(...)
     web_link: str = Field(...)
