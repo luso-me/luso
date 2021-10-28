@@ -3,7 +3,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-import api
+from . import api
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -17,5 +17,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(api.item_router, prefix="/items")
+app.include_router(api.skill_router, prefix="/skills")
 app.include_router(api.user_router)

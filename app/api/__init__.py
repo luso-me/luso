@@ -1,2 +1,2 @@
-from .item import router as item_router
+from .skill import router as skill_router
 from .user import router as user_router

@@ -4,11 +4,11 @@ from pydantic import BaseModel, Field
 from ..schema.base import PyObjectId
 
 
-class ItemId(PyObjectId):
+class SkillId(PyObjectId):
     object_name = "item id"
 
 
-class Item(BaseModel):
+class Skill(BaseModel):
     name: str = Field(...)
     description: str = Field(...)
     web_link: str = Field(...)
@@ -31,8 +31,8 @@ class Item(BaseModel):
         }
 
 
-class ItemInDB(Item):
-    id: ItemId = Field(default_factory=ItemId, alias="_id")
+class SkillInDB(Skill):
+    id: SkillId = Field(default_factory=SkillId, alias="_id")
 
     class Config:
         allow_population_by_field_name = True
