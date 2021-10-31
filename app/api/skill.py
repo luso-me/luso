@@ -1,5 +1,6 @@
 import logging
-from typing import List
+from http import HTTPStatus
+from typing import List, Optional
 
 from fastapi import HTTPException, status, APIRouter
 from fastapi.responses import Response
@@ -23,8 +24,16 @@ async def create_skill(skill: Skill):
 
 
 @router.get("/", response_description="List all skills", response_model=List[SkillInDB])
-async def list_skills():
-    return await skill_crud.find_skills()
+async def list_skills(limit: int = 100):
+    return await skill_crud.find_skills(limit)
+
+
+@router.get("/find", response_description="Find skill by...", response_model=List[SkillInDB])
+async def find_query(skill_name: Optional[str] = None, limit: int = 10):
+    if skill_name:
+        return await skill_crud.find_by_name(skill_name, limit)
+
+    raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail="No known search parameter passed")
 
 
 @router.get("/{skill_id}", response_description="Get a single skill", response_model=SkillInDB)

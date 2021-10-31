@@ -21,6 +21,10 @@ async def find_by_id(skill_id: ObjectId) -> Optional[SkillInDB]:
         return skill_found
 
 
+async def find_by_name(skill_name: str, limit) -> Optional[SkillInDB]:
+    return await skill_collection.find({"name": skill_name}).to_list(limit)
+
+
 async def find_skills(limit: int = 100) -> List[SkillInDB]:
     return await skill_collection.find().to_list(limit)
 
