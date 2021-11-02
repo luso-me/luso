@@ -32,9 +32,13 @@ class Skill(BaseModel):
 
 
 class SkillInDB(Skill):
-    id: SkillId = Field(default_factory=SkillId, alias="_id")
+    id: PyObjectId
+
+    # Hack around: https://github.com/samuelcolvin/pydantic/issues/565, https://github.com/tiangolo/fastapi/issues/1515
+    def __init__(self, *args, **kwargs):
+        kwargs['id'] = kwargs.pop('_id')
+        super().__init__(*args, **kwargs)
 
     class Config:
-        allow_population_by_field_name = True
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}

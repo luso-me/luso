@@ -26,7 +26,7 @@ async def find_by_name(skill_name: str, limit) -> Optional[SkillInDB]:
 
 
 async def find_skills(limit: int = 100) -> List[SkillInDB]:
-    return await skill_collection.find().to_list(limit)
+    return [SkillInDB(**x) for x in await skill_collection.find().to_list(limit)]
 
 
 async def update_one(skill_id: ObjectId, skill: Skill):
