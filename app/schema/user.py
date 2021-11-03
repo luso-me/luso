@@ -1,13 +1,16 @@
+from typing import List, Optional
+
 from bson import ObjectId
 from pydantic import BaseModel, Field
 
 from app.schema.base import PyObjectId
+from app.schema.skill import Skill
 
 
 class User(BaseModel):
     first_name: str = Field(...)
     last_name: str = Field(...)
-    items: list = Field(None)
+    skill: Optional[List[Skill]]
     active: bool = Field(True)
 
     class Config:
@@ -18,12 +21,12 @@ class User(BaseModel):
             "example": {
                 "first_name": "Darth",
                 "last_name": "Vader",
-                "items": [
+                "skills": [
                     {
-                        "item_id": "000102030406",  # from item
-                        "name": "Apache Airflow",  # from item
-                        "icon_link": "https://link.to.png",  # from item
-                        "tags": ["category:Tools"],  # from item
+                        "skill_id": "000102030406",  # from skill
+                        "name": "Apache Airflow",  # from skill
+                        "icon_link": "https://link.to.png",  # from skill
+                        "tags": ["category:Tools"],  # from skill
                         "user_rating": 1,
                         "score": 29,
                         "confidence": 30,

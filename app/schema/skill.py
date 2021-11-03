@@ -4,11 +4,11 @@ from pydantic import BaseModel, Field
 from ..schema.base import PyObjectId
 
 
-class ItemId(PyObjectId):
+class SkillId(PyObjectId):
     object_name = "item id"
 
 
-class Item(BaseModel):
+class Skill(BaseModel):
     name: str = Field(...)
     description: str = Field(...)
     web_link: str = Field(...)
@@ -31,10 +31,14 @@ class Item(BaseModel):
         }
 
 
-class ItemInDB(Item):
-    id: ItemId = Field(default_factory=ItemId, alias="_id")
+class SkillInDB(Skill):
+    id: PyObjectId
+
+    # Hack around: https://github.com/samuelcolvin/pydantic/issues/565, https://github.com/tiangolo/fastapi/issues/1515
+    def __init__(self, *args, **kwargs):
+        kwargs['id'] = kwargs.pop('_id')
+        super().__init__(*args, **kwargs)
 
     class Config:
-        allow_population_by_field_name = True
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}
