@@ -1,3 +1,5 @@
+import uuid
+
 from bson import ObjectId
 from pydantic import BaseModel, Field
 
@@ -9,6 +11,7 @@ class SkillId(PyObjectId):
 
 
 class Skill(BaseModel):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4)
     name: str = Field(...)
     description: str = Field(...)
     web_link: str = Field(...)
@@ -32,13 +35,8 @@ class Skill(BaseModel):
 
 
 class SkillInDB(Skill):
-    id: PyObjectId
-
-    # Hack around: https://github.com/samuelcolvin/pydantic/issues/565, https://github.com/tiangolo/fastapi/issues/1515
-    def __init__(self, *args, **kwargs):
-        kwargs['id'] = kwargs.pop('_id')
-        super().__init__(*args, **kwargs)
+    _id: PyObjectId = Field(default_factory=PyObjectId)
 
     class Config:
         arbitrary_types_allowed = True
-        json_encoders = {ObjectId: str}
+        json_encoders = {ObjectId: str, uuid.UUID: str}
