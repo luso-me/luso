@@ -21,4 +21,4 @@ jobs:
         poetry install
     - name: Analysing the code with mypy
       run: |
-       poetry mypy app
+       poetry run mypy app
