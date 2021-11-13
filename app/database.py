@@ -1,4 +1,4 @@
-from motor import motor_asyncio
+from motor import motor_asyncio  # type: ignore
 
 from .config import settings
 

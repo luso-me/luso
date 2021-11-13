@@ -26,6 +26,7 @@ async def find_by_mongo_id(_id: ObjectId):
 async def find_by_id(skill_id: UUID) -> Optional[Skill]:
     if skill_found := await skill_collection.find_one({"id": skill_id}):
         return skill_found
+    return None
 
 
 async def find_by_name(skill_name: str, limit) -> Optional[Skill]:
