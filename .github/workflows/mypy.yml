@@ -18,7 +18,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install poetry
-        poetry init
-    - name: Analysing the code with pylint
+        poetry install
+    - name: Analysing the code with mypy
       run: |
        poetry mypy app
