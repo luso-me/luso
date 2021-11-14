@@ -4,7 +4,7 @@ from fastapi import HTTPException, status, APIRouter
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
-from app.crud.user import db as user_db
+from app.repositories.user import db as user_db
 from app.schema.user import User
 
 router = APIRouter(

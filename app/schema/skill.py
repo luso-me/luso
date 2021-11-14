@@ -1,6 +1,4 @@
-import uuid
-
-from bson import ObjectId
+import shortuuid
 from pydantic import BaseModel, Field
 
 from ..schema.base import PyObjectId
@@ -10,8 +8,7 @@ class SkillId(PyObjectId):
     object_name = "item id"
 
 
-class Skill(BaseModel):
-    id: uuid.UUID = Field(default_factory=uuid.uuid4)
+class InSkill(BaseModel):
     name: str = Field(...)
     description: str = Field(...)
     web_link: str = Field(...)
@@ -34,9 +31,19 @@ class Skill(BaseModel):
         }
 
 
-class SkillInDB(Skill):
-    _id: PyObjectId = Field(default_factory=PyObjectId)
+class Skill(InSkill):
+    id: str = Field(default_factory=shortuuid.uuid)
 
     class Config:
-        arbitrary_types_allowed = True
-        json_encoders = {ObjectId: str, uuid.UUID: str}
+        schema_extra = {
+            "example": {
+                "id": "ABC123",
+                "name": "Apache Airflow",
+                "description": "Airflow is a platform created ...",
+                "web_link": "https://airflow.apache.org/",
+                "repo_link": "https://github.com/apache/airflow",
+                "icon_link": "",
+                "tags": ["category:Framework"],
+                "active": True
+            }
+        }

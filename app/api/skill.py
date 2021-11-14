@@ -6,8 +6,8 @@ from uuid import UUID
 from fastapi import HTTPException, status, APIRouter
 from fastapi.responses import Response
 
-import app.crud.skill as skill_crud
-from app.schema.skill import Skill, SkillInDB, SkillId
+import app.repositories.skill as skill_crud
+from app.schema.skill import Skill
 
 log = logging.getLogger(__name__)
 
@@ -45,7 +45,7 @@ async def show_skill(skill_id: UUID):
     raise HTTPException(status_code=404, detail=f"skill {skill_id} not found")
 
 
-@router.put("/{skill_id}", response_description="Update a skill", response_model=SkillInDB)
+@router.put("/{skill_id}", response_description="Update a skill", response_model=Skill)
 async def update_skill(skill_id: UUID, skill: Skill):
     if update_result := await skill_crud.update_one(skill_id, skill):
         if update_result.matched_count == 1:

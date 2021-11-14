@@ -1,12 +1,13 @@
 import logging
-from typing import Optional, List
+from typing import Optional, List, Type, Dict
 
 from uuid import UUID
 
 from bson import ObjectId
 
 from app.database import client
-from app.schema.skill import Skill
+from app.repositories.base import BaseRepository
+from app.schema.skill import Skill, InSkill
 
 skill_collection = client.luso["skill"]
 
@@ -46,3 +47,13 @@ async def update_one(skill_id: UUID, skill: Skill):
 async def delete_one(skill_id: UUID):
     delete_result = await skill_collection.delete_one({"id": skill_id})
     return delete_result
+
+
+class SkillsRepository(BaseRepository[InSkill, Skill, dict]):
+    @property
+    def _schema(self) -> Type[Skill]:
+        return Skill
+
+    @property
+    def _collection(self) -> Type[Skill]:
+        return Skill
