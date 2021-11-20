@@ -3,14 +3,13 @@ from typing import List, Optional
 from bson import ObjectId
 from pydantic import BaseModel, Field
 
-from app.schema.base import PyObjectId
-from app.schema.skill import Skill
+from app.models.base import PyObjectId
 
 
 class User(BaseModel):
     first_name: str = Field(...)
     last_name: str = Field(...)
-    skill: Optional[List[Skill]]
+    skill: Optional[List[str]]
     active: bool = Field(True)
 
     class Config:

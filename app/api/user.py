@@ -5,7 +5,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
 from app.repositories.user import db as user_db
-from app.schema.user import User
+from app.models.user import User
 
 router = APIRouter(
     prefix="/users",

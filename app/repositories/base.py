@@ -1,49 +1,66 @@
 import abc
 import logging
-from typing import Generic, TypeVar, Type, Optional, Any
+from typing import Generic, TypeVar, Type, List
 
 from pydantic import BaseModel
+import shortuuid
 
-IN_SCHEMA = TypeVar('IN_SCHEMA', bound=BaseModel)
-SCHEMA = TypeVar('SCHEMA', bound=BaseModel)
-COLLECTION = TypeVar('COLLECTION')
+from app.repositories.exceptions import DocumentNotFoundException, DocumentCouldNotBeCreatedException
+
+CREATE_SCHEMA = TypeVar('CREATE_SCHEMA', bound=BaseModel)
+READ_SCHEMA = TypeVar('READ_SCHEMA', bound=BaseModel)
+UPDATE_SCHEMA = TypeVar('UPDATE_SCHEMA', bound=BaseModel)
 
 log = logging.getLogger(__name__)
 
 
-class BaseRepository(Generic[IN_SCHEMA, SCHEMA, COLLECTION]):
+class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
     def __init__(self, db_session, db_name: str, collection: str):
-        self._db_session = db_session[db_name][collection]
+        self._collection = db_session[db_name][collection]
 
     @property
     @abc.abstractmethod
-    def _collection(self) -> Type[COLLECTION]:
-        pass
+    def _read_schema(self) -> Type[READ_SCHEMA]:
+        ...
 
-    @property
-    @abc.abstractmethod
-    def _schema(self) -> Type[SCHEMA]:
-        pass
+    @staticmethod
+    def _generate_uuid():
+        return shortuuid.uuid()
 
-    async def create(self, document: IN_SCHEMA) -> SCHEMA:
-        db_document = self._collection(**document.dict())
-        insert_result = await self._db_session.insert_one(db_document.dict())
-        if inserted_document := await self.find_by_id(insert_result.inserted_id):
-            return inserted_document
-        else:
-            log.warning(f'There was an error when trying to insert {document}')
-            raise Exception(f'Could not create object')
+    async def get(self, _id: str) -> READ_SCHEMA:
+        document = await self._collection.find_one({"_id": _id})
+        if not document:
+            raise DocumentNotFoundException()
+        return self._read_schema(**document)
 
-    async def find_by_id(self, _id) -> Optional[SCHEMA]:
-        if document_found := await self._db_session.find_one({"_id": _id}):
-            return document_found
-        else:
-            log.info(f'Could not find object using _id: {_id}')
-            return None
+    async def list(self, limit=None) -> List[READ_SCHEMA]:
+        return [self._read_schema(**document) for document in await self._collection.find().to_list(limit)]
 
-    async def find_by_key(self, key: str, value: Any) -> Optional[SCHEMA]:
-        if skill_found := await self._db_session.find_one({key: value}):
-            return self._schema(**skill_found)
-        else:
-            log.info(f'Could not find object using key {key}')
-            return None
+    async def create(self, create: CREATE_SCHEMA) -> READ_SCHEMA:
+        document = create.dict()
+        document["_id"] = self._generate_uuid()
+
+        result = await self._collection.insert_one(document)
+
+        if not result.acknowledged:
+            log.error(f'failed to create document {document}')
+            raise DocumentCouldNotBeCreatedException()
+
+        return await self.get(result.inserted_id)
+
+    async def update(self, _id: str, update: UPDATE_SCHEMA) -> READ_SCHEMA:
+        document = update.dict()
+
+        result = await self._collection.update_one({"_id": _id}, {"$set": document})
+        if not result.modified_count:
+            log.debug('document not modified')
+
+        return await self.get(_id)
+
+    async def delete(self, _id: str):
+        result = self._collection.delete_one({"_id": _id})
+        if not result.deleted_count:
+            raise DocumentNotFoundException()
+
+    async def find(self, search_dict) -> List[READ_SCHEMA]:
+        return [await self._read_schema(**document) for document in self._collection.find(search_dict)]
