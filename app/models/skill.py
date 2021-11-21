@@ -57,8 +57,8 @@ class SkillRead(SkillCreate):
 
     @pydantic.root_validator(pre=True)
     def _set_skill_id(cls, data):
-        """Swap the field _id to person_id (this could be done with field alias, by setting the field as "_id"
-        and the alias as "person_id", but can be quite confusing)"""
+        """Swap the field _id to skill_id (this could be done with field alias, by setting the field as "_id"
+        and the alias as "skill_id", but can be quite confusing)"""
         document_id = data.get("_id")
         if document_id:
             data['skill_id'] = document_id

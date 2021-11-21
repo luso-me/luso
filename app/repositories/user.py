@@ -1,29 +1,10 @@
-from app.database import client
-from ..models.user import User
+from typing import Type
 
-db = client.luso
-collection = "users"
-
-
-async def insert_user(user: User):
-    return await db[collection].insert_one(user)
+from app.models.user import UserCreate, UserRead, UserUpdate
+from app.repositories.base import BaseRepository, READ_SCHEMA
 
 
-async def find_one_inserted(user_id: str):
-    return await db[collection].find_one({"_id": user_id})
-
-
-async def find_users():
-    return await db[collection].find().to_list(1000)
-
-
-async def find_one(user_id: str):
-    return await db[collection].find_one({"_id": user_id})
-
-
-async def update_one(user_id: str, user: User):
-    return await db[collection].update_one({"_id": user_id}, {"$set": user})
-
-
-async def delete_one(user_id: str):
-    return await db[collection].delete_one({"_id": user_id})
+class UserRepository(BaseRepository[UserCreate, UserRead, UserUpdate]):
+    @property
+    def _read_schema(self) -> Type[READ_SCHEMA]:
+        return UserRead

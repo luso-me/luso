@@ -49,7 +49,7 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
         return await self.get(result.inserted_id)
 
     async def update(self, _id: str, update: UPDATE_SCHEMA) -> READ_SCHEMA:
-        document = update.dict()
+        document = update.dict(exclude_none=True)
 
         result = await self._collection.update_one({"_id": _id}, {"$set": document})
         if not result.modified_count:
@@ -58,7 +58,7 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
         return await self.get(_id)
 
     async def delete(self, _id: str):
-        result = self._collection.delete_one({"_id": _id})
+        result = await self._collection.delete_one({"_id": _id})
         if not result.deleted_count:
             raise DocumentNotFoundException()
 
