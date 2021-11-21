@@ -3,7 +3,7 @@ import logging
 from typing import Generic, TypeVar, Type, List
 
 from pydantic import BaseModel
-import shortuuid
+import shortuuid  # type: ignore
 
 from app.repositories.exceptions import DocumentNotFoundException, DocumentCouldNotBeCreatedException
 
@@ -63,4 +63,4 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
             raise DocumentNotFoundException()
 
     async def find(self, search_dict) -> List[READ_SCHEMA]:
-        return [await self._read_schema(**document) for document in self._collection.find(search_dict)]
+        return [self._read_schema(**document) for document in self._collection.find(search_dict)]
