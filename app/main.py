@@ -18,4 +18,4 @@ app.add_middleware(
 )
 
 app.include_router(api.skill_router, prefix="/skills")
-app.include_router(api.user_router)
+app.include_router(api.user_router, prefix="/users")

@@ -7,7 +7,6 @@ from app.models.user import UserCreate, UserUpdate, UserRead
 from app.repositories.user import UserRepository
 
 router = APIRouter(
-    prefix="/users",
     tags=["users"],
     responses={404: {"description": "Not found"}},
 )
