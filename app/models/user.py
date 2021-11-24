@@ -13,6 +13,11 @@ class UserFields:
         min_length=22,
         max_length=22
     )
+    username = Field(
+        description='Username',
+        example='john',
+        min_length=1
+    )
     first_name = Field(
         description='First name',
         example='John',
@@ -36,6 +41,7 @@ class UserUpdate(BaseModel):
 
 
 class UserCreate(UserUpdate):
+    username: str = UserFields.username
     first_name: str = UserFields.first_name
     last_name: str = UserFields.last_name
 

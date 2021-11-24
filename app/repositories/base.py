@@ -63,4 +63,4 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
             raise DocumentNotFoundException()
 
     async def find(self, search_dict) -> List[READ_SCHEMA]:
-        return [self._read_schema(**document) for document in self._collection.find(search_dict)]
+        return [self._read_schema(**document) for document in await self._collection.find(search_dict).to_list(100)]

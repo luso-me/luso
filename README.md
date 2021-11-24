@@ -23,3 +23,8 @@ MONGO_CONNECTION_URL=mongodb://localhost:27017
   ```
   poetry install --no-dev
   ```
+- SECRET_KEY generation
+  ```shell
+  openssl rand -hex 32
+  ```
+  
