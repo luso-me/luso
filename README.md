@@ -27,3 +27,9 @@ MONGO_CONNECTION_URL=mongodb://localhost:27017
   ```shell
   openssl rand -hex 32
   ```
+
+### To run the app
+
+```shell
+$> uvicorn app.main:app --reload --host 0.0.0.0 --port 5000  
+```

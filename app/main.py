@@ -1,11 +1,9 @@
 import logging
-import uvicorn
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import api
-from app.data_populator import populate_db
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -23,7 +21,4 @@ app = CORSMiddleware(
         allow_headers=["*"],
 )
 
-if __name__ == "__main__":
-    # populate_db()
-    uvicorn.run("app.main:app", host='0.0.0.0', port=5000,
-                reload=True, debug=True)
+# todo : dan to add little data populator

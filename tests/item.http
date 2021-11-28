@@ -10,7 +10,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:5000/items
+GET http://localhost:5000/skills
 Accept: application/json
 Content-Type: application/json
 
