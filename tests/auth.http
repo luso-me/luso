@@ -1,0 +1,1 @@
+GET http://localhost:5000/auth/github/callback?code=9c0d82c2f7cfbe871cb7

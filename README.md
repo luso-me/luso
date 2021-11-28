@@ -9,7 +9,7 @@ MONGO_CONNECTION_URL=mongodb://localhost:27017
 
 - Requirements
     - python 3.8 or greater
-    - poetry 1.1.0
+    - poetry 1.1.0 (`pip install poetry`)
 - Commands
     - `poetry install`
 
@@ -27,4 +27,3 @@ MONGO_CONNECTION_URL=mongodb://localhost:27017
   ```shell
   openssl rand -hex 32
   ```
-  

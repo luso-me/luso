@@ -1,0 +1,89 @@
+{
+  "skills": [
+    {
+      "id": "617",
+      "name": "Apache Airflow",
+      "description": "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows.",
+      "web_link": "https://airflow.apache.org/",
+      "repo_link": "https://github.com/apache/airflow",
+      "icon_link": "",
+      "tags": [
+        "category:Framework"
+      ],
+      "active": true,
+      "skillResources": [
+        {
+          "id": "600",
+          "name": "Learn Amazing Airflow Now",
+          "authors": "Mr Vader",
+          "description": "Learn how to improve your Airflow today",
+          "web_link": "https://udemy.amazing.airflow.now",
+          "resource_authored_date": "2020-11-14T00:55:31.820Z",
+          "resource_added_date": "2021-11-14T00:55:31.820Z",
+          "tags": [
+            "Online Course",
+            "Video Only"
+          ]
+        },
+        {
+          "id": "601",
+          "name": "Airflow in 24 Hours",
+          "authors": "Mr Skywalker",
+          "description": "Airflow from Zero to Hero",
+          "web_link": "http://24-hour-airflow.com",
+          "resource_authored_date": "2020-11-13T00:55:31.820Z",
+          "resource_added_date": "2021-11-17T00:55:31.820Z",
+          "tags": [
+            "Online Course",
+            "Practical Code"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "618",
+      "name": "Apache Wicket",
+      "description": "Wicket is web",
+      "web_link": "https://wicket.apache.org/",
+      "repo_link": "https://github.com/apache/wicket",
+      "icon_link": "",
+      "tags": [
+        "category:Framework"
+      ],
+      "active": true
+    }
+  ],
+  "users": [
+    {
+      "id": "223",
+      "username": "lskywalker",
+      "first_name": "luke",
+      "last_name": "skywalker",
+      "skills": [
+        {
+          "skill_id": "617",
+          "name": "Apache Airflow",
+          "icon_link": "https://link.to.png",
+          "tags": [
+            "category:Framework"
+          ],
+          "user_rating": 1,
+          "score": 29,
+          "confidence": 30,
+          "notes": [
+            {
+              "description": "i love it!",
+              "date_added": "2021-11-11T13:00:01"
+            }
+          ],
+          "used": [
+            {
+              "from": "2010",
+              "to": "2012"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
