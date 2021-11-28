@@ -28,7 +28,10 @@ async def create_skill(skill: SkillCreate, skill_repo: SkillRepository = Depends
 
 @router.get("/", response_description="List all skills", response_model=List[SkillRead])
 async def list_skills(limit: int = 100, skill_repo: SkillRepository = Depends(skill_repository)):
-    return await skill_repo.list(limit)
+    x = await skill_repo.list(limit)
+    print(x)
+
+    return x
 
 
 @router.get("/find", response_description="Find skill by...", response_model=List[SkillRead])

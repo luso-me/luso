@@ -1,17 +1,11 @@
-POST http://localhost:5000/items
+POST http://localhost:5000/skills
 Accept: application/json
 Content-Type: application/json
 
 
 {
   "name": "Apache Airflow",
-  "description": "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows.",
-  "web_link": "https://airflow.apache.org/",
-  "repo_link": "https://github.com/apache/airflow",
-  "tags": [
-    "category:Framework",
-    "track:Data Engineer"
-  ]
+  "description": "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows."
 }
 
 ###
