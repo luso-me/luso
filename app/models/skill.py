@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 
 class SkillFields:
-    skill_id = Field(
+    id = Field(
         description='ID of skill',
         example='VxiguUxKdezsawDEoHatoy',
         min_length=22,
@@ -53,7 +53,7 @@ class SkillCreate(SkillUpdate):
 
 
 class SkillRead(SkillCreate):
-    skill_id: str = SkillFields.skill_id
+    id: str = SkillFields.id
 
     @pydantic.root_validator(pre=True)
     def _set_skill_id(cls, data):
@@ -61,5 +61,5 @@ class SkillRead(SkillCreate):
         and the alias as "skill_id", but can be quite confusing)"""
         document_id = data.get("_id")
         if document_id:
-            data['skill_id'] = document_id
+            data['id'] = document_id
         return data
