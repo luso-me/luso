@@ -2,6 +2,10 @@
 ## Environment vars
 ```shell
 MONGO_CONNECTION_URL=mongodb://localhost:27017
+GITHUB_CLIENT_ID=<github client id>
+GITHUB_CLIENT_SECRET=<github client secret>
+SECRET_KEY=<any random string> (see notes on how to generate)
+
 ```
 ## Dev Support
 

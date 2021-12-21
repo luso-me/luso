@@ -1,11 +1,12 @@
 import http
+import logging
 from datetime import datetime, timedelta
 from typing import Optional
 
 import httpx
 from authlib.integrations.httpx_client import AsyncOAuth2Client  # type: ignore
 from fastapi import APIRouter, HTTPException, Depends
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials, APIKeyCookie
 
 from fastapi.responses import RedirectResponse
 from jose import jwt, JWTError  # type: ignore
@@ -17,7 +18,8 @@ from app.models.auth import TokenData, Token
 from app.models.user import UserRead
 from app.repositories.user import UserRepository
 
-SECRET_KEY = ""
+log = logging.getLogger(__name__)
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -40,6 +42,7 @@ async def user_repository():
 async def github_login():
     auth_url, state = github_client.create_authorization_url(
             url='https://github.com/login/oauth/authorize')
+    log.info(f'Github auth url [{auth_url}] state [{state}]')
     return RedirectResponse(url=auth_url,
                             status_code=http.HTTPStatus.TEMPORARY_REDIRECT)
 
@@ -51,14 +54,15 @@ async def auth_callback(code: str,
     token = await github_client.fetch_token(
             url='https://github.com/login/oauth/access_token',
             code=code)
-    print(token)
 
     async with httpx.AsyncClient() as http_client:
         user_data = (await http_client.get(
                 'https://api.github.com/user',
                 headers={'Authorization': f'token {token.get("access_token")}'}
         )).json()
-        print(user_data)
+
+        log.debug(f'User data {user_data}')
+
         username = user_data['login']
         user = await user_repo.find({"username": username})
 
@@ -90,7 +94,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, settings.secret_key, algorithm=ALGORITHM)
     return encoded_jwt
 
 
@@ -103,9 +107,8 @@ async def get_current_user(
             headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token.credentials, SECRET_KEY,
+        payload = jwt.decode(token.credentials, settings.secret_key,
                              algorithms=[ALGORITHM])
-        print(payload)
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception

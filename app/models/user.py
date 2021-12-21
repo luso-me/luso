@@ -47,7 +47,7 @@ class UserCreate(UserUpdate):
 
 
 class UserRead(UserCreate):
-    user_id: str = UserFields.user_id
+    id: str = UserFields.user_id
 
     @pydantic.root_validator(pre=True)
     def _set_user_id(cls, data):
@@ -55,7 +55,7 @@ class UserRead(UserCreate):
         and the alias as "user_id", but can be quite confusing)"""
         document_id = data.get("_id")
         if document_id:
-            data['user_id'] = document_id
+            data['id'] = document_id
         return data
 
 
