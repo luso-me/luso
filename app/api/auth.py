@@ -15,7 +15,7 @@ from fastapi import status
 from app.config import settings
 from app.database import client
 from app.models.auth import TokenData, Token
-from app.models.user import UserRead
+from app.models.user import UserRead, UserCreate
 from app.repositories.user import UserRepository
 
 log = logging.getLogger(__name__)
@@ -48,7 +48,7 @@ async def github_login():
 
 
 @router.get('/github/callback')
-async def auth_callback(code: str,
+async def github_auth_callback(code: str,
                         user_repo: UserRepository = Depends(
                                 user_repository)) -> Token:
     token = await github_client.fetch_token(
@@ -67,11 +67,7 @@ async def auth_callback(code: str,
         user = await user_repo.find({"username": username})
 
         if not user:
-            raise HTTPException(
-                    status_code=status.HTTP_401_UNAUTHORIZED,
-                    detail="Incorrect username or password",
-                    headers={"WWW-Authenticate": "Bearer"},
-            )
+            user = [await github_create_user(user_data, user_repo), ]
 
         if len(user) > 1:
             raise HTTPException(
@@ -98,6 +94,16 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 
+async def github_create_user(user_data: dict, user_repo: UserRepository) -> UserRead:
+    log.info(f"Creating new user {user_data}")
+    user = UserCreate(
+        github_user_id=user_data['id'],
+        username=user_data['login'],
+        name=user_data['name'],
+    )
+    return await user_repo.create(user)
+
+
 async def get_current_user(
         token: HTTPAuthorizationCredentials = Depends(auth_scheme),
         user_repo: UserRepository = Depends(user_repository)):
@@ -116,7 +122,7 @@ async def get_current_user(
     except JWTError:
         raise credentials_exception
     user = await user_repo.find({'username': token_data.username})
-    if user is None or len(user) > 1:
+    if not user or len(user) > 1:
         raise credentials_exception
     return user[0]
 

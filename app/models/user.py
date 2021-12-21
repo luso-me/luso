@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 import pydantic
 from pydantic import BaseModel, Field
@@ -18,14 +18,9 @@ class UserFields:
         example='john',
         min_length=1
     )
-    first_name = Field(
-        description='First name',
-        example='John',
-        min_length=1
-    )
-    last_name = Field(
-        description='Last name',
-        example='Doe',
+    name = Field(
+        description='Name',
+        example='John Doe',
         min_length=1
     )
     skills = Field(
@@ -35,15 +30,14 @@ class UserFields:
 
 
 class UserUpdate(BaseModel):
-    first_name: Optional[str] = UserFields.first_name
-    last_name: Optional[str] = UserFields.last_name
+    name: Optional[str] = UserFields.name
     skills: Optional[List[SkillRead]] = UserFields.skills
 
 
 class UserCreate(UserUpdate):
     username: str = UserFields.username
-    first_name: str = UserFields.first_name
-    last_name: str = UserFields.last_name
+    name: str = UserFields.name
+    github_user_id: str
 
 
 class UserRead(UserCreate):
