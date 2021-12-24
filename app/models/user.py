@@ -13,11 +13,6 @@ class UserFields:
         min_length=22,
         max_length=22
     )
-    username = Field(
-        description='Username',
-        example='john',
-        min_length=1
-    )
     name = Field(
         description='Name',
         example='John Doe',
@@ -26,18 +21,21 @@ class UserFields:
     skills = Field(
         description='List of skills'
     )
+    email = Field(
+        description='Users emails address'
+    )
     active = Field(True)
 
 
 class UserUpdate(BaseModel):
     name: Optional[str] = UserFields.name
+    email: Optional[str] = UserFields.email
     skills: Optional[List[SkillRead]] = UserFields.skills
 
 
 class UserCreate(UserUpdate):
-    username: str = UserFields.username
     name: str = UserFields.name
-    github_user_id: str
+    github_user_id: Optional[str]
 
 
 class UserRead(UserCreate):

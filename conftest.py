@@ -1,9 +1,28 @@
 import asyncio
+import os
 from typing import Generator, AsyncGenerator
 
 import pytest
 from fastapi import FastAPI
 from httpx import AsyncClient
+
+
+TEMP_ENV_VARS = {
+    'token_secret_key': 'wqe'
+}
+
+
+def pytest_sessionstart(session):
+    # Will be executed before the first test
+    old_environ = dict(os.environ)
+    os.environ.update(TEMP_ENV_VARS)
+    # for env_var in ENV_VARS_TO_SUSPEND:
+    #     os.environ.pop(env_var, default=None)
+
+    yield
+    # Will be executed after the last test
+    os.environ.clear()
+    os.environ.update(old_environ)
 
 
 @pytest.fixture(scope="session")

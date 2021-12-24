@@ -6,19 +6,26 @@ from fastapi.middleware.cors import CORSMiddleware
 from app import api
 from app.config import settings
 
-logging.basicConfig(level=logging.DEBUG)
 
-app = FastAPI()
-app.add_middleware(
-        middleware_class=CORSMiddleware,
-        allow_origins=settings.cors_allowed_origins,
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"]
-)
+def get_application() -> FastAPI:
+    application = FastAPI()
 
-app.include_router(api.skill_router, prefix="/skills")
-app.include_router(api.user_router, prefix="/users")
-app.include_router(api.auth_router, prefix='/auth')
+    # TODO: Add logging configuration
 
-# todo : dan to add little data populator
+    application.add_middleware(
+            middleware_class=CORSMiddleware,
+            allow_origins=settings.cors_allowed_origins,
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"]
+    )
+
+    # TODO: Move to own module
+    application.include_router(api.skill_router, prefix="/skills")
+    application.include_router(api.user_router, prefix="/users")
+    application.include_router(api.auth_router, prefix='/auth')
+
+    return application
+
+
+app = get_application()

@@ -4,8 +4,8 @@ from typing import List, Optional
 
 from fastapi import HTTPException, status, APIRouter, Depends
 
-from app.repositories.skill import SkillRepository
 from app.database import client
+from app.repositories.skill import SkillRepository
 from app.models.skill import SkillCreate, SkillRead, SkillUpdate
 
 log = logging.getLogger(__name__)
