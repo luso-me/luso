@@ -124,7 +124,7 @@ async def get_current_user(
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    user = await user_repo.find({'username': username})
+    user = await user_repo.find({'_id': username})
     if not user or len(user) > 1:
         raise credentials_exception
     return user[0]

@@ -27,6 +27,11 @@ async def list_users(limit: int = 100, user_repo: UserRepository = Depends(user_
     return await user_repo.list(limit)
 
 
+@router.get("/me", response_model=UserRead)
+async def read_users_me(current_user: UserRead = Depends(get_current_user)):
+    return current_user
+
+
 @router.get("/{user_id}",
             response_description="Get a single user",
             response_model=UserRead)
