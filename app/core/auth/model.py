@@ -1,6 +1,6 @@
-from typing import Optional
+from typing import Optional, List
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Token(BaseModel):
@@ -8,5 +8,7 @@ class Token(BaseModel):
     token_type: str
 
 
-class TokenData(BaseModel):
+class JWTPayload(BaseModel):
     sub: str
+    exp: Optional[int]
+    scopes: List[str] = Field(default_factory=list)

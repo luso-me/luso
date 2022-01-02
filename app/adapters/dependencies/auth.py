@@ -1,0 +1,41 @@
+from fastapi import Depends, HTTPException
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi import status
+from jose import JWTError
+
+from app.core.auth.base import get_payload
+from app.core.auth.exceptions import InvalidCredentialsException
+from app.database import client
+from app.repositories.user import UserRepository
+
+auth_scheme = HTTPBearer()
+
+credentials_exception = HTTPException(
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail="Could not validate credentials",
+    headers={"WWW-Authenticate": "Bearer"},
+)
+
+
+async def user_repository():
+    yield UserRepository(db_session=client, db_name='luso', collection='users')
+
+
+async def get_current_user(
+        token: HTTPAuthorizationCredentials = Depends(auth_scheme),
+        user_repo: UserRepository = Depends(user_repository)):
+
+    try:
+        payload = await get_payload(token)
+        if payload.sub is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    except InvalidCredentialsException:
+        raise credentials_exception
+
+    user = await user_repo.find({'_id': payload.sub})
+    if user and len(user) == 1:
+        return user[0]
+
+    raise credentials_exception

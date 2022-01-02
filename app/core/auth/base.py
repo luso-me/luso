@@ -2,6 +2,7 @@ import logging
 from datetime import datetime, timedelta
 
 from authlib.integrations.httpx_client import AsyncOAuth2Client  # type: ignore
+from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials
 from jose import jwt, JWTError  # type: ignore
 
@@ -27,7 +28,10 @@ async def create_access_token(payload: JWTPayload, ttl: timedelta = timedelta(DE
 async def get_payload(token: HTTPAuthorizationCredentials) -> JWTPayload:
     try:
         return JWTPayload.parse_obj(
-            jwt.decode(token.credentials, settings.token_secret_key, algorithms=[settings.token_algorithm]))
+            jwt.decode(token.credentials,
+                       settings.token_secret_key,
+                       algorithms=[settings.token_algorithm])
+        )
     except JWTError as e:
         log.info(f'Failed to decrypt token with our secret', e)
     raise InvalidCredentialsException

@@ -2,7 +2,7 @@ from typing import List
 
 from fastapi import HTTPException, status, APIRouter, Depends
 
-from app.api.auth import get_current_user
+from app.adapters.dependencies.auth import get_current_user, user_repository
 from app.database import client
 from app.models.user import UserCreate, UserUpdate, UserRead
 from app.repositories.user import UserRepository
@@ -11,10 +11,6 @@ router = APIRouter(
     tags=["users"],
     responses={404: {"description": "Not found"}},
 )
-
-
-async def user_repository():
-    yield UserRepository(db_session=client, db_name='luso', collection='users')
 
 
 @router.post("/", response_description="Add new user", response_model=UserRead, status_code=status.HTTP_201_CREATED)
