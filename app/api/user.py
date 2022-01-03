@@ -3,7 +3,6 @@ from typing import List
 from fastapi import HTTPException, status, APIRouter, Depends
 
 from app.adapters.dependencies.auth import get_current_user, user_repository
-from app.database import client
 from app.models.user import UserCreate, UserUpdate, UserRead
 from app.repositories.user import UserRepository
 

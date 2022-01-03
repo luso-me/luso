@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from . import github
+from app.adapters.rest.auth import github
 
 router = APIRouter(
     tags=['authentication']

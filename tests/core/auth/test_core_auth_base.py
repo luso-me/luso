@@ -6,7 +6,7 @@ from fastapi.security import HTTPAuthorizationCredentials
 from app.config import AppSettings
 from app.core.auth.base import create_access_token, get_payload
 from app.core.auth.exceptions import InvalidCredentialsException
-from app.models.auth import JWTPayload
+from app.core.auth.model import JWTPayload
 import base64
 
 

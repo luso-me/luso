@@ -1,4 +1,5 @@
-from typing import Optional, List
+from datetime import datetime
+from typing import List
 
 from pydantic import BaseModel, Field
 
@@ -10,5 +11,5 @@ class Token(BaseModel):
 
 class JWTPayload(BaseModel):
     sub: str
-    exp: Optional[int]
+    exp: datetime
     scopes: List[str] = Field(default_factory=list)

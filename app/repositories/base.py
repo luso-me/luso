@@ -1,6 +1,6 @@
 import abc
 import logging
-from typing import Generic, TypeVar, Type, List
+from typing import Generic, TypeVar, Type, List, Callable
 
 from pydantic import BaseModel
 import shortuuid  # type: ignore
@@ -15,8 +15,14 @@ log = logging.getLogger(__name__)
 
 
 class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
-    def __init__(self, db_session, db_name: str, collection: str):
-        self._collection = db_session[db_name][collection]
+    def __init__(self, db_client_factory: Callable, db_name: str, collection_name: str):
+        self._db_name = db_name
+        self._collection_name = collection_name
+        self._db_client_factory = db_client_factory
+
+    @property
+    def _collection(self):
+        return self._db_client_factory()[self._db_name][self._collection_name]
 
     @property
     @abc.abstractmethod

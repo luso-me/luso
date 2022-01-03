@@ -2,7 +2,7 @@ from http import HTTPStatus
 
 from fastapi import APIRouter
 
-from app.models.auth import Token
+from app.core.auth.model import Token
 from app.core.auth import github as github_core
 from fastapi.responses import RedirectResponse
 

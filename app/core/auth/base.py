@@ -2,20 +2,19 @@ import logging
 from datetime import datetime, timedelta
 
 from authlib.integrations.httpx_client import AsyncOAuth2Client  # type: ignore
-from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials
 from jose import jwt, JWTError  # type: ignore
 
 from app.config import settings
 from app.core.auth.exceptions import InvalidCredentialsException
-from app.models.auth import JWTPayload
+from app.core.auth.model import JWTPayload
 
 log = logging.getLogger(__name__)
 
 DEFAULT_TTL_MINUTES = 15
 
 
-async def create_access_token(payload: JWTPayload, ttl: timedelta = timedelta(DEFAULT_TTL_MINUTES)) -> str:
+async def create_access_token(payload: JWTPayload, ttl: timedelta = timedelta(minutes=DEFAULT_TTL_MINUTES)) -> str:
     payload.exp = datetime.utcnow() + ttl
     encoded_jwt = jwt.encode(
         claims=payload.dict(exclude_none=True),

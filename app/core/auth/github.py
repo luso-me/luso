@@ -8,8 +8,8 @@ from jose import jwt, JWTError  # type: ignore
 from app.config import settings
 from app.core.auth.base import create_access_token
 from app.core.auth.exceptions import GithubCredentialsException
-from app.database import client
-from app.models.auth import JWTPayload
+from app.database import client, get_db_client
+from app.core.auth.model import JWTPayload
 from app.models.user import UserRead, UserCreate
 from app.repositories.user import UserRepository
 
@@ -19,7 +19,7 @@ github_client = AsyncOAuth2Client(client_id=settings.github_client_id,
                                   client_secret=settings.github_client_secret,
                                   scope='user:email')
 
-user_repo = UserRepository(db_session=client, db_name='luso', collection='users')
+user_repo = UserRepository(db_client_factory=get_db_client, db_name='luso', collection_name='users')
 
 
 def github_login_url():
