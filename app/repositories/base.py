@@ -68,5 +68,5 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
         if not result.deleted_count:
             raise DocumentNotFoundException()
 
-    async def find(self, search_dict) -> List[READ_SCHEMA]:
-        return [self._read_schema(**document) for document in await self._collection.find(search_dict).to_list(100)]
+    async def find(self, search_dict, limit=None) -> List[READ_SCHEMA]:
+        return [self._read_schema(**document) for document in await self._collection.find(search_dict).to_list(limit)]
