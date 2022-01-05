@@ -21,4 +21,10 @@ jobs:
         poetry install
     - name: Analysing the code with mypy
       run: |
-       poetry run mypy app
+       poetry run mypy --namespace-packages app
+    - name: Run pytest
+      # Workaround for required env vars
+      env:
+        TOKEN_SECRET_KEY: 1234
+      run: |
+        poetry run pytest -m "not integration"
