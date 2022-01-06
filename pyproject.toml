@@ -10,13 +10,22 @@ fastapi = "^0.70.0"
 uvicorn = "^0.15.0"
 motor = "^2.5.1"
 shortuuid = "^1.0.8"
+Authlib = "^0.15.5"
+httpx = "^0.21.1"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
 mypy = "^0.910"
 pymongo-stubs = "^0.1.0"
-httpx = "^0.20.0"
 pytest-asyncio = "^0.16.0"
+types-orjson = "^3.6.1"
+types-ujson = "^4.2.0"
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: test that require external resources"
+]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

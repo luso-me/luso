@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 import pydantic
 from pydantic import BaseModel, Field
@@ -13,35 +13,33 @@ class UserFields:
         min_length=22,
         max_length=22
     )
-    first_name = Field(
-        description='First name',
-        example='John',
-        min_length=1
-    )
-    last_name = Field(
-        description='Last name',
-        example='Doe',
+    name = Field(
+        description='Name',
+        example='John Doe',
         min_length=1
     )
     skills = Field(
         description='List of skills'
     )
+    email = Field(
+        description='Users emails address'
+    )
     active = Field(True)
 
 
 class UserUpdate(BaseModel):
-    first_name: Optional[str] = UserFields.first_name
-    last_name: Optional[str] = UserFields.last_name
+    name: Optional[str] = UserFields.name
+    email: Optional[str] = UserFields.email
     skills: Optional[List[SkillRead]] = UserFields.skills
 
 
 class UserCreate(UserUpdate):
-    first_name: str = UserFields.first_name
-    last_name: str = UserFields.last_name
+    name: str = UserFields.name
+    github_user_id: Optional[str]
 
 
 class UserRead(UserCreate):
-    user_id: str = UserFields.user_id
+    id: str = UserFields.user_id
 
     @pydantic.root_validator(pre=True)
     def _set_user_id(cls, data):
@@ -49,7 +47,7 @@ class UserRead(UserCreate):
         and the alias as "user_id", but can be quite confusing)"""
         document_id = data.get("_id")
         if document_id:
-            data['user_id'] = document_id
+            data['id'] = document_id
         return data
 
 
