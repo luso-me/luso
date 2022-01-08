@@ -1,6 +1,6 @@
 from typing import Type
 
-from app.models.user import UserCreate, UserRead, UserUpdate
+from app.core.user.model.base import UserCreate, UserRead, UserUpdate
 from app.repositories.base import BaseRepository, READ_SCHEMA
 
 

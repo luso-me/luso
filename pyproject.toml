@@ -13,6 +13,7 @@ shortuuid = "^1.0.8"
 Authlib = "^0.15.5"
 httpx = "^0.21.1"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+BaseModel = "^20190604.1625"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

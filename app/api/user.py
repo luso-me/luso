@@ -3,7 +3,7 @@ from typing import List
 from fastapi import HTTPException, status, APIRouter, Depends
 
 from app.adapters.dependencies.auth import get_current_user, user_repository
-from app.models.user import UserCreate, UserUpdate, UserRead
+from app.core.user.model.base import UserCreate, UserUpdate, UserRead
 from app.repositories.user import UserRepository
 
 router = APIRouter(
@@ -18,7 +18,7 @@ async def create_user(user: UserCreate, user_repo: UserRepository = Depends(user
 
 
 @router.get("/", response_description="List all users", response_model=List[UserRead])
-async def list_users(limit: int = 100, user_repo: UserRepository = Depends(user_repository), current_user: UserRead = Depends(get_current_user)):
+async def list_users(limit: int = 100, user_repo: UserRepository = Depends(user_repository)):
     return await user_repo.list(limit)
 
 
@@ -30,7 +30,7 @@ async def read_users_me(current_user: UserRead = Depends(get_current_user)):
 @router.get("/{user_id}",
             response_description="Get a single user",
             response_model=UserRead)
-async def show_user(user_id: str, user_repo: UserRepository = Depends(user_repository), current_user: UserRead = Depends(get_current_user)):
+async def show_user(user_id: str, user_repo: UserRepository = Depends(user_repository)):
     if (user := await user_repo.get(user_id)) is not None:
         return user
 
@@ -39,7 +39,8 @@ async def show_user(user_id: str, user_repo: UserRepository = Depends(user_repos
 
 @router.patch("/{user_id}", response_description="Update a user",
             response_model=UserRead)
-async def update_user(user_id: str, user: UserUpdate, user_repo: UserRepository = Depends(user_repository), current_user: UserRead = Depends(get_current_user)):
+async def update_user(user_id: str, user: UserUpdate, user_repo: UserRepository = Depends(user_repository)):
+    print(user)
     return await user_repo.update(user_id, user)
 
 

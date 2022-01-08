@@ -8,7 +8,7 @@ from jose import JWTError  # type: ignore
 from app.core.auth.base import get_payload
 from app.core.auth.exceptions import InvalidCredentialsException
 from app.database import get_db_client
-from app.models.user import UserRead
+from app.core.user.model.base import UserRead
 from app.repositories.user import UserRepository
 
 auth_scheme = HTTPBearer()

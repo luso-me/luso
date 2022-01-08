@@ -10,7 +10,7 @@ from app.core.auth.base import create_access_token
 from app.core.auth.exceptions import GithubCredentialsException
 from app.database import client, get_db_client
 from app.core.auth.model import JWTPayload
-from app.models.user import UserRead, UserCreate
+from app.core.user.model.base import UserRead, UserCreate
 from app.repositories.user import UserRepository
 
 log = logging.getLogger(__name__)
