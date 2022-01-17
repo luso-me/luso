@@ -6,10 +6,7 @@ from app.adapters.dependencies.auth import get_current_user, user_repository
 from app.core.user.model.base import UserCreate, UserUpdate, UserRead
 from app.repositories.user import UserRepository
 
-router = APIRouter(
-    tags=["users"],
-    responses={404: {"description": "Not found"}},
-)
+router = APIRouter()
 
 
 @router.post("/", response_description="Add new user", response_model=UserRead, status_code=status.HTTP_201_CREATED)
