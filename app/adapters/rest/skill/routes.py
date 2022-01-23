@@ -8,5 +8,4 @@ router = APIRouter(
 
 router.include_router(
     base.router,
-    prefix='/skills'
 )
