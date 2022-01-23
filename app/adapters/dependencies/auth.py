@@ -1,13 +1,11 @@
-from typing import AsyncGenerator
-
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import status
 from jose import JWTError  # type: ignore
 
+from app.adapters.dependencies.db import user_repository
 from app.core.auth.base import get_payload
 from app.core.auth.exceptions import InvalidCredentialsException
-from app.database import get_db_client
 from app.core.user.model.base import UserRead
 from app.repositories.user import UserRepository
 
@@ -18,10 +16,6 @@ credentials_exception = HTTPException(
     detail="Could not validate credentials",
     headers={"WWW-Authenticate": "Bearer"},
 )
-
-
-async def user_repository() -> AsyncGenerator[UserRepository, None]:
-    yield UserRepository(db_client_factory=get_db_client, db_name='luso', collection_name='users')
 
 
 async def get_current_user(

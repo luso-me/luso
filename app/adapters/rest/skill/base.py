@@ -4,20 +4,13 @@ from typing import List, Optional
 
 from fastapi import HTTPException, status, APIRouter, Depends
 
-from app.database import get_db_client
+from app.adapters.dependencies.db import skill_repository
 from app.repositories.skill import SkillRepository
 from app.models.skill import SkillCreate, SkillRead, SkillUpdate
 
 log = logging.getLogger(__name__)
 
-router = APIRouter(
-    tags=["skill"],
-    responses={404: {"description": "Not found"}},
-)
-
-
-async def skill_repository():
-    yield SkillRepository(db_client_factory=get_db_client, db_name='luso', collection_name='skills')
+router = APIRouter()
 
 
 @router.post("/", response_description="Add new skill", response_model=SkillRead, status_code=status.HTTP_201_CREATED)
