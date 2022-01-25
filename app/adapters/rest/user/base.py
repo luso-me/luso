@@ -37,7 +37,6 @@ async def show_user(user_id: str, user_repo: UserRepository = Depends(user_repos
 @router.patch("/{user_id}", response_description="Update a user",
             response_model=UserRead)
 async def update_user(user_id: str, user: UserUpdate, user_repo: UserRepository = Depends(user_repository)):
-    print(user)
     return await user_repo.update(user_id, user)
 
 
