@@ -1,14 +1,14 @@
-import logging
 from http import HTTPStatus
 from typing import List, Optional
 
+import structlog
 from fastapi import HTTPException, status, APIRouter, Depends
 
 from app.adapters.dependencies.db import skill_repository
 from app.repositories.skill import SkillRepository
 from app.models.skill import SkillCreate, SkillRead, SkillUpdate
 
-log = logging.getLogger(__name__)
+log = structlog.get_logger()
 
 router = APIRouter()
 
@@ -21,14 +21,16 @@ async def create_skill(skill: SkillCreate, skill_repo: SkillRepository = Depends
 
 @router.get("/", response_description="List all skills", response_model=List[SkillRead])
 async def list_skills(limit: int = 100, skill_repo: SkillRepository = Depends(skill_repository)):
-    x = await skill_repo.list(limit)
-    return x
+    skills = await skill_repo.list(limit)
+    log.debug("skills found", skills=skills)
+    return skills
 
 
 @router.get("/find", response_description="Find skill by...", response_model=List[SkillRead])
 async def find_query(skill_name: Optional[str] = None, limit: int = 10, skill_repo: SkillRepository = Depends(skill_repository)):
     if skill_name:
-        return await skill_repo.find({'name': skill_name})
+        log.info("searching for skills with name", skill_name=skill_name)
+        return await skill_repo.find({'name': skill_name}, limit=limit)
 
     raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail="No known search parameter passed")
 

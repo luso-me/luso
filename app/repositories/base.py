@@ -1,7 +1,7 @@
 import abc
-import logging
 from typing import Generic, TypeVar, Type, List, Callable
 
+import structlog
 from pydantic import BaseModel
 import shortuuid  # type: ignore
 
@@ -11,7 +11,7 @@ CREATE_SCHEMA = TypeVar('CREATE_SCHEMA', bound=BaseModel)
 READ_SCHEMA = TypeVar('READ_SCHEMA', bound=BaseModel)
 UPDATE_SCHEMA = TypeVar('UPDATE_SCHEMA', bound=BaseModel)
 
-log = logging.getLogger(__name__)
+log = structlog.get_logger()
 
 
 class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):

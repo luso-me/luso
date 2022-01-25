@@ -1,6 +1,6 @@
-import logging
 from datetime import datetime, timedelta
 
+import structlog
 from authlib.integrations.httpx_client import AsyncOAuth2Client  # type: ignore
 from fastapi.security import HTTPAuthorizationCredentials
 from jose import jwt, JWTError  # type: ignore
@@ -9,7 +9,7 @@ from app.config import settings
 from app.core.auth.exceptions import InvalidCredentialsException
 from app.core.auth.model import JWTPayload
 
-log = logging.getLogger(__name__)
+log = structlog.get_logger()
 
 DEFAULT_TTL_MINUTES = 15
 
