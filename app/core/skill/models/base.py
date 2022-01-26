@@ -1,7 +1,10 @@
+from datetime import datetime
 from typing import List, Optional
 
 import pydantic
 from pydantic import BaseModel, Field
+
+from app.core.skill.models.resource import SkillResource
 
 
 class SkillFields:
@@ -35,6 +38,9 @@ class SkillFields:
     active = Field(
         description='Is skill active'
     )
+    skills_resources = Field(
+        description='List of skill resources'
+    )
 
 
 class SkillUpdate(BaseModel):
@@ -45,6 +51,7 @@ class SkillUpdate(BaseModel):
     icon_link: Optional[str] = SkillFields.icon_link
     tags: Optional[List[str]] = SkillFields.tags
     active: Optional[bool] = SkillFields.active
+    skill_resources: Optional[List[SkillResource]]
 
 
 class SkillCreate(SkillUpdate):
