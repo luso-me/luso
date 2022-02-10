@@ -32,5 +32,5 @@ async def get_payload(token: HTTPAuthorizationCredentials) -> JWTPayload:
                        algorithms=[settings.token_algorithm])
         )
     except JWTError as e:
-        log.info(f'Failed to decrypt token with our secret', e)
+        log.info(f'Failed to decrypt token with our secret', error=e)
     raise InvalidCredentialsException
