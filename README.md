@@ -4,9 +4,9 @@
 
 ```shell
 MONGO_CONNECTION_URL=mongodb://localhost:27017
-GITHUB_CLIENT_ID=<github client id>
-GITHUB_CLIENT_SECRET=<github client secret>
-SECRET_KEY=<any random string> (see notes on how to generate)
+GITHUB_CLIENT_ID=<github client id> (see notes on how to find it)
+GITHUB_CLIENT_SECRET=<github client secret> (see notes on how to find it)
+TOKEN_SECRET_KEY=<any random string> (see notes on how to generate)
 ```
 
 ## Dev Support
@@ -15,7 +15,8 @@ SECRET_KEY=<any random string> (see notes on how to generate)
 
 - Requirements
     - python 3.9 or greater
-    - poetry 1.1.0 (`pip install poetry`). Install poetry globally if you are having issues running the `poetry` command below.
+    - poetry 1.1.0 (`pip install poetry`).
+    Install poetry globally if you are having issues running the `poetry` command below.
 - Commands
     - `poetry install`
 
@@ -33,7 +34,9 @@ SECRET_KEY=<any random string> (see notes on how to generate)
   ```
   poetry shell
   ```
-- SECRET_KEY generation
+- To find GITHUB_CLIENT_ID do ...
+- To find GITHUB_CLIENT_SECRET do ...
+- TOKEN_SECRET_KEY generation
   ```shell
   openssl rand -hex 32
   ```
