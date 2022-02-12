@@ -5,4 +5,5 @@ class SkillResourceItem(BaseModel):
     id: str
     name: str
     summary: str
-    duration: int
+    web_link: str
+    duration: str

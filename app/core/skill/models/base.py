@@ -9,38 +9,29 @@ from app.core.skill.models.resource import SkillResource
 
 class SkillFields:
     id = Field(
-        description='ID of skill',
-        example='VxiguUxKdezsawDEoHatoy',
-        min_length=22,
-        max_length=22
+            description='ID of skill',
+            example='VxiguUxKdezsawDEoHatoy',
+            min_length=22,
+            max_length=22
     )
     name = Field(
-        description='Name of skill',
-        example='Apache Airflow',
-        min_length=1
+            description='Name of skill',
+            example='Apache Airflow',
+            min_length=1
     )
-    description = Field(
-        description='Description of skill'
-    )
-    web_link = Field(
-        description='Url of skill'
-    )
-    repo_link = Field(
-        description='Repo of skill'
-    )
-    icon_link = Field(
-        description='Icon link'
-    )
+
+    description = Field(description='Description of skill')
+    web_link = Field(description='Url of skill')
+    repo_link = Field(description='Repo of skill')
+    icon_link = Field(description='Icon link')
+
     tags = Field(
-        description='List of tags',
-        example=['cncf::Data Engineering']
+            description='List of tags',
+            example=['cncf::Data Engineering']
     )
-    active = Field(
-        description='Is skill active'
-    )
-    skills_resources = Field(
-        description='List of skill resources'
-    )
+    category = Field(description='Category of the Skill')
+    active = Field(description='Is skill active')
+    resources = Field(description='List of skill resources')
 
 
 class SkillUpdate(BaseModel):
@@ -50,8 +41,9 @@ class SkillUpdate(BaseModel):
     repo_link: Optional[str] = SkillFields.repo_link
     icon_link: Optional[str] = SkillFields.icon_link
     tags: Optional[List[str]] = SkillFields.tags
+    category: Optional[str] = SkillFields.category
     active: Optional[bool] = SkillFields.active
-    skill_resources: Optional[List[SkillResource]]
+    resources: Optional[List[SkillResource]]
 
 
 class SkillCreate(SkillUpdate):
