@@ -1,15 +1,15 @@
-from typing import List, Optional, Dict
+from typing import List, Optional
 
 import pydantic
 from pydantic import BaseModel, Field
 
-from app.models.skill import SkillRead
+from app.core.user.model.user_skill import UserSkill
 
 
 class UserFields:
     user_id = Field(
         description='ID of user',
-        example='VxiguUxKdezsawDEoHatoy',
+        example='some id',
         min_length=22,
         max_length=22
     )
@@ -19,7 +19,8 @@ class UserFields:
         min_length=1
     )
     skills = Field(
-        description='List of skills'
+        description='List of skills',
+        default_factory=list
     )
     email = Field(
         description='Users emails address'
@@ -30,11 +31,12 @@ class UserFields:
 class UserUpdate(BaseModel):
     name: Optional[str] = UserFields.name
     email: Optional[str] = UserFields.email
-    skills: Optional[List[SkillRead]] = UserFields.skills
+    skills: Optional[List[UserSkill]] = UserFields.skills
 
 
 class UserCreate(UserUpdate):
     name: str = UserFields.name
+    email: str = UserFields.email
     github_user_id: Optional[str]
 
 

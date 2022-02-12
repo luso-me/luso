@@ -1,9 +1,7 @@
 import json
 import pymongo
 
-from app.database import client
-from app.models.skill import SkillCreate
-from app.repositories.skill import SkillRepository
+from app.core.skill.models.base import SkillCreate
 
 
 def populate_db():

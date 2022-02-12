@@ -1,7 +1,7 @@
-import logging
 from typing import Dict, Optional
 
 import httpx
+import structlog
 from authlib.integrations.httpx_client import AsyncOAuth2Client  # type: ignore
 from jose import jwt, JWTError  # type: ignore
 
@@ -10,10 +10,10 @@ from app.core.auth.base import create_access_token
 from app.core.auth.exceptions import GithubCredentialsException
 from app.database import client, get_db_client
 from app.core.auth.model import JWTPayload
-from app.models.user import UserRead, UserCreate
+from app.core.user.model.base import UserRead, UserCreate
 from app.repositories.user import UserRepository
 
-log = logging.getLogger(__name__)
+log = structlog.get_logger()
 
 github_client = AsyncOAuth2Client(client_id=settings.github_client_id,
                                   client_secret=settings.github_client_secret,
