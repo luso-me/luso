@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -14,7 +14,7 @@ class SkillResourceItem(BaseModel):
     id: str
     name: str
     summary: str
-    web_link: str
+    web_link: Optional[str]
     duration: str
 
 
@@ -28,7 +28,7 @@ class SkillResource(BaseModel):
     resource_authored_date: datetime
     resource_added_date: datetime
     tags: List[str]
-    community_rating: int
+    community_rating: Optional[int]
     duration: str
     estimated_effort: DurationRange
     intended_levels: List[str]

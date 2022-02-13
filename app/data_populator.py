@@ -1,19 +1,22 @@
+import asyncio
 import json
 
 from app.core.skill.models.base import SkillCreate
 from app.core.user.model.base import UserCreate
 from app.database import get_db_client
 from app.repositories.skill import SkillRepository
+from app.repositories.user import UserRepository
 
 
-def populate_db():
+async def populate_db():
     with open("../test_resources/sample.json") as file:
         data = json.load(file)
-        insert_skills(data)
-        # insert_users(data, mydb)
+        # await insert_skills(data)
+        await insert_users(data)
 
 
-def insert_skills(data):
+async def insert_skills(data):
+    print("Inserting Skills")
     repo = SkillRepository(db_client_factory=get_db_client, db_name='luso',
                            collection_name='skills')
 
@@ -27,25 +30,24 @@ def insert_skills(data):
                         category=skill["category"],
                         active=skill["active"],
                         resources=skill["resources"])
-        print(skill)
-        repo.create(s)
-        # mydb.mycoll.insert_one(s)
-        # s_repo.create(s)
+        await repo.create(s)
 
 
-def insert_users(data, mydb):
-    print("Inserting users")
+async def insert_users(data):
+    print("Inserting Users")
+
+    repo = UserRepository(db_client_factory=get_db_client, db_name='luso',
+                          collection_name='users')
+
     for user in data["users"]:
-        u = UserCreate(name=user["name"],
+        u = UserCreate(username=user["username"],
                        description=user["description"],
                        web_link=user["web_link"],
                        repo_link=user["repo_link"],
                        icon_link=user["icon_link"],
                        tags=user["tags"],
                        active=user["active"])
-        print(user)
-        mydb.mycoll.insert_one(u)
-        # s_repo.create(s)
+        await repo.create(u)
 
 
-populate_db()
+asyncio.run(populate_db())

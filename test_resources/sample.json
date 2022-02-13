@@ -218,7 +218,8 @@
       "icon_link": "",
       "tags": [],
       "category": "Platforms",
-      "active": true
+      "active": true,
+      "resources": []
     },
     {
       "id": "103",
@@ -229,7 +230,8 @@
       "icon_link": "",
       "tags": [],
       "category": "Platforms",
-      "active": true
+      "active": true,
+      "resources": []
     },
     {
       "id": "104",
@@ -240,7 +242,8 @@
       "icon_link": "",
       "tags": [],
       "category": "Platforms",
-      "active": true
+      "active": true,
+      "resources": []
     },
     {
       "id": "105",
@@ -251,7 +254,8 @@
       "icon_link": "",
       "tags": [],
       "category": "Languages & Frameworks",
-      "active": true
+      "active": true,
+      "resources": []
     },
     {
       "id": "106",
@@ -262,7 +266,8 @@
       "icon_link": "",
       "tags": [],
       "category": "Tools",
-      "active": true
+      "active": true,
+      "resources": []
     }
   ],
   "users": [

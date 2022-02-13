@@ -18,13 +18,11 @@ class UserFields:
             example='John Doe',
             min_length=1
     )
-    skills = Field(
-            description='List of skills',
-            default_factory=list
-    )
-    email = Field(
-            description='Users emails address'
-    )
+    display_name = Field(description='User Display name')
+    email = Field(description='Users emails address')
+    skills = Field(description='List of skills', default_factory=list)
+    plans = Field(description='List of plans', default_factory=list)
+    score = Field(description='User Score')
     active = Field(True)
 
 
