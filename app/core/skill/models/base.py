@@ -5,10 +5,10 @@ from pydantic import BaseModel, Field
 
 from app.core.skill.models.resource import SkillResource
 
-resourceCategories = ["Book", "Website", "Course", "Other"]
+resource_categories = ["Book", "Website", "Course", "Other"]
 
-skillCategories = ["Languages & Frameworks", "Platforms",
-                   "Tools", "Techniques"]
+skill_categories = ["Languages & Frameworks", "Platforms",
+                    "Tools", "Techniques"]
 
 
 class SkillFields:
@@ -53,6 +53,9 @@ class SkillUpdate(BaseModel):
 class SkillCreate(SkillUpdate):
     name: str = SkillFields.name
     description: str = SkillFields.description
+    web_link: str = SkillFields.web_link
+    category: str = SkillFields.category
+    active: bool = SkillFields.active
 
 
 class SkillRead(SkillCreate):

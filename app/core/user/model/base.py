@@ -9,14 +9,14 @@ from app.core.user.model.user_skill import UserSkill
 
 statuses = ["Todo", "In Progress", "Done"]
 
-userSkillRatings = [
+user_skill_ratings = [
     "Beginner (typically 0 - 3 years xp)",
     "Intermediate (typically 4 - 7 years xp)",
     "Advanced (typically 7 - 12 years xp)",
     "Expert (typically 12+ years xp)",
 ]
 
-timeHorizons = [
+time_horizons = [
     "1 week - 3 months",
     "3 - 6 months",
     "6 months - 1 year",
@@ -32,17 +32,14 @@ class UserFields:
             min_length=22,
             max_length=22
     )
-    username = Field(
-            description='Name',
-            example='John Doe',
-            min_length=1
-    )
+    username = Field(description='Username', example='John Doe')
     display_name = Field(description='User Display name')
     email = Field(description='Users emails address')
     active = Field(True)
     skills = Field(description='List of skills', default_factory=list)
     plans = Field(description='List of plans', default_factory=list)
-    score = Field(description='User Score')
+    score = Field(description='User Score',
+                  default_factory=lambda: UserScore(gold=0, points=0))
 
 
 class UserUpdate(BaseModel):
@@ -50,11 +47,12 @@ class UserUpdate(BaseModel):
     email: Optional[str] = UserFields.email
     skills: Optional[List[UserSkill]] = UserFields.skills
     plans: Optional[List[SkillPlan]] = UserFields.plans
+    score: Optional[UserScore] = None
 
 
 class UserCreate(UserUpdate):
-    username: str = UserFields.username
-    github_user_id: Optional[str]
+    username: Optional[str] = UserFields.username
+    github_user_id: str
     email: str = UserFields.email
     score: UserScore = UserFields.score
 
