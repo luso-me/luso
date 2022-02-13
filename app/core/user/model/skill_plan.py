@@ -12,8 +12,8 @@ class SkillPlanObjective(BaseModel):
     resource_item_name: str
     resource_item_web_link: Optional[str]
     duration: str
-    start_date: datetime
-    end_date: datetime
+    start_date: Optional[datetime]
+    end_date: Optional[datetime]
     status: str
 
 

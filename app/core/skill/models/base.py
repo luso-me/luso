@@ -5,6 +5,11 @@ from pydantic import BaseModel, Field
 
 from app.core.skill.models.resource import SkillResource
 
+resourceCategories = ["Book", "Website", "Course", "Other"]
+
+skillCategories = ["Languages & Frameworks", "Platforms",
+                   "Tools", "Techniques"]
+
 
 class SkillFields:
     id = Field(

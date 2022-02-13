@@ -1,11 +1,12 @@
+from datetime import datetime
 from typing import List, Optional
 
 from pydantic import BaseModel
 
 
 class UserSkillUsed(BaseModel):
-    from_: str  # todo: 'from' on the frontend
-    to: str
+    from_date: datetime
+    to_date: datetime
     at: str
 
 

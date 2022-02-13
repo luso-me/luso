@@ -278,6 +278,11 @@
       "display_name": "",
       "email": "laa@skywalker.com",
       "password": "yes",
+      "active": true,
+      "score": {
+        "gold": 100,
+        "points": 50
+      },
       "skills": [
         {
           "skill_id": "100",
@@ -292,22 +297,18 @@
           "notes": "i love it!",
           "used": [
             {
-              "from": "2005-01-01",
-              "to": "2008-01-01",
+              "from_date": "2005-01-01T00:00:00.000Z",
+              "to_date": "2008-01-01T00:00:00.000Z",
               "at": "University"
             },
             {
-              "from": "2010-01-01",
-              "to": "2015-08-04",
+              "from_date": "2010-10-01T00:00:00.000Z",
+              "to_date": "2015-08-04T00:00:00.000Z",
               "at": "Groogle"
             }
           ]
         }
       ],
-      "score": {
-        "gold": 100,
-        "points": 50
-      },
       "plans": [
         {
           "id": "500",
@@ -329,8 +330,8 @@
               "resource_item_name": "Chapter 1: Introduction to Airflow",
               "resource_item_web_link": "https://udemy.amazing.airflow.now/chapter_1",
               "duration": "PT60M",
-              "start_date": "2022-01-20",
-              "end_date": "2022-01-31",
+              "start_date": "2022-01-22T21:00:04.846Z",
+              "end_date": "2022-01-31T21:00:04.846Z",
               "status": "In Progress"
             },
             {
@@ -341,8 +342,6 @@
               "resource_item_name": "Chapter 1: Welcome Tour",
               "resource_item_web_link": "http://24-hour-airflow.com/chapter1.html",
               "duration": "PT15M",
-              "start_date": "2022-01-20",
-              "end_date": "2022-01-31",
               "status": "Todo"
             }
           ]

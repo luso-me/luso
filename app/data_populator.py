@@ -35,18 +35,18 @@ async def insert_skills(data):
 
 async def insert_users(data):
     print("Inserting Users")
-
     repo = UserRepository(db_client_factory=get_db_client, db_name='luso',
                           collection_name='users')
 
     for user in data["users"]:
         u = UserCreate(username=user["username"],
-                       description=user["description"],
-                       web_link=user["web_link"],
-                       repo_link=user["repo_link"],
-                       icon_link=user["icon_link"],
-                       tags=user["tags"],
-                       active=user["active"])
+                       github_user_id=user["github_user_id"],
+                       display_name=user["display_name"],
+                       email=user["email"],
+                       active=user["active"],
+                       score=user["score"],
+                       skills=user["skills"],
+                       plans=user["plans"])
         await repo.create(u)
 
 
