@@ -7,41 +7,41 @@ from app.core.user.model.user_skill import UserSkill
 
 
 class UserFields:
-    user_id = Field(
-        description='ID of user',
-        example='some id',
-        min_length=22,
-        max_length=22
+    id = Field(
+            description='ID of user',
+            example='some id',
+            min_length=22,
+            max_length=22
     )
-    name = Field(
-        description='Name',
-        example='John Doe',
-        min_length=1
+    username = Field(
+            description='Name',
+            example='John Doe',
+            min_length=1
     )
     skills = Field(
-        description='List of skills',
-        default_factory=list
+            description='List of skills',
+            default_factory=list
     )
     email = Field(
-        description='Users emails address'
+            description='Users emails address'
     )
     active = Field(True)
 
 
 class UserUpdate(BaseModel):
-    name: Optional[str] = UserFields.name
+    username: Optional[str] = UserFields.username
     email: Optional[str] = UserFields.email
     skills: Optional[List[UserSkill]] = UserFields.skills
 
 
 class UserCreate(UserUpdate):
-    name: str = UserFields.name
-    email: str = UserFields.email
+    username: str = UserFields.username
     github_user_id: Optional[str]
+    email: str = UserFields.email
 
 
 class UserRead(UserCreate):
-    id: str = UserFields.user_id
+    id: str = UserFields.id
 
     @pydantic.root_validator(pre=True)
     def _set_user_id(cls, data):

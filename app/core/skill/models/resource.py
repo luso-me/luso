@@ -20,7 +20,7 @@ class SkillResource(BaseModel):
     web_link: str
     category: str
     resource_authored_date: datetime
-    resources_added_date: datetime
+    resource_added_date: datetime
     tags: List[str]
     community_rating: int
     duration: str

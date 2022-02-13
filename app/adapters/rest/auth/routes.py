@@ -2,10 +2,10 @@ from fastapi import APIRouter
 from app.adapters.rest.auth import github
 
 router = APIRouter(
-    tags=['authentication']
+        tags=['authentication']
 )
 
 router.include_router(
-    github.router,
-    prefix='/github'
+        github.router,
+        prefix='/github'
 )

@@ -12,16 +12,15 @@ from app.repositories.user import UserRepository
 auth_scheme = HTTPBearer()
 
 credentials_exception = HTTPException(
-    status_code=status.HTTP_401_UNAUTHORIZED,
-    detail="Could not validate credentials",
-    headers={"WWW-Authenticate": "Bearer"},
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
 )
 
 
 async def get_current_user(
         token: HTTPAuthorizationCredentials = Depends(auth_scheme),
         user_repo: UserRepository = Depends(user_repository)) -> UserRead:
-
     try:
         payload = await get_payload(token)
         if payload.sub is None:

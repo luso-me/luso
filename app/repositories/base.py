@@ -5,7 +5,8 @@ import structlog
 from pydantic import BaseModel
 import shortuuid  # type: ignore
 
-from app.repositories.exceptions import DocumentNotFoundException, DocumentCouldNotBeCreatedException
+from app.repositories.exceptions import DocumentNotFoundException, \
+    DocumentCouldNotBeCreatedException
 
 CREATE_SCHEMA = TypeVar('CREATE_SCHEMA', bound=BaseModel)
 READ_SCHEMA = TypeVar('READ_SCHEMA', bound=BaseModel)
@@ -15,7 +16,8 @@ log = structlog.get_logger()
 
 
 class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
-    def __init__(self, db_client_factory: Callable, db_name: str, collection_name: str):
+    def __init__(self, db_client_factory: Callable, db_name: str,
+                 collection_name: str):
         self._db_name = db_name
         self._collection_name = collection_name
         self._db_client_factory = db_client_factory
@@ -40,7 +42,8 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
         return self._read_schema(**document)
 
     async def list(self, limit=None) -> List[READ_SCHEMA]:
-        return [self._read_schema(**document) for document in await self._collection.find().to_list(limit)]
+        return [self._read_schema(**document) for document in
+                await self._collection.find().to_list(limit)]
 
     async def create(self, create: CREATE_SCHEMA) -> READ_SCHEMA:
         document = create.dict()
@@ -57,7 +60,8 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
     async def update(self, _id: str, update: UPDATE_SCHEMA) -> READ_SCHEMA:
         document = update.dict(exclude_none=True)
 
-        result = await self._collection.update_one({"_id": _id}, {"$set": document})
+        result = await self._collection.update_one({"_id": _id},
+                                                   {"$set": document})
         if not result.modified_count:
             log.debug('document not modified')
 
@@ -69,4 +73,5 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
             raise DocumentNotFoundException()
 
     async def find(self, search_dict, limit=None) -> List[READ_SCHEMA]:
-        return [self._read_schema(**document) for document in await self._collection.find(search_dict).to_list(limit)]
+        return [self._read_schema(**document) for document in
+                await self._collection.find(search_dict).to_list(limit)]
