@@ -18,6 +18,6 @@ async def github_login():
 
 
 @router.get('/callback')
-async def github_callback(code: str, state: str) -> Token:
+async def github_callback(code: str) -> Token:
     return Token(access_token=await github_core.github_callback(code=code),
                  token_type='bearer')
