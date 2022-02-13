@@ -11,7 +11,7 @@ from app.repositories.user import UserRepository
 async def populate_db():
     with open("../test_resources/sample.json") as file:
         data = json.load(file)
-        # await insert_skills(data)
+        await insert_skills(data)
         await insert_users(data)
 
 

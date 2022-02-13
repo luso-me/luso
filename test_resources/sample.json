@@ -352,23 +352,22 @@
   "config": [
     {
       "id": "400",
-      "name": "user_skill_ratings",
+      "name": "resource_categories",
       "value": [
-        "beginner",
-        "intermediate",
-        "advanced",
-        "expert"
+        "Book",
+        "Website",
+        "Course",
+        "Other"
       ]
     },
     {
       "id": "401",
-      "name": "skill_plan_time_horizons",
+      "name": "skill_categories",
       "value": [
-        "1 week - 3 months",
-        "3 - 6 months",
-        "6 months - 1 year",
-        "1 year - 3 years",
-        "3+ years"
+        "Languages & Frameworks",
+        "Platforms",
+        "Tools",
+        "Techniques"
       ]
     }
   ]
