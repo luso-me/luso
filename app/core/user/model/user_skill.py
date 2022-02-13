@@ -1,18 +1,24 @@
+from datetime import datetime
 from typing import List, Optional
 
 from pydantic import BaseModel
 
-from app.core.user.model.user_skill_note import UserSkillNote
-from app.core.user.model.user_skill_used import UserSkillUsed
+
+class UserSkillUsed(BaseModel):
+    from_date: datetime
+    to_date: datetime
+    at: str
 
 
 class UserSkill(BaseModel):
-    name: Optional[str]
+    skill_id: str
+    name: str
+    web_link: str
     icon_link: Optional[str]
     tags: Optional[List[str]]
-    category: Optional[str]
-    user_rating: Optional[int]
+    category: str
+    user_rating: Optional[str]
     score: Optional[float]
     confidence: Optional[float]
-    notes: Optional[List[UserSkillNote]]
-    used: Optional[UserSkillUsed]
+    notes: Optional[str]
+    used: Optional[List[UserSkillUsed]]

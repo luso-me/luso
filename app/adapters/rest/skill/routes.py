@@ -3,9 +3,9 @@ from fastapi import APIRouter
 from . import base
 
 router = APIRouter(
-    tags=['skills']
+        tags=['skills']
 )
 
 router.include_router(
-    base.router,
+        base.router,
 )
