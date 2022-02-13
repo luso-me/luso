@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from app.adapters.rest.user import base, skill
 
 router = APIRouter(

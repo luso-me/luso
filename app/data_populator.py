@@ -1,7 +1,5 @@
 import json
-import pymongo
 
-from app.adapters.dependencies.db import skill_repository
 from app.core.skill.models.base import SkillCreate
 from app.core.user.model.base import UserCreate
 from app.database import get_db_client

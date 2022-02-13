@@ -1,10 +1,10 @@
 from http import HTTPStatus
 
 from fastapi import APIRouter
-
-from app.core.auth.model import Token
-from app.core.auth import github as github_core
 from fastapi.responses import RedirectResponse
+
+from app.core.auth import github as github_core
+from app.core.auth.model import Token
 
 router = APIRouter()
 

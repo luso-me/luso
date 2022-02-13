@@ -5,8 +5,8 @@ import structlog
 from fastapi import HTTPException, status, APIRouter, Depends
 
 from app.adapters.dependencies.db import skill_repository
-from app.repositories.skill import SkillRepository
 from app.core.skill.models.base import SkillCreate, SkillRead, SkillUpdate
+from app.repositories.skill import SkillRepository
 
 log = structlog.get_logger()
 

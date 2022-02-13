@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from app.adapters.rest.auth import github
 
 router = APIRouter(

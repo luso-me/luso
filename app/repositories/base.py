@@ -1,9 +1,9 @@
 import abc
 from typing import Generic, TypeVar, Type, List, Callable
 
+import shortuuid  # type: ignore
 import structlog
 from pydantic import BaseModel
-import shortuuid  # type: ignore
 
 from app.repositories.exceptions import DocumentNotFoundException, \
     DocumentCouldNotBeCreatedException

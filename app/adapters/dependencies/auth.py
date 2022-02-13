@@ -1,6 +1,6 @@
 from fastapi import Depends, HTTPException
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError  # type: ignore
 
 from app.adapters.dependencies.db import user_repository

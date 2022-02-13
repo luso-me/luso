@@ -3,13 +3,19 @@ from typing import List
 
 from pydantic import BaseModel
 
-from app.core.skill.models.resource_item import SkillResourceItem
-
 
 class DurationRange(BaseModel):
     min: str
     max: str
     period: str
+
+
+class SkillResourceItem(BaseModel):
+    id: str
+    name: str
+    summary: str
+    web_link: str
+    duration: str
 
 
 class SkillResource(BaseModel):

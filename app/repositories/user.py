@@ -1,7 +1,7 @@
 from typing import Type
 
 from app.core.user.model.base import UserCreate, UserRead, UserUpdate
-from app.repositories.base import BaseRepository, READ_SCHEMA
+from app.repositories.base import BaseRepository
 
 
 class UserRepository(BaseRepository[UserCreate, UserRead, UserUpdate]):

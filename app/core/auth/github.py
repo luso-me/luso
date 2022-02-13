@@ -8,9 +8,9 @@ from jose import jwt, JWTError  # type: ignore
 from app.config import settings
 from app.core.auth.base import create_access_token
 from app.core.auth.exceptions import GithubCredentialsException
-from app.database import client, get_db_client
 from app.core.auth.model import JWTPayload
 from app.core.user.model.base import UserRead, UserCreate
+from app.database import get_db_client
 from app.repositories.user import UserRepository
 
 log = structlog.get_logger()

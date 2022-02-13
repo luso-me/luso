@@ -1,8 +1,8 @@
-from structlog import get_logger
 from typing import List
 
 from fastapi import APIRouter, Depends
 from fastapi import HTTPException, status
+from structlog import get_logger
 
 from app.adapters.dependencies.auth import user_repository
 from app.core.user.model.base import UserUpdate
