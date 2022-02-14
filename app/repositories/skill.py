@@ -1,6 +1,6 @@
 from typing import Type
 
-from app.core.skill.models.base import SkillRead, SkillUpdate, SkillCreate
+from app.core.skill.model.base import SkillRead, SkillUpdate, SkillCreate
 from app.repositories.base import BaseRepository
 
 

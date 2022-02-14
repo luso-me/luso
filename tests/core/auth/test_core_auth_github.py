@@ -3,7 +3,7 @@ from urllib.parse import urlparse, parse_qs
 
 import pytest
 
-from app.core.auth import github
+from app.core.auth import github_service
 from app.core.auth.exceptions import GithubCredentialsException
 
 

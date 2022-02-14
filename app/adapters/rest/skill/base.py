@@ -6,7 +6,7 @@ from fastapi import HTTPException, status, APIRouter, Depends
 
 from app.adapters.dependencies.auth import get_current_user
 from app.adapters.dependencies.db import skill_repository
-from app.core.skill.models.base import SkillCreate, SkillRead, SkillUpdate
+from app.core.skill.model.base import SkillCreate, SkillRead, SkillUpdate
 from app.core.user.model.base import UserRead
 from app.repositories.skill import SkillRepository
 

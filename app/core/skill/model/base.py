@@ -3,7 +3,7 @@ from typing import List, Optional
 import pydantic
 from pydantic import BaseModel, Field
 
-from app.core.skill.models.resource import SkillResource
+from app.core.skill.model.resource import SkillResource
 
 resource_categories = ["Book", "Website", "Course", "Other"]
 

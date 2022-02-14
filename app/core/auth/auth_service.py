@@ -7,7 +7,7 @@ from jose import jwt, JWTError  # type: ignore
 
 from app.config import settings
 from app.core.auth.exceptions import InvalidCredentialsException
-from app.core.auth.model import JWTPayload
+from app.core.auth.model.base import JWTPayload
 
 log = structlog.get_logger()
 
