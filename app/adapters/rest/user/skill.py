@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends
 from fastapi import HTTPException, status
 from structlog import get_logger
 
-from app.adapters.dependencies.auth import user_repository
-from app.core.user.model.base import UserUpdate
+from app.adapters.dependencies.auth import user_repository, get_current_user
+from app.core.user.model.base import UserUpdate, UserRead
 from app.core.user.model.user_skill import UserSkill
 from app.repositories.user import UserRepository
 
@@ -16,7 +16,8 @@ log = get_logger(__name__)
 
 @router.get('/{user_id}/skills', response_model=List[UserSkill])
 async def get_user_skills(user_id: str,
-                          user_repo: UserRepository = Depends(user_repository)):
+                          user_repo: UserRepository = Depends(user_repository),
+                          current_user: UserRead = Depends(get_current_user)):
     user = await user_repo.find({'_id': user_id})
 
     if len(user) == 1:
@@ -28,7 +29,8 @@ async def get_user_skills(user_id: str,
 
 @router.post('/{user_id}/skills', response_model=List[UserSkill])
 async def add_user_skills(user_id: str, user_skills: List[UserSkill],
-                          user_repo: UserRepository = Depends(user_repository)):
+                          user_repo: UserRepository = Depends(user_repository),
+                          current_user: UserRead = Depends(get_current_user)):
     user = await user_repo.find({'_id': user_id})
 
     if user:

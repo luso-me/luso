@@ -29,7 +29,7 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
     @property
     @abc.abstractmethod
     def _read_schema(self) -> Type[READ_SCHEMA]:
-        ...
+        pass
 
     @staticmethod
     def _generate_uuid():

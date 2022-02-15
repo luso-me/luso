@@ -1,7 +1,7 @@
 import asyncio
 import json
 
-from app.core.skill.models.base import SkillCreate
+from app.core.skill.model.base import SkillCreate
 from app.core.user.model.base import UserCreate
 from app.database import get_db_client
 from app.repositories.skill import SkillRepository

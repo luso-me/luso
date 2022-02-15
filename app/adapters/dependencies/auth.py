@@ -4,7 +4,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError  # type: ignore
 
 from app.adapters.dependencies.db import user_repository
-from app.core.auth.base import get_payload
+from app.core.auth.auth_service import get_payload
 from app.core.auth.exceptions import InvalidCredentialsException
 from app.core.user.model.base import UserRead
 from app.repositories.user import UserRepository

@@ -3,7 +3,7 @@ from typing import List, Optional
 import pydantic
 from pydantic import BaseModel, Field
 
-from app.core.skill.models.resource import SkillResource
+from app.core.skill.model.resource import SkillResource
 
 resource_categories = ["Book", "Website", "Course", "Other"]
 
@@ -35,7 +35,8 @@ class SkillFields:
     )
     category = Field(description='Category of the Skill')
     active = Field(description='Is skill active')
-    resources = Field(description='List of skill resources')
+    resources = Field(description='List of skill resources',
+                      default_factory=list)
 
 
 class SkillUpdate(BaseModel):

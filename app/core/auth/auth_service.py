@@ -7,11 +7,11 @@ from jose import jwt, JWTError  # type: ignore
 
 from app.config import settings
 from app.core.auth.exceptions import InvalidCredentialsException
-from app.core.auth.model import JWTPayload
+from app.core.auth.model.base import JWTPayload
 
 log = structlog.get_logger()
 
-DEFAULT_TTL_MINUTES = 15
+DEFAULT_TTL_MINUTES = 10080 # 7 days
 
 
 async def create_access_token(payload: JWTPayload, ttl: timedelta = timedelta(

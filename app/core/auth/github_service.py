@@ -6,9 +6,9 @@ from authlib.integrations.httpx_client import AsyncOAuth2Client  # type: ignore
 from jose import jwt, JWTError  # type: ignore
 
 from app.config import settings
-from app.core.auth.base import create_access_token
+from app.core.auth.auth_service import create_access_token
 from app.core.auth.exceptions import GithubCredentialsException
-from app.core.auth.model import JWTPayload
+from app.core.auth.model.base import JWTPayload
 from app.core.user.model.base import UserRead, UserCreate
 from app.database import get_db_client
 from app.repositories.user import UserRepository
@@ -40,9 +40,7 @@ async def github_callback(code: str) -> str:
         github_user = await get_user_info(access_token=github_access_token)
         user = await get_github_user(github_user)
 
-        jwt_payload = JWTPayload(
-                sub=user.id
-        )
+        jwt_payload = JWTPayload(sub=user.id)
         return await create_access_token(payload=jwt_payload)
     else:
         raise GithubCredentialsException()
@@ -58,15 +56,17 @@ async def get_github_user(github_user):
     elif len(users) == 1:
         return users[0]
     else:
-        log.error(
-            f'More than one user found with the same github id users: {users}')
+        log.error(f'More than one user found with the same github '
+                  f'id users: {users}')
         raise GithubCredentialsException()
 
 
 async def get_user_info(access_token) -> Dict:
     async with httpx.AsyncClient() as http_client:
-        resp = await http_client.get('https://api.github.com/user', headers={
-            'Authorization': f'token {access_token}'})
+
+        resp = await http_client.get(
+                'https://api.github.com/user',
+                headers={'Authorization': f'token {access_token}'})
 
         user_data = resp.json()
         log.info(f'User data {user_data}')
@@ -79,9 +79,10 @@ async def get_user_info(access_token) -> Dict:
 
 async def get_user_email(access_token) -> Optional[str]:
     async with httpx.AsyncClient() as http_client:
-        resp = await http_client.get('https://api.github.com/user/emails',
-                                     headers={
-                                         'Authorization': f'token {access_token}'})
+
+        resp = await http_client.get(
+                'https://api.github.com/user/emails',
+                headers={'Authorization': f'token {access_token}'})
 
         email_data = resp.json()
         log.info(f'Email data {email_data}')
