@@ -23,8 +23,9 @@ async def jwt_token():
 async def test_create_access_token(jwt_token):
     token_parts = jwt_token.split('.')
     assert ast.literal_eval(
-        base64.b64decode(token_parts[0]).decode('utf-8')) == {'alg': 'HS256',
-                                                              'typ': 'JWT'}
+            base64.b64decode(token_parts[0]).decode('utf-8')) == {
+               'alg': 'HS256',
+               'typ': 'JWT'}
     assert token_parts[1] != ''
     assert token_parts[2] != ''
 

@@ -20,10 +20,10 @@ def test_github_login():
 
 @pytest.mark.asyncio
 async def test_github_callback():
-    with patch('app.core.auth.github.github_client.fetch_token',
+    with patch('app.core.auth.github_service.github_client.fetch_token',
                new=AsyncMock()) as fetch_token_patch, \
-            patch('app.core.auth.github.get_user_info') as get_user_info_patch, \
-            patch('app.core.auth.github.get_github_user',
+            patch('app.core.auth.github_service.get_user_info') as get_user_info_patch, \
+            patch('app.core.auth.github_service.get_github_user',
                   new=AsyncMock()) as get_github_user_patch:
         fetch_token_patch.return_value = {
             'access_token': '123'
@@ -44,9 +44,9 @@ async def test_github_callback():
 @pytest.mark.asyncio
 async def test_github_callback_no_token():
     with pytest.raises(GithubCredentialsException):
-        with patch('app.core.auth.github.github_client.fetch_token',
+        with patch('app.core.auth.github_service.github_client.fetch_token',
                    new=AsyncMock()) as fetch_token_patch, \
-                patch('app.core.auth.github.get_user_info') as get_user_info_patch:
+                patch('app.core.auth.github_service.get_user_info') as get_user_info_patch:
             fetch_token_patch.return_value = {
                 'access_token': None
             }
