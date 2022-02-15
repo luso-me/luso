@@ -41,7 +41,7 @@ async def show_user(user_id: str,
     raise HTTPException(status_code=404, detail=f"user {user_id} not found")
 
 
-@router.patch("/{user_id}", response_description="Update a user",
+@router.put("/{user_id}", response_description="Update a user",
               response_model=UserRead)
 async def update_user(user_id: str, user: UserUpdate,
                       user_repo: UserRepository = Depends(user_repository),

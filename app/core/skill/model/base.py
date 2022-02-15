@@ -35,7 +35,8 @@ class SkillFields:
     )
     category = Field(description='Category of the Skill')
     active = Field(description='Is skill active')
-    resources = Field(description='List of skill resources')
+    resources = Field(description='List of skill resources',
+                      default_factory=list)
 
 
 class SkillUpdate(BaseModel):
