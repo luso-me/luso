@@ -1,12 +1,15 @@
 from typing import List
 
+import structlog
 from fastapi import HTTPException, status, APIRouter, Depends
 
 from app.adapters.dependencies.auth import get_current_user, user_repository
+from app.core.user import user_service
 from app.core.user.model.base import UserCreate, UserUpdate, UserRead
 from app.repositories.user import UserRepository
 
 router = APIRouter()
+log = structlog.get_logger()
 
 
 @router.post("/", response_description="Add new user", response_model=UserRead,
@@ -42,11 +45,11 @@ async def show_user(user_id: str,
 
 
 @router.put("/{user_id}", response_description="Update a user",
-              response_model=UserRead)
+            response_model=UserRead)
 async def update_user(user_id: str, user: UserUpdate,
-                      user_repo: UserRepository = Depends(user_repository),
                       current_user: UserRead = Depends(get_current_user)):
-    return await user_repo.update(user_id, user)
+    log.info(f"Attempting to update user: {user}")
+    return await user_service.update_user(user_id, user)
 
 
 @router.delete("/{user_id}", response_description="Delete a user")
