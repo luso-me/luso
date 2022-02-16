@@ -1,8 +1,8 @@
-import shortuuid
 import structlog
 
 from app.core.user.model.base import UserCreate, UserUpdate
 from app.database import get_db_client
+from app.repositories.base import BaseRepository
 from app.repositories.user import UserRepository
 
 log = structlog.get_logger()
@@ -20,7 +20,7 @@ async def update_user(user_id: str, user: UserUpdate):
     for plan in user.plans:
         if not plan.id:
             log.debug(f'plan id missing for user {user.username}')
-            plan.id = shortuuid.uuid()
+            plan.id = BaseRepository.generate_uuid()
 
     await user_repo.update(user_id, user)
 

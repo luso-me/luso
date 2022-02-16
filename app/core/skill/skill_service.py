@@ -1,8 +1,8 @@
-import shortuuid
 import structlog
 
 from app.core.skill.model.base import SkillCreate, SkillUpdate
 from app.database import get_db_client
+from app.repositories.base import BaseRepository
 from app.repositories.skill import SkillRepository
 
 log = structlog.get_logger()
@@ -28,8 +28,8 @@ def _set_ids(skill):
     for resource in skill.resources:
         if not resource.id:
             log.info(f"resource id missing for skill: [{skill.name}]")
-            resource.id = shortuuid.uuid()
+            resource.id = BaseRepository.generate_uuid()
         for item in resource.items:
             if not item.id:
                 log.info(f"item id missing for resource: [{resource.name}] ")
-                item.id = shortuuid.uuid()
+                item.id = BaseRepository.generate_uuid()

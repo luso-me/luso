@@ -32,7 +32,7 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
         pass
 
     @staticmethod
-    def _generate_uuid():
+    def generate_uuid():
         return shortuuid.uuid()
 
     async def get(self, _id: str) -> READ_SCHEMA:
@@ -47,7 +47,7 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
 
     async def create(self, create: CREATE_SCHEMA) -> READ_SCHEMA:
         document = create.dict()
-        document["_id"] = self._generate_uuid()
+        document["_id"] = self.generate_uuid()
 
         result = await self._collection.insert_one(document)
 
