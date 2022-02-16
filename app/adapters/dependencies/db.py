@@ -10,6 +10,6 @@ async def user_repository() -> AsyncGenerator[UserRepository, None]:
                          collection_name='users')
 
 
-async def skill_repository():
+async def skill_repository() -> AsyncGenerator[SkillRepository, None]:
     yield SkillRepository(db_client_factory=get_db_client, db_name='luso',
                           collection_name='skills')

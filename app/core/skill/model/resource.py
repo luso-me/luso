@@ -15,7 +15,7 @@ class SkillResourceItem(BaseModel):
     name: str
     summary: str
     web_link: Optional[str]
-    duration: str
+    duration: Optional[str]
 
 
 class SkillResource(BaseModel):
@@ -25,11 +25,11 @@ class SkillResource(BaseModel):
     description: str
     web_link: str
     category: str
-    resource_authored_date: datetime
-    resource_added_date: datetime
-    tags: List[str]
+    resource_authored_date: Optional[datetime]
+    resource_added_date: Optional[datetime]
+    tags: Optional[List[str]]
     community_rating: Optional[int]
-    duration: str
-    estimated_effort: DurationRange
-    intended_levels: List[str]
-    items: List[SkillResourceItem]
+    duration: Optional[str]
+    estimated_effort: Optional[DurationRange]
+    intended_levels: Optional[List[str]]
+    items: Optional[List[SkillResourceItem]]

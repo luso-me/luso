@@ -11,7 +11,7 @@ from app.core.auth.model.base import JWTPayload
 
 log = structlog.get_logger()
 
-DEFAULT_TTL_MINUTES = 10080 # 7 days
+DEFAULT_TTL_MINUTES = 10080  # 7 days
 
 
 async def create_access_token(payload: JWTPayload, ttl: timedelta = timedelta(

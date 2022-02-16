@@ -6,6 +6,7 @@ from fastapi import HTTPException, status, APIRouter, Depends
 
 from app.adapters.dependencies.auth import get_current_user
 from app.adapters.dependencies.db import skill_repository
+from app.core.skill import skill_service
 from app.core.skill.model.base import SkillCreate, SkillRead, SkillUpdate
 from app.core.user.model.base import UserRead
 from app.repositories.skill import SkillRepository
@@ -18,10 +19,9 @@ router = APIRouter()
 @router.post("/", response_description="Add new skill",
              response_model=SkillRead, status_code=status.HTTP_201_CREATED)
 async def create_skill(skill: SkillCreate,
-                       skill_repo: SkillRepository = Depends(skill_repository),
                        current_user: UserRead = Depends(get_current_user)):
     log.debug(f"attempting to create skill with body {skill}")
-    return await skill_repo.create(skill)
+    return await skill_service.create_skill(skill)
 
 
 @router.get("/", response_description="List all skills",
@@ -61,9 +61,8 @@ async def show_skill(skill_id: str,
 @router.put("/{skill_id}", response_description="Update a skill",
             response_model=SkillRead)
 async def update_skill(skill_id: str, skill: SkillUpdate,
-                       skill_repo: SkillRepository = Depends(skill_repository),
                        current_user: UserRead = Depends(get_current_user)):
-    return await skill_repo.update(skill_id, skill)
+    return await skill_service.update_skill(skill_id, skill)
 
 
 @router.delete("/{skill_id}", response_description="Delete a skill")
