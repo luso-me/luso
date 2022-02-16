@@ -17,12 +17,13 @@ def create_user(user: UserCreate):
 
 
 async def update_user(user_id: str, user: UserUpdate):
-    for plan in user.plans:
-        if not plan.id:
-            log.debug(f'plan id missing for user {user.username}')
-            plan.id = BaseRepository.generate_uuid()
+    if user.plans is not None:
+        for plan in user.plans:
+            if not plan.id:
+                log.debug(f'plan id missing for user {user.username}')
+                plan.id = BaseRepository.generate_uuid()
 
-    await user_repo.update(user_id, user)
+        await user_repo.update(user_id, user)
 
 
 def delete_user(user_id: str):
