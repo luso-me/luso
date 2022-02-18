@@ -11,7 +11,7 @@ from app.repositories.user import UserRepository
 log = structlog.get_logger()
 
 router = APIRouter(
-    prefix='/user'
+    prefix='/users'
 )
 
 

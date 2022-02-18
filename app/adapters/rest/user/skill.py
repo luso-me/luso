@@ -13,7 +13,7 @@ log = get_logger(__name__)
 
 
 router = APIRouter(
-    prefix='/user'
+    prefix='/users'
 )
 
 
