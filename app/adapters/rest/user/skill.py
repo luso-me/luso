@@ -9,9 +9,12 @@ from app.core.user.model.base import UserUpdate, UserRead
 from app.core.user.model.user_skill import UserSkill
 from app.repositories.user import UserRepository
 
-router = APIRouter()
-
 log = get_logger(__name__)
+
+
+router = APIRouter(
+    prefix='/user'
+)
 
 
 @router.get('/{user_id}/skills', response_model=List[UserSkill])

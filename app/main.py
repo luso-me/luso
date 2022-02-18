@@ -20,9 +20,9 @@ def get_application() -> FastAPI:
     )
 
     # TODO: Move to own module
-    application.include_router(skill_router, prefix="/skills")
-    application.include_router(user_router, prefix="/users")
-    application.include_router(auth_router, prefix='/auth')
+    application.include_router(skill_router)
+    application.include_router(user_router)
+    application.include_router(auth_router)
 
     return application
 

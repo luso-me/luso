@@ -1,25 +1,28 @@
 from typing import List
 
 import structlog
-from fastapi import HTTPException, status, APIRouter, Depends
+from fastapi import HTTPException, status, Depends, APIRouter
 
 from app.adapters.dependencies.auth import get_current_user, user_repository
 from app.core.user import user_service
 from app.core.user.model.base import UserCreate, UserUpdate, UserRead
 from app.repositories.user import UserRepository
 
-router = APIRouter()
 log = structlog.get_logger()
 
+router = APIRouter(
+    prefix='/user'
+)
 
-@router.post("/", response_description="Add new user", response_model=UserRead,
+
+@router.post("", response_description="Add new user", response_model=UserRead,
              status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserCreate,
                       user_repo: UserRepository = Depends(user_repository)):
     return await user_repo.create(user)
 
 
-@router.get("/", response_description="List all users",
+@router.get("", response_description="List all users",
             response_model=List[UserRead])
 async def list_users(limit: int = 100,
                      user_repo: UserRepository = Depends(user_repository),
