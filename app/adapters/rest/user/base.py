@@ -18,7 +18,8 @@ router = APIRouter(
 @router.post("", response_description="Add new user", response_model=UserRead,
              status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserCreate,
-                      user_repo: UserRepository = Depends(user_repository)):
+                      user_repo: UserRepository = Depends(user_repository),
+                      current_user: UserRead = Depends(get_current_user)):
     return await user_repo.create(user)
 
 
