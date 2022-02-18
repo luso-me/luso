@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 
-from app.adapters.rest.user import base, skill
+from . import base, skill
 
 router = APIRouter(
-        tags=['user']
+        tags=['user'],
+        redirect_slashes=False
 )
 
 router.include_router(

@@ -13,10 +13,12 @@ from app.repositories.skill import SkillRepository
 
 log = structlog.get_logger()
 
-router = APIRouter()
+router = APIRouter(
+    prefix='/skills'
+)
 
 
-@router.post("/", response_description="Add new skill",
+@router.post("", response_description="Add new skill",
              response_model=SkillRead, status_code=status.HTTP_201_CREATED)
 async def create_skill(skill: SkillCreate,
                        current_user: UserRead = Depends(get_current_user)):
@@ -24,7 +26,7 @@ async def create_skill(skill: SkillCreate,
     return await skill_service.create_skill(skill)
 
 
-@router.get("/", response_description="List all skills",
+@router.get("", response_description="List all skills",
             response_model=List[SkillRead])
 async def list_skills(limit: int = 100,
                       skill_repo: SkillRepository = Depends(skill_repository),
