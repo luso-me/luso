@@ -53,3 +53,7 @@ Q: When I try to run `uvicorn` I get, `ModuleNotFoundError: No module named 'uvi
 
 A: Make sure that you activated your virtual env with `poetry shell`
 
+
+# Coding Standards
+
+- https://google.github.io/styleguide/pyguide.html

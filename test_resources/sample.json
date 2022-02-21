@@ -39,21 +39,21 @@
             {
               "id": "600",
               "name": "Chapter 1: Introduction to Airflow",
-              "summary": "A quick introduction into Airflow and what you can do with it",
+              "description": "A quick introduction into Airflow and what you can do with it",
               "web_link": "https://udemy.amazing.airflow.now/chapter_1",
               "duration": "PT60M"
             },
             {
               "id": "601",
               "name": "Chapter 2: Hello World",
-              "summary": "Working through a Hello World example, setting up a basic end to end flow.",
+              "description": "Working through a Hello World example, setting up a basic end to end flow.",
               "web_link": "https://udemy.amazing.airflow.now/chapter_2",
               "duration": "PT30M"
             },
             {
               "id": "603",
               "name": "Chapter 3: Web UI",
-              "summary": "Going through the Web UI in detail",
+              "description": "Going through the Web UI in detail",
               "web_link": "https://udemy.amazing.airflow.now/chapter_3",
               "duration": "PT45M"
             }
@@ -86,21 +86,21 @@
             {
               "id": "610",
               "name": "Chapter 1: Welcome Tour",
-              "summary": "What we going to be covering in this course",
+              "description": "What we going to be covering in this course",
               "web_link": "http://24-hour-airflow.com/chapter1.html",
               "duration": "PT15M"
             },
             {
               "id": "611",
               "name": "Chapter 2: How to get the best out of this course",
-              "summary": "This is a fast-paced course and we want you to get the best out of it",
+              "description": "This is a fast-paced course and we want you to get the best out of it",
               "web_link": "http://24-hour-airflow.com/chapter2.html",
               "duration": "PT15M"
             },
             {
               "id": "612",
               "name": "Chapter 3: Setup",
-              "summary": "We want to set you up for success, so you need the right tools",
+              "description": "We want to set you up for success, so you need the right tools",
               "web_link": "http://24-hour-airflow.com/chapter3.html",
               "duration": "PT30M"
             }
@@ -146,21 +146,21 @@
             {
               "id": "620",
               "name": "Chapter 1: What is Wicket?",
-              "summary": "Introduction to Wicket",
+              "description": "Introduction to Wicket",
               "web_link": "https://coursera.amazing.wicket.improve/chap_1",
               "duration": "PT45M"
             },
             {
               "id": "621",
               "name": "Chapter 2: Hello World",
-              "summary": "Working through a Hello World example, setting up a basic end to end flow",
+              "description": "Working through a Hello World example, setting up a basic end to end flow",
               "web_link": "https://coursera.amazing.wicket.improve/chap_2",
               "duration": "PT30M"
             },
             {
               "id": "622",
               "name": "Chapter 3: Components",
-              "summary": "Going through Wicket Components",
+              "description": "Going through Wicket Components",
               "web_link": "https://coursera.amazing.wicket.improve/chap_3",
               "duration": "PT45M"
             }
@@ -190,19 +190,19 @@
             {
               "id": "630",
               "name": "Chapter 1: Welcome Tour",
-              "summary": "What we going to be covering in this course",
+              "description": "What we going to be covering in this course",
               "duration": "PT15M"
             },
             {
               "id": "631",
               "name": "Chapter 2: How to get the best out of this course",
-              "summary": "This is a fast-paced course and we want you to get the best out of it",
+              "description": "This is a fast-paced course and we want you to get the best out of it",
               "duration": "PT15M"
             },
             {
               "id": "632",
               "name": "Chapter 3: Setup",
-              "summary": "We want to set you up for success, so you need the right tools",
+              "description": "We want to set you up for success, so you need the right tools",
               "duration": "PT30M"
             }
           ]

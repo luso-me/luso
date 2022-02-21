@@ -8,3 +8,7 @@ class SkillRepository(BaseRepository[SkillCreate, SkillRead, SkillUpdate]):
     @property
     def _read_schema(self) -> Type[SkillRead]:
         return SkillRead
+
+
+class SkillAlreadyExistException(Exception):
+    pass

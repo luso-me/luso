@@ -13,7 +13,7 @@ class DurationRange(BaseModel):
 class SkillResourceItem(BaseModel):
     id: str
     name: str
-    summary: str
+    description: str
     web_link: Optional[str]
     duration: Optional[str]
 

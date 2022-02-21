@@ -3,7 +3,7 @@ import structlog
 from app.core.skill.model.base import SkillCreate, SkillUpdate
 from app.database import get_db_client
 from app.repositories.base import BaseRepository
-from app.repositories.skill import SkillRepository
+from app.repositories.skill import SkillRepository, SkillAlreadyExistException
 
 log = structlog.get_logger()
 
@@ -14,8 +14,14 @@ skill_repo = SkillRepository(db_client_factory=get_db_client,
 
 async def create_skill(skill: SkillCreate):
     _set_ids(skill)
+    # validate skill doesn't already exist
+    find_ = await skill_repo.find()
 
-    await skill_repo.create(skill)
+    if (len(find_) is 0):
+        await skill_repo.create(skill)
+    else:
+        raise SkillAlreadyExistException(
+            'A skill with name: [{}] already exist')
 
 
 async def update_skill(skill_id: str, skill: SkillUpdate):
