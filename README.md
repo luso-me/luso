@@ -57,3 +57,9 @@ A: Make sure that you activated your virtual env with `poetry shell`
 # Coding Standards
 
 - https://google.github.io/styleguide/pyguide.html
+
+## to run formatter on app source
+
+```shell
+$> yapf -ri app
+```
