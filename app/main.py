@@ -11,13 +11,11 @@ def get_application() -> FastAPI:
     application = FastAPI()
 
     # TODO: Add logging configuration
-    application.add_middleware(
-            middleware_class=CORSMiddleware,
-            allow_origins=settings.cors_allowed_origins,
-            allow_credentials=True,
-            allow_methods=["*"],
-            allow_headers=["*"]
-    )
+    application.add_middleware(middleware_class=CORSMiddleware,
+                               allow_origins=settings.cors_allowed_origins,
+                               allow_credentials=True,
+                               allow_methods=["*"],
+                               allow_headers=["*"])
 
     # TODO: Move to own module
     application.include_router(skill_router)

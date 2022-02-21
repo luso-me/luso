@@ -11,10 +11,7 @@ from app.repositories.user import UserRepository
 
 log = get_logger(__name__)
 
-
-router = APIRouter(
-    prefix='/users'
-)
+router = APIRouter(prefix='/users')
 
 
 @router.get('/{user_id}/skills', response_model=List[UserSkill])
@@ -31,7 +28,8 @@ async def get_user_skills(user_id: str,
 
 
 @router.post('/{user_id}/skills', response_model=List[UserSkill])
-async def add_user_skills(user_id: str, user_skills: List[UserSkill],
+async def add_user_skills(user_id: str,
+                          user_skills: List[UserSkill],
                           user_repo: UserRepository = Depends(user_repository),
                           current_user: UserRead = Depends(get_current_user)):
     user = await user_repo.find({'_id': user_id})

@@ -17,7 +17,8 @@ async def populate_db():
 
 async def insert_skills(data):
     print("Inserting Skills")
-    repo = SkillRepository(db_client_factory=get_db_client, db_name='luso',
+    repo = SkillRepository(db_client_factory=get_db_client,
+                           db_name='luso',
                            collection_name='skills')
 
     for skill in data["skills"]:
@@ -35,7 +36,8 @@ async def insert_skills(data):
 
 async def insert_users(data):
     print("Inserting Users")
-    repo = UserRepository(db_client_factory=get_db_client, db_name='luso',
+    repo = UserRepository(db_client_factory=get_db_client,
+                          db_name='luso',
                           collection_name='users')
 
     for user in data["users"]:

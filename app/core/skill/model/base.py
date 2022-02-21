@@ -7,32 +7,26 @@ from app.core.skill.model.resource import SkillResource
 
 resource_categories = ["Book", "Website", "Course", "Other"]
 
-skill_categories = ["Languages & Frameworks", "Platforms",
-                    "Tools", "Techniques"]
+skill_categories = [
+    "Languages & Frameworks", "Platforms", "Tools", "Techniques"
+]
 
 
 class SkillFields:
-    id = Field(
-            description='ID of skill',
-            example='VxiguUxKdezsawDEoHatoy',
-            min_length=22,
-            max_length=22
-    )
-    name = Field(
-            description='Name of skill',
-            example='Apache Airflow',
-            min_length=1
-    )
+    id = Field(description='ID of skill',
+               example='VxiguUxKdezsawDEoHatoy',
+               min_length=22,
+               max_length=22)
+    name = Field(description='Name of skill',
+                 example='Apache Airflow',
+                 min_length=1)
 
     description = Field(description='Description of skill')
     web_link = Field(description='Url of skill')
     repo_link = Field(description='Repo of skill')
     icon_link = Field(description='Icon link')
 
-    tags = Field(
-            description='List of tags',
-            example=['cncf::Data Engineering']
-    )
+    tags = Field(description='List of tags', example=['cncf::Data Engineering'])
     category = Field(description='Category of the Skill')
     active = Field(description='Is skill active')
     resources = Field(description='List of skill resources',

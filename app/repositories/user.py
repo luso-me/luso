@@ -5,6 +5,7 @@ from app.repositories.base import BaseRepository
 
 
 class UserRepository(BaseRepository[UserCreate, UserRead, UserUpdate]):
+
     @property
     def _read_schema(self) -> Type[UserRead]:
         return UserRead

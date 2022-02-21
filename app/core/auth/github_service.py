@@ -2,8 +2,8 @@ from typing import Dict, Optional
 
 import httpx
 import structlog
-from authlib.integrations.httpx_client import AsyncOAuth2Client  # type: ignore
-from jose import jwt, JWTError  # type: ignore
+from authlib.integrations.httpx_client import AsyncOAuth2Client    # type: ignore
+from jose import jwt, JWTError    # type: ignore
 
 from app.config import settings
 from app.core.auth.auth_service import create_access_token
@@ -19,13 +19,14 @@ github_client = AsyncOAuth2Client(client_id=settings.github_client_id,
                                   client_secret=settings.github_client_secret,
                                   scope='user:email')
 
-user_repo = UserRepository(db_client_factory=get_db_client, db_name='luso',
+user_repo = UserRepository(db_client_factory=get_db_client,
+                           db_name='luso',
                            collection_name='users')
 
 
 def github_login_url():
     auth_url, state = github_client.create_authorization_url(
-            url='https://github.com/login/oauth/authorize')
+        url='https://github.com/login/oauth/authorize')
     log.info(f'Github auth url [{auth_url}] state [{state}]')
     # TODO: Do something with state
     return auth_url
@@ -33,8 +34,7 @@ def github_login_url():
 
 async def github_callback(code: str) -> str:
     token = await github_client.fetch_token(
-            url='https://github.com/login/oauth/access_token',
-            code=code)
+        url='https://github.com/login/oauth/access_token', code=code)
 
     if github_access_token := token.get('access_token'):
         github_user = await get_user_info(access_token=github_access_token)
@@ -65,8 +65,8 @@ async def get_user_info(access_token) -> Dict:
     async with httpx.AsyncClient() as http_client:
 
         resp = await http_client.get(
-                'https://api.github.com/user',
-                headers={'Authorization': f'token {access_token}'})
+            'https://api.github.com/user',
+            headers={'Authorization': f'token {access_token}'})
 
         user_data = resp.json()
         log.info(f'User data {user_data}')
@@ -81,8 +81,8 @@ async def get_user_email(access_token) -> Optional[str]:
     async with httpx.AsyncClient() as http_client:
 
         resp = await http_client.get(
-                'https://api.github.com/user/emails',
-                headers={'Authorization': f'token {access_token}'})
+            'https://api.github.com/user/emails',
+            headers={'Authorization': f'token {access_token}'})
 
         email_data = resp.json()
         log.info(f'Email data {email_data}')
@@ -99,9 +99,7 @@ async def get_user_email(access_token) -> Optional[str]:
 
 async def github_create_user(user_data: dict) -> UserRead:
     log.info(f"Creating new user {user_data}")
-    user = UserCreate(
-            github_user_id=user_data['id'],
-            name=user_data['name'],
-            email=user_data['email']
-    )
+    user = UserCreate(github_user_id=user_data['id'],
+                      name=user_data['name'],
+                      email=user_data['email'])
     return await user_repo.create(user)

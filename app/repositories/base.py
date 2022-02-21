@@ -1,7 +1,7 @@
 import abc
 from typing import Generic, TypeVar, Type, List, Callable
 
-import shortuuid  # type: ignore
+import shortuuid    # type: ignore
 import structlog
 from pydantic import BaseModel
 
@@ -16,6 +16,7 @@ log = structlog.get_logger()
 
 
 class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
+
     def __init__(self, db_client_factory: Callable, db_name: str,
                  collection_name: str):
         self._db_name = db_name
@@ -42,8 +43,10 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
         return self._read_schema(**document)
 
     async def list(self, limit=None) -> List[READ_SCHEMA]:
-        return [self._read_schema(**document) for document in
-                await self._collection.find().to_list(limit)]
+        return [
+            self._read_schema(**document)
+            for document in await self._collection.find().to_list(limit)
+        ]
 
     async def create(self, create: CREATE_SCHEMA) -> READ_SCHEMA:
         document = create.dict()
@@ -73,5 +76,7 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
             raise DocumentNotFoundException()
 
     async def find(self, search_dict, limit=None) -> List[READ_SCHEMA]:
-        return [self._read_schema(**document) for document in
-                await self._collection.find(search_dict).to_list(limit)]
+        return [
+            self._read_schema(**document) for document in await
+            self._collection.find(search_dict).to_list(limit)
+        ]

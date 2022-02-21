@@ -10,12 +10,12 @@ from app.repositories.user import UserRepository
 
 log = structlog.get_logger()
 
-router = APIRouter(
-    prefix='/users'
-)
+router = APIRouter(prefix='/users')
 
 
-@router.post("", response_description="Add new user", response_model=UserRead,
+@router.post("",
+             response_description="Add new user",
+             response_model=UserRead,
              status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserCreate,
                       user_repo: UserRepository = Depends(user_repository),
@@ -23,7 +23,8 @@ async def create_user(user: UserCreate,
     return await user_repo.create(user)
 
 
-@router.get("", response_description="List all users",
+@router.get("",
+            response_description="List all users",
             response_model=List[UserRead])
 async def list_users(limit: int = 100,
                      user_repo: UserRepository = Depends(user_repository),
@@ -48,9 +49,11 @@ async def show_user(user_id: str,
     raise HTTPException(status_code=404, detail=f"user {user_id} not found")
 
 
-@router.put("/{user_id}", response_description="Update a user",
+@router.put("/{user_id}",
+            response_description="Update a user",
             response_model=UserRead)
-async def update_user(user_id: str, user: UserUpdate,
+async def update_user(user_id: str,
+                      user: UserUpdate,
                       current_user: UserRead = Depends(get_current_user)):
     log.info(f"Attempting to update user: {user}")
     return await user_service.update_user(user_id, user)

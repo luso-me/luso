@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException
 from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import JWTError  # type: ignore
+from jose import JWTError    # type: ignore
 
 from app.adapters.dependencies.db import user_repository
 from app.core.auth.auth_service import get_payload
@@ -12,9 +12,9 @@ from app.repositories.user import UserRepository
 auth_scheme = HTTPBearer()
 
 credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail="Could not validate credentials",
+    headers={"WWW-Authenticate": "Bearer"},
 )
 
 
