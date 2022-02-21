@@ -13,7 +13,7 @@ skill_repo = SkillRepository(db_client_factory=get_db_client,
 
 
 async def create_skill(skill: SkillCreate):
-    if check_if_skill_exist(skill.name):
+    if await check_if_skill_exist(skill.name):
         log.error(f"Unable to create skill with name: [{skill.name}] because "
                   f"it already exists")
         raise SkillAlreadyExistException(f'Skill [{skill.name}] already exist')
@@ -31,6 +31,7 @@ async def update_skill(skill_id: str, skill: SkillUpdate):
 
 async def check_if_skill_exist(skill_name: str):
     skill = await skill_repo.find({'name': skill_name})
+    log.info(f'Skill is {skill}')
 
     if skill:
         return True
@@ -46,6 +47,5 @@ def _set_ids(skill):
                 resource.id = BaseRepository.generate_uuid()
             for item in resource.items:
                 if not item.id:
-                    log.info(
-                            f"item id missing for resource: [{resource.name}] ")
+                    log.info(f"item id missing for resource: [{resource.name}]")
                     item.id = BaseRepository.generate_uuid()
