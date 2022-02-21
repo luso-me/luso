@@ -13,15 +13,14 @@ skill_repo = SkillRepository(db_client_factory=get_db_client,
 
 
 async def create_skill(skill: SkillCreate):
-    _set_ids(skill)
-    # validate skill doesn't already exist
-    find_ = await skill_repo.find()
+    if await check_if_skill_exist(skill.name):
+        log.error(f"Unable to create skill with name: [{skill.name}] because "
+                  f"it already exists")
+        raise SkillAlreadyExistException(f'Skill [{skill.name}] already exist')
 
-    if (len(find_) is 0):
-        await skill_repo.create(skill)
-    else:
-        raise SkillAlreadyExistException(
-            'A skill with name: [{}] already exist')
+    _set_ids(skill)
+
+    await skill_repo.create(skill)
 
 
 async def update_skill(skill_id: str, skill: SkillUpdate):
@@ -30,12 +29,23 @@ async def update_skill(skill_id: str, skill: SkillUpdate):
     await skill_repo.update(skill_id, skill)
 
 
+async def check_if_skill_exist(skill_name: str):
+    skill = await skill_repo.find({'name': skill_name})
+    log.info(f'Skill is {skill}')
+
+    if skill:
+        return True
+
+    return False
+
+
 def _set_ids(skill):
-    for resource in skill.resources:
-        if not resource.id:
-            log.info(f"resource id missing for skill: [{skill.name}]")
-            resource.id = BaseRepository.generate_uuid()
-        for item in resource.items:
-            if not item.id:
-                log.info(f"item id missing for resource: [{resource.name}] ")
-                item.id = BaseRepository.generate_uuid()
+    if skill.resources is not None:
+        for resource in skill.resources:
+            if not resource.id:
+                log.info(f"resource id missing for skill: [{skill.name}]")
+                resource.id = BaseRepository.generate_uuid()
+            for item in resource.items:
+                if not item.id:
+                    log.info(f"item id missing for resource: [{resource.name}]")
+                    item.id = BaseRepository.generate_uuid()
