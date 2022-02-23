@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 
 class SkillPlanObjective(BaseModel):
+    id: str
     resource_id: str
     resource_name: str
     resource_web_link: str

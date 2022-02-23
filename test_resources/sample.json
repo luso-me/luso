@@ -323,6 +323,7 @@
           "status": "In Progress",
           "objectives": [
             {
+              "id": "700",
               "resource_id": "200",
               "resource_name": "Learn Amazing Airflow Now",
               "resource_web_link": "https://udemy.amazing.airflow.now",
@@ -335,6 +336,7 @@
               "status": "In Progress"
             },
             {
+              "id": "701",
               "resource_id": "201",
               "resource_name": "Airflow in 24 Hours",
               "resource_web_link": "http://24-hour-airflow.com",

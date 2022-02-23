@@ -1,6 +1,6 @@
 import structlog
 
-from app.core.user.model.base import UserCreate, UserUpdate
+from app.core.user.model.base import UserUpdate
 from app.database import get_db_client
 from app.repositories.base import BaseRepository
 from app.repositories.user import UserRepository
@@ -12,27 +12,14 @@ user_repo = UserRepository(db_client_factory=get_db_client,
                            collection_name='users')
 
 
-def create_user(user: UserCreate):
-    pass
-
-
 async def update_user(user_id: str, user: UserUpdate):
     if user.plans is not None:
         for plan in user.plans:
             if not plan.id:
                 log.debug(f'plan id missing for user {user.username}')
                 plan.id = BaseRepository.generate_uuid()
+            for objective in plan.objectives:
+                if not objective.id:
+                    objective.id = BaseRepository.generate_uuid()
 
-        await user_repo.update(user_id, user)
-
-
-def delete_user(user_id: str):
-    pass
-
-
-def get_user(user_id: str):
-    pass
-
-
-def add_user_skill(user_id, user_skill):
-    pass
+    await user_repo.update(user_id, user)
