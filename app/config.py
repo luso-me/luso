@@ -9,7 +9,7 @@ class AppSettings(BaseSettings):
     mongo_max_pool_size: int = 1
     github_client_id: Optional[str]
     github_client_secret: Optional[str]
-    cors_allowed_origins: List[str] = ['http://localhost:7000']
+    cors_allowed_origins: List[str] = ["http://localhost:7000"]
     token_secret_key: str
     token_algorithm: str = "HS256"
 

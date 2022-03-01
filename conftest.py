@@ -17,6 +17,7 @@ def event_loop(request) -> Generator:
 @pytest.fixture()
 def app() -> FastAPI:
     from app.main import app
+
     return app
 
 

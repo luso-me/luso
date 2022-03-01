@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException
 from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import JWTError    # type: ignore
+from jose import JWTError  # type: ignore
 
 from app.adapters.dependencies.db import user_repository
 from app.core.auth.auth_service import get_payload
@@ -19,8 +19,9 @@ credentials_exception = HTTPException(
 
 
 async def get_current_user(
-        token: HTTPAuthorizationCredentials = Depends(auth_scheme),
-        user_repo: UserRepository = Depends(user_repository)) -> UserRead:
+    token: HTTPAuthorizationCredentials = Depends(auth_scheme),
+    user_repo: UserRepository = Depends(user_repository),
+) -> UserRead:
     try:
         payload = await get_payload(token)
         if payload.sub is None:
@@ -30,7 +31,7 @@ async def get_current_user(
     except InvalidCredentialsException:
         raise credentials_exception
 
-    user = await user_repo.find({'_id': payload.sub})
+    user = await user_repo.find({"_id": payload.sub})
     if user and len(user) == 1:
         return user[0]
 

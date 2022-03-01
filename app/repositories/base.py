@@ -1,24 +1,24 @@
 import abc
 from typing import Generic, TypeVar, Type, List, Callable
 
-import shortuuid    # type: ignore
+import shortuuid  # type: ignore
 import structlog
 from pydantic import BaseModel
 
-from app.repositories.exceptions import DocumentNotFoundException, \
-    DocumentCouldNotBeCreatedException
+from app.repositories.exceptions import (
+    DocumentNotFoundException,
+    DocumentCouldNotBeCreatedException,
+)
 
-CREATE_SCHEMA = TypeVar('CREATE_SCHEMA', bound=BaseModel)
-READ_SCHEMA = TypeVar('READ_SCHEMA', bound=BaseModel)
-UPDATE_SCHEMA = TypeVar('UPDATE_SCHEMA', bound=BaseModel)
+CREATE_SCHEMA = TypeVar("CREATE_SCHEMA", bound=BaseModel)
+READ_SCHEMA = TypeVar("READ_SCHEMA", bound=BaseModel)
+UPDATE_SCHEMA = TypeVar("UPDATE_SCHEMA", bound=BaseModel)
 
 log = structlog.get_logger()
 
 
 class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
-
-    def __init__(self, db_client_factory: Callable, db_name: str,
-                 collection_name: str):
+    def __init__(self, db_client_factory: Callable, db_name: str, collection_name: str):
         self._db_name = db_name
         self._collection_name = collection_name
         self._db_client_factory = db_client_factory
@@ -55,7 +55,7 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
         result = await self._collection.insert_one(document)
 
         if not result.acknowledged:
-            log.error(f'failed to create document {document}')
+            log.error(f"failed to create document {document}")
             raise DocumentCouldNotBeCreatedException()
 
         return await self.get(result.inserted_id)
@@ -63,10 +63,9 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
     async def update(self, _id: str, update: UPDATE_SCHEMA) -> READ_SCHEMA:
         document = update.dict(exclude_none=True)
 
-        result = await self._collection.update_one({"_id": _id},
-                                                   {"$set": document})
+        result = await self._collection.update_one({"_id": _id}, {"$set": document})
         if not result.modified_count:
-            log.debug('document not modified')
+            log.debug("document not modified")
 
         return await self.get(_id)
 
@@ -77,6 +76,6 @@ class BaseRepository(Generic[CREATE_SCHEMA, READ_SCHEMA, UPDATE_SCHEMA]):
 
     async def find(self, search_dict, limit=None) -> List[READ_SCHEMA]:
         return [
-            self._read_schema(**document) for document in await
-            self._collection.find(search_dict).to_list(limit)
+            self._read_schema(**document)
+            for document in await self._collection.find(search_dict).to_list(limit)
         ]

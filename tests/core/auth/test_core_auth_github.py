@@ -15,19 +15,19 @@ class MockGettableDict(dict):
 def test_github_login():
     url = urlparse(github_service.github_login_url())
     query_data = parse_qs(url.query)
-    assert query_data.get('scope') == ['user:email']
+    assert query_data.get("scope") == ["user:email"]
 
 
 @pytest.mark.asyncio
 async def test_github_callback():
-    with patch('app.core.auth.github_service.github_client.fetch_token',
-               new=AsyncMock()) as fetch_token_patch, \
-            patch('app.core.auth.github_service.get_user_info') as get_user_info_patch, \
-            patch('app.core.auth.github_service.get_github_user',
-                  new=AsyncMock()) as get_github_user_patch:
-        fetch_token_patch.return_value = {
-            'access_token': '123'
-        }
+    with patch(
+        "app.core.auth.github_service.github_client.fetch_token", new=AsyncMock()
+    ) as fetch_token_patch, patch(
+        "app.core.auth.github_service.get_user_info"
+    ) as get_user_info_patch, patch(
+        "app.core.auth.github_service.get_github_user", new=AsyncMock()
+    ) as get_github_user_patch:
+        fetch_token_patch.return_value = {"access_token": "123"}
         get_github_user_patch.return_value = MockGettableDict(id=1)
 
         token = await github.github_callback("some code")
@@ -36,7 +36,7 @@ async def test_github_callback():
 
         assert get_user_info_patch.call_count == 1
         args, kwargs = get_user_info_patch.call_args_list[0]
-        assert kwargs['access_token'] == '123'
+        assert kwargs["access_token"] == "123"
 
         assert token
 
@@ -44,11 +44,11 @@ async def test_github_callback():
 @pytest.mark.asyncio
 async def test_github_callback_no_token():
     with pytest.raises(GithubCredentialsException):
-        with patch('app.core.auth.github_service.github_client.fetch_token',
-                   new=AsyncMock()) as fetch_token_patch, \
-                patch('app.core.auth.github_service.get_user_info') as get_user_info_patch:
-            fetch_token_patch.return_value = {
-                'access_token': None
-            }
+        with patch(
+            "app.core.auth.github_service.github_client.fetch_token", new=AsyncMock()
+        ) as fetch_token_patch, patch(
+            "app.core.auth.github_service.get_user_info"
+        ) as get_user_info_patch:
+            fetch_token_patch.return_value = {"access_token": None}
 
             await github.github_callback("some code")

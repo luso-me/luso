@@ -7,16 +7,18 @@ from app.repositories.skill import SkillRepository, SkillAlreadyExistException
 
 log = structlog.get_logger()
 
-skill_repo = SkillRepository(db_client_factory=get_db_client,
-                             db_name='luso',
-                             collection_name='skills')
+skill_repo = SkillRepository(
+    db_client_factory=get_db_client, db_name="luso", collection_name="skills"
+)
 
 
 async def create_skill(skill: SkillCreate):
     if await check_if_skill_exist(skill.name):
-        log.error(f"Unable to create skill with name: [{skill.name}] because "
-                  f"it already exists")
-        raise SkillAlreadyExistException(f'Skill [{skill.name}] already exist')
+        log.error(
+            f"Unable to create skill with name: [{skill.name}] because "
+            f"it already exists"
+        )
+        raise SkillAlreadyExistException(f"Skill [{skill.name}] already exist")
 
     _set_ids(skill)
 
@@ -30,8 +32,8 @@ async def update_skill(skill_id: str, skill: SkillUpdate):
 
 
 async def check_if_skill_exist(skill_name: str):
-    skill = await skill_repo.find({'name': skill_name})
-    log.info(f'Skill is {skill}')
+    skill = await skill_repo.find({"name": skill_name})
+    log.info(f"Skill is {skill}")
 
     if skill:
         return True
