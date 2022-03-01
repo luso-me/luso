@@ -17,38 +17,42 @@ async def populate_db():
 
 async def insert_skills(data):
     print("Inserting Skills")
-    repo = SkillRepository(db_client_factory=get_db_client,
-                           db_name='luso',
-                           collection_name='skills')
+    repo = SkillRepository(
+        db_client_factory=get_db_client, db_name="luso", collection_name="skills"
+    )
 
     for skill in data["skills"]:
-        s = SkillCreate(name=skill["name"],
-                        description=skill["description"],
-                        web_link=skill["web_link"],
-                        repo_link=skill["repo_link"],
-                        icon_link=skill["icon_link"],
-                        tags=skill["tags"],
-                        category=skill["category"],
-                        active=skill["active"],
-                        resources=skill["resources"])
+        s = SkillCreate(
+            name=skill["name"],
+            description=skill["description"],
+            web_link=skill["web_link"],
+            repo_link=skill["repo_link"],
+            icon_link=skill["icon_link"],
+            tags=skill["tags"],
+            category=skill["category"],
+            active=skill["active"],
+            resources=skill["resources"],
+        )
         await repo.create(s)
 
 
 async def insert_users(data):
     print("Inserting Users")
-    repo = UserRepository(db_client_factory=get_db_client,
-                          db_name='luso',
-                          collection_name='users')
+    repo = UserRepository(
+        db_client_factory=get_db_client, db_name="luso", collection_name="users"
+    )
 
     for user in data["users"]:
-        u = UserCreate(username=user["username"],
-                       github_user_id=user["github_user_id"],
-                       display_name=user["display_name"],
-                       email=user["email"],
-                       active=user["active"],
-                       score=user["score"],
-                       skills=user["skills"],
-                       plans=user["plans"])
+        u = UserCreate(
+            username=user["username"],
+            github_user_id=user["github_user_id"],
+            display_name=user["display_name"],
+            email=user["email"],
+            active=user["active"],
+            score=user["score"],
+            skills=user["skills"],
+            plans=user["plans"],
+        )
         await repo.create(u)
 
 
