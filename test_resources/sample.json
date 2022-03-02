@@ -1,7 +1,7 @@
 {
   "skills": [
     {
-      "id": "100",
+      "id": "",
       "name": "Apache Airflow",
       "description": "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows.",
       "web_link": "https://airflow.apache.org/",
@@ -12,7 +12,7 @@
       "active": true,
       "resources": [
         {
-          "id": "200",
+          "id": "",
           "name": "Learn Amazing Airflow Now",
           "authors": "Mr Vader",
           "description": "Learn how to improve your Airflow today",
@@ -37,21 +37,21 @@
           ],
           "items": [
             {
-              "id": "600",
+              "id": "",
               "name": "Chapter 1: Introduction to Airflow",
               "description": "A quick introduction into Airflow and what you can do with it",
               "web_link": "https://udemy.amazing.airflow.now/chapter_1",
               "duration": "PT60M"
             },
             {
-              "id": "601",
+              "id": "",
               "name": "Chapter 2: Hello World",
               "description": "Working through a Hello World example, setting up a basic end to end flow.",
               "web_link": "https://udemy.amazing.airflow.now/chapter_2",
               "duration": "PT30M"
             },
             {
-              "id": "603",
+              "id": "",
               "name": "Chapter 3: Web UI",
               "description": "Going through the Web UI in detail",
               "web_link": "https://udemy.amazing.airflow.now/chapter_3",
@@ -60,7 +60,7 @@
           ]
         },
         {
-          "id": "201",
+          "id": "",
           "name": "Airflow in 24 Hours",
           "authors": "Mr Skywalker",
           "description": "Airflow from Zero to Hero",
@@ -84,21 +84,21 @@
           ],
           "items": [
             {
-              "id": "610",
+              "id": "",
               "name": "Chapter 1: Welcome Tour",
               "description": "What we going to be covering in this course",
               "web_link": "http://24-hour-airflow.com/chapter1.html",
               "duration": "PT15M"
             },
             {
-              "id": "611",
+              "id": "",
               "name": "Chapter 2: How to get the best out of this course",
               "description": "This is a fast-paced course and we want you to get the best out of it",
               "web_link": "http://24-hour-airflow.com/chapter2.html",
               "duration": "PT15M"
             },
             {
-              "id": "612",
+              "id": "",
               "name": "Chapter 3: Setup",
               "description": "We want to set you up for success, so you need the right tools",
               "web_link": "http://24-hour-airflow.com/chapter3.html",
@@ -109,7 +109,7 @@
       ]
     },
     {
-      "id": "101",
+      "id": "",
       "name": "Apache Wicket",
       "description": "Wicket is web",
       "web_link": "https://wicket.apache.org/",
@@ -120,7 +120,7 @@
       "active": true,
       "resources": [
         {
-          "id": "210",
+          "id": "",
           "name": "Learn Wicket",
           "authors": "Uncle Sam",
           "description": "Learn how to improve your Wicketz",
@@ -144,21 +144,21 @@
           ],
           "items": [
             {
-              "id": "620",
+              "id": "",
               "name": "Chapter 1: What is Wicket?",
               "description": "Introduction to Wicket",
               "web_link": "https://coursera.amazing.wicket.improve/chap_1",
               "duration": "PT45M"
             },
             {
-              "id": "621",
+              "id": "",
               "name": "Chapter 2: Hello World",
               "description": "Working through a Hello World example, setting up a basic end to end flow",
               "web_link": "https://coursera.amazing.wicket.improve/chap_2",
               "duration": "PT30M"
             },
             {
-              "id": "622",
+              "id": "",
               "name": "Chapter 3: Components",
               "description": "Going through Wicket Components",
               "web_link": "https://coursera.amazing.wicket.improve/chap_3",
@@ -167,7 +167,7 @@
           ]
         },
         {
-          "id": "211",
+          "id": "",
           "name": "Wicket in Action",
           "authors": "Prof Manning",
           "description": "Wicket in Action book",
@@ -188,19 +188,19 @@
           ],
           "items": [
             {
-              "id": "630",
+              "id": "",
               "name": "Chapter 1: Welcome Tour",
               "description": "What we going to be covering in this course",
               "duration": "PT15M"
             },
             {
-              "id": "631",
+              "id": "",
               "name": "Chapter 2: How to get the best out of this course",
               "description": "This is a fast-paced course and we want you to get the best out of it",
               "duration": "PT15M"
             },
             {
-              "id": "632",
+              "id": "",
               "name": "Chapter 3: Setup",
               "description": "We want to set you up for success, so you need the right tools",
               "duration": "PT30M"
@@ -210,7 +210,7 @@
       ]
     },
     {
-      "id": "102",
+      "id": "",
       "name": "Backstage",
       "description": "An open platform for building developer portals",
       "web_link": "https://backstage.io/",
@@ -222,7 +222,7 @@
       "resources": []
     },
     {
-      "id": "103",
+      "id": "",
       "name": "Pulumi",
       "description": "Developer-First Infrastructure",
       "web_link": "https://www.pulumi.com/",
@@ -234,7 +234,7 @@
       "resources": []
     },
     {
-      "id": "104",
+      "id": "",
       "name": "Babashka",
       "description": "Fast native Clojure scripting runtime",
       "web_link": "https://babashka.org/",
@@ -246,7 +246,7 @@
       "resources": []
     },
     {
-      "id": "105",
+      "id": "",
       "name": "pydantic",
       "description": "Data validation and settings management using python type annotations.",
       "web_link": "https://pydantic-docs.helpmanual.io/",
@@ -258,7 +258,7 @@
       "resources": []
     },
     {
-      "id": "106",
+      "id": "",
       "name": "fastlane",
       "description": "App automation done right",
       "web_link": "https://fastlane.tools/",
@@ -272,7 +272,7 @@
   ],
   "users": [
     {
-      "id": "300",
+      "id": "",
       "username": "laa#1240",
       "github_user_id": "",
       "display_name": "",
@@ -285,12 +285,7 @@
       },
       "skills": [
         {
-          "skill_id": "100",
-          "name": "Apache Airflow",
-          "web_link": "https://airflow.apache.org/",
-          "icon_link": "https://link.to.png",
-          "tags": [],
-          "category": "Tools",
+          "skill_id": "",
           "user_rating": "Beginner (typically 0 - 3 years xp)",
           "score": 29,
           "confidence": 30,
@@ -311,11 +306,9 @@
       ],
       "plans": [
         {
-          "id": "500",
+          "id": "",
           "plan_name": "Operation Hammer",
-          "skill_id": "100",
-          "skill_name": "Apache Airflow",
-          "web_link": "https://airflow.apache.org/",
+          "skill_id": "",
           "start_date": "2022-01-07T21:00:04.846Z",
           "end_date": "2022-04-07T21:00:04.846Z",
           "time_horizon": "3 - 6 months",
@@ -323,27 +316,17 @@
           "status": "In Progress",
           "objectives": [
             {
-              "id": "700",
-              "resource_id": "200",
-              "resource_name": "Learn Amazing Airflow Now",
-              "resource_web_link": "https://udemy.amazing.airflow.now",
-              "resource_item_id": "600",
-              "resource_item_name": "Chapter 1: Introduction to Airflow",
-              "resource_item_web_link": "https://udemy.amazing.airflow.now/chapter_1",
-              "duration": "PT60M",
+              "id": "",
+              "resource_id": "",
+              "resource_item_id": "",
               "start_date": "2022-01-22T21:00:04.846Z",
               "end_date": "2022-01-31T21:00:04.846Z",
               "status": "In Progress"
             },
             {
-              "id": "701",
-              "resource_id": "201",
-              "resource_name": "Airflow in 24 Hours",
-              "resource_web_link": "http://24-hour-airflow.com",
-              "resource_item_id": "610",
-              "resource_item_name": "Chapter 1: Welcome Tour",
-              "resource_item_web_link": "http://24-hour-airflow.com/chapter1.html",
-              "duration": "PT15M",
+              "id": "",
+              "resource_id": "",
+              "resource_item_id": "",
               "status": "Todo"
             }
           ]
