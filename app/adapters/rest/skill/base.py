@@ -2,10 +2,12 @@ from http import HTTPStatus
 from typing import List, Optional
 
 import structlog
-from fastapi import HTTPException, status, APIRouter, Depends
+from fastapi import HTTPException, status, APIRouter, Depends, UploadFile
 
 from app.adapters.dependencies.auth import get_current_user
 from app.adapters.dependencies.db import skill_repository
+from app.core.media import media_service
+from app.core.media.media_service import MediaService
 from app.core.skill import skill_service
 from app.core.skill.model.base import SkillCreate, SkillRead, SkillUpdate
 from app.core.user.model.base import UserRead
@@ -90,3 +92,11 @@ async def delete_skill(
     current_user: UserRead = Depends(get_current_user),
 ):
     await skill_repo.delete(skill_id)
+
+
+@router.post("/{skill_id}/icon")
+async def skill_icon_upload(skill_id: str, file: UploadFile, skill_repo: SkillRepository = Depends(skill_repository), media_service: MediaService = Depends(MediaService)):
+    log.info("file upload", filename=file.filename)
+    skill = SkillUpdate()
+    skill.icon_link = await media_service.upload_image(file.filename, file.file)
+    return await skill_repo.update(skill_id, skill)
