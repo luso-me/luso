@@ -1,11 +1,17 @@
 import asyncio
 import json
+from typing import List
 
-from app.core.skill.model.base import SkillCreate
+from app.core.skill import skill_service
+from app.core.skill.model.base import SkillCreate, SkillRead
+from app.core.user import user_service
 from app.core.user.model.base import UserCreate
 from app.database import get_db_client
 from app.repositories.skill import SkillRepository
-from app.repositories.user import UserRepository
+
+skill_repo = SkillRepository(
+    db_client_factory=get_db_client, db_name="luso", collection_name="skills"
+)
 
 
 async def populate_db():
@@ -17,9 +23,6 @@ async def populate_db():
 
 async def insert_skills(data):
     print("Inserting Skills")
-    repo = SkillRepository(
-        db_client_factory=get_db_client, db_name="luso", collection_name="skills"
-    )
 
     for skill in data["skills"]:
         s = SkillCreate(
@@ -33,14 +36,12 @@ async def insert_skills(data):
             active=skill["active"],
             resources=skill["resources"],
         )
-        await repo.create(s)
+        await skill_service.create_skill(s)
 
 
 async def insert_users(data):
     print("Inserting Users")
-    repo = UserRepository(
-        db_client_factory=get_db_client, db_name="luso", collection_name="users"
-    )
+    airflows: List[SkillRead] = await skill_repo.find({"name": "Apache Airflow"})
 
     for user in data["users"]:
         u = UserCreate(
@@ -53,7 +54,16 @@ async def insert_users(data):
             skills=user["skills"],
             plans=user["plans"],
         )
-        await repo.create(u)
+
+        u.skills[0].skill_id = airflows[0].id
+        u.plans[0].skill_id = airflows[0].id
+        u.plans[0].objectives[0].resource_id = airflows[0].resources[0].id
+        u.plans[0].objectives[0].resource_item_id = airflows[0].resources[0].items[0].id
+
+        u.plans[0].objectives[1].resource_id = airflows[0].resources[1].id
+        u.plans[0].objectives[1].resource_item_id = airflows[0].resources[1].items[0].id
+
+        await user_service.create_user(u)
 
 
 asyncio.run(populate_db())

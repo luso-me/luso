@@ -1,6 +1,6 @@
 import structlog
 
-from app.core.user.model.base import UserUpdate
+from app.core.user.model.base import UserUpdate, UserCreate
 from app.database import get_db_client
 from app.repositories.base import BaseRepository
 from app.repositories.user import UserRepository
@@ -12,7 +12,19 @@ user_repo = UserRepository(
 )
 
 
+async def create_user(user: UserCreate):
+    _set_ids(user)
+
+    await user_repo.create(user)
+
+
 async def update_user(user_id: str, user: UserUpdate):
+    _set_ids(user)
+
+    await user_repo.update(user_id, user)
+
+
+def _set_ids(user):
     if user.plans is not None:
         for plan in user.plans:
             if not plan.id:
@@ -21,5 +33,3 @@ async def update_user(user_id: str, user: UserUpdate):
             for objective in plan.objectives:
                 if not objective.id:
                     objective.id = BaseRepository.generate_uuid()
-
-    await user_repo.update(user_id, user)
