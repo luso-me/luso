@@ -6,21 +6,28 @@ import shortuuid
 import structlog
 from botocore.config import Config
 
-from app.config import settings
-
 log = structlog.get_logger()
 
 
 class MediaService:
 
-    def __init__(self):
-        self.s3 = boto3.client('s3',
-                               config=Config(
-                                   region_name=settings.icons_s3_bucket_region
-                               ))
+    def __init__(self, region: str, bucket_name: str, random_suffix=False):
+        self.s3 = boto3.resource(
+            's3',
+            config=Config(
+                region_name=region
+            )
+        )
+        self.region = region
+        self.bucket_name = bucket_name
+        self.bucket = self.s3.Bucket(bucket_name)
+        self.random_suffix = random_suffix
 
     async def upload_image(self, image_name: str, bytes_: IO):
-        suffix = shortuuid.random()
+        suffix = ''
+        if self.random_suffix:
+            suffix = shortuuid.random()
+
         basename, ext = os.path.splitext(image_name)
-        self.s3.upload_fileobj(bytes_, settings.icons_s3_bucket, f'{basename}-{suffix}{ext}')
-        return f'https://luso-me-media-local.s3.{settings.icons_s3_bucket_region}.amazonaws.com/{basename}-{suffix}{ext}'
+        self.bucket.upload_fileobj(bytes_, f'{basename}-{suffix}{ext}')
+        return f'https://{self.bucket_name}.s3.{self.region}.amazonaws.com/{basename}-{suffix}{ext}'

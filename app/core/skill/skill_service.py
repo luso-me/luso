@@ -2,6 +2,7 @@ from typing import IO
 
 import structlog
 
+from app.config import settings
 from app.core.media.media_service import MediaService
 from app.core.skill.model.base import SkillCreate, SkillUpdate
 from app.database import get_db_client
@@ -17,7 +18,11 @@ class SkillService:
         self.skill_repo = SkillRepository(
             db_client_factory=get_db_client, db_name="luso", collection_name="skills"
         )
-        self.media_service = MediaService()
+        self.media_service = MediaService(
+            region=settings.icons_s3_bucket_region,
+            bucket_name=settings.icons_s3_bucket,
+            random_suffix=True
+        )
 
     async def list_skills(self, limit: int = 100):
         return await self.skill_repo.list(limit)

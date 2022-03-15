@@ -93,6 +93,11 @@ async def delete_skill(
 
 
 @router.post("/{skill_id}/icon")
-async def skill_icon_upload(skill_id: str, file: UploadFile, skill_service: SkillService = Depends(SkillService)):
+async def skill_icon_upload(
+        skill_id: str,
+        file: UploadFile,
+        current_user: UserRead = Depends(get_current_user),
+        skill_service: SkillService = Depends(SkillService)
+):
     log.info("file upload", filename=file.filename)
     return await skill_service.update_skill_icon(skill_id, file.filename, file.file)
