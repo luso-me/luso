@@ -13,7 +13,7 @@ def test_set_default_values():
         description="s-desc-123",
         web_link="s-link",
         category="s-cat",
-        name="test-skill",
+        name="test-skills",
         active=True,
         resources=[r1, r2],
     )
