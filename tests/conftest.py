@@ -5,6 +5,11 @@ import pytest
 from fastapi import FastAPI
 from httpx import AsyncClient
 
+from pytest import MonkeyPatch
+
+mp = MonkeyPatch()
+mp.setenv("TOKEN_SECRET_KEY", "123")
+
 
 @pytest.fixture(scope="session")
 def event_loop(request) -> Generator:

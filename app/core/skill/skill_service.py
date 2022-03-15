@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import structlog
 
 from app.core.skill.model.base import SkillCreate, SkillUpdate
@@ -20,13 +22,13 @@ async def create_skill(skill: SkillCreate):
         )
         raise SkillAlreadyExistException(f"Skill [{skill.name}] already exist")
 
-    _set_ids(skill)
+    _set_default_values(skill)
 
     await skill_repo.create(skill)
 
 
 async def update_skill(skill_id: str, skill: SkillUpdate):
-    _set_ids(skill)
+    _set_default_values(skill)
 
     await skill_repo.update(skill_id, skill)
 
@@ -41,9 +43,12 @@ async def check_if_skill_exist(skill_name: str):
     return False
 
 
-def _set_ids(skill):
+def _set_default_values(skill):
     if skill.resources is not None:
         for resource in skill.resources:
+            if not resource.resource_added_date:
+                log.info(f"resource added date missing for resource: [{resource.name}]")
+                resource.resource_added_date = datetime.utcnow()
             if not resource.id:
                 log.info(f"resource id missing for skill: [{skill.name}]")
                 resource.id = BaseRepository.generate_uuid()

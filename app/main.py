@@ -1,10 +1,16 @@
-from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import structlog
+
+from fastapi import FastAPI, Request, status
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
 from app.adapters.rest.auth.routes import router as auth_router
 from app.adapters.rest.skill.routes import router as skill_router
 from app.adapters.rest.user.routes import router as user_router
 from app.config import settings
+
+log = structlog.get_logger()
 
 
 def get_application() -> FastAPI:
@@ -28,3 +34,13 @@ def get_application() -> FastAPI:
 
 
 app = get_application()
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    exc_str = f"{exc}".replace("\n", " ").replace("   ", " ")
+    log.error(f"{request}: {exc_str}")
+    content = {"status_code": 422, "message": exc_str, "data": None}
+    return JSONResponse(
+        content=content, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY
+    )
