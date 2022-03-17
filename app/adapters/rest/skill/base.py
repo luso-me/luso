@@ -22,8 +22,10 @@ router = APIRouter(prefix="/skills")
     status_code=status.HTTP_201_CREATED,
 )
 async def create_skill(
-    skill: SkillCreate, current_user: UserRead = Depends(get_current_user),
-        skill_service: SkillService = Depends(SkillService)):
+    skill: SkillCreate,
+    current_user: UserRead = Depends(get_current_user),
+    skill_service: SkillService = Depends(SkillService),
+):
     log.debug(f"attempting to create skill with body {skill}")
     return await skill_service.create_skill(skill)
 
@@ -83,7 +85,11 @@ async def update_skill(
     return await skill_service.update_skill(skill_id, skill)
 
 
-@router.delete("/{skill_id}", response_description="Delete a skill", status_code=HTTPStatus.NO_CONTENT)
+@router.delete(
+    "/{skill_id}",
+    response_description="Delete a skill",
+    status_code=HTTPStatus.NO_CONTENT,
+)
 async def delete_skill(
     skill_id,
     skill_service: SkillService = Depends(SkillService),
@@ -94,10 +100,10 @@ async def delete_skill(
 
 @router.post("/{skill_id}/icon")
 async def skill_icon_upload(
-        skill_id: str,
-        file: UploadFile,
-        current_user: UserRead = Depends(get_current_user),
-        skill_service: SkillService = Depends(SkillService)
+    skill_id: str,
+    file: UploadFile,
+    current_user: UserRead = Depends(get_current_user),
+    skill_service: SkillService = Depends(SkillService),
 ):
     log.info("file upload", filename=file.filename)
     return await skill_service.update_skill_icon(skill_id, file.filename, file.file)

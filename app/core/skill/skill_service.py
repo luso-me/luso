@@ -13,7 +13,6 @@ log = structlog.get_logger()
 
 
 class SkillService:
-
     def __init__(self):
         self.skill_repo = SkillRepository(
             db_client_factory=get_db_client, db_name="luso", collection_name="skills"
@@ -21,7 +20,7 @@ class SkillService:
         self.media_service = MediaService(
             region=settings.icons_s3_bucket_region,
             bucket_name=settings.icons_s3_bucket,
-            random_suffix=True
+            random_suffix=True,
         )
 
     async def list_skills(self, limit: int = 100):
