@@ -74,9 +74,6 @@ class SkillService:
                         log.info(f"item id missing for resource: [{resource.name}]")
                         item.id = BaseRepository.generate_uuid()
 
-    async def update(self, skill_id: str, skill: SkillUpdate):
-        return await self.skill_repo.update(skill_id, skill)
-
     async def update_skill_icon(self, skill_id: str, icon_name: str, icon_file: IO):
         skill = SkillUpdate()
         skill.icon_link = await self.media_service.upload_image(icon_name, icon_file)
