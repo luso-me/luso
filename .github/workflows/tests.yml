@@ -36,9 +36,12 @@ jobs:
       # Workaround for required env vars
       env:
         TOKEN_SECRET_KEY: 1234
+        ICONS_S3_BUCKET: mybucket
+        ICONS_S3_BUCKET_REGION: af-south-1
       run: |
         poetry run pytest -m "not integration"
   build-and-push-image:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read

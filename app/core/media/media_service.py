@@ -2,7 +2,7 @@ import os.path
 from typing import IO
 
 import boto3
-import shortuuid
+import shortuuid # type: ignore
 import structlog
 from botocore.config import Config
 
