@@ -12,6 +12,8 @@ class AppSettings(BaseSettings):
     cors_allowed_origins: List[str] = ["http://localhost:7000"]
     token_secret_key: str
     token_algorithm: str = "HS256"
+    icons_s3_bucket: str
+    icons_s3_bucket_region: str
 
 
 settings = AppSettings()

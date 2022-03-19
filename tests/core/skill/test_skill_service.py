@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from app.core.skill import skill_service
 from app.core.skill.model.base import SkillCreate
 from app.core.skill.model.resource import SkillResource, SkillResourceItem
+from app.core.skill.skill_service import SkillService
 
 
 def test_set_default_values():
@@ -17,7 +17,7 @@ def test_set_default_values():
         active=True,
         resources=[r1, r2],
     )
-    skill_service._set_default_values(skill)
+    SkillService()._set_default_values(skill)
 
     assert type(r1.resource_added_date) == datetime
     assert type(r2.resource_added_date) == datetime
