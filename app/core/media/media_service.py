@@ -18,10 +18,16 @@ class MediaService:
         self.random_suffix = random_suffix
 
     async def upload_image(self, image_name: str, bytes_: IO):
+        log.info(f"Uploading image, {image_name} to S3")
+
         suffix = ""
         if self.random_suffix:
             suffix = shortuuid.random()
 
         basename, ext = os.path.splitext(image_name)
         self.bucket.upload_fileobj(bytes_, f"{basename}-{suffix}{ext}")
-        return f"https://{self.bucket_name}.s3.{self.region}.amazonaws.com/{basename}-{suffix}{ext}"
+
+        return (
+            f"https://{self.bucket_name}.s3.{self.region}.amazonaws.com"
+            f"/{basename}-{suffix}{ext}"
+        )

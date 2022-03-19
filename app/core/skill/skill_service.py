@@ -47,12 +47,18 @@ class SkillService:
 
         self._set_default_values(skill)
 
-        await self.skill_repo.create(skill)
+        return await self.skill_repo.create(skill)
 
     async def update_skill(self, skill_id: str, skill: SkillUpdate):
         self._set_default_values(skill)
 
-        await self.skill_repo.update(skill_id, skill)
+        return await self.skill_repo.update(skill_id, skill)
+
+    async def update_skill_icon(self, skill_id: str, icon_name: str, icon_file: IO):
+        skill = SkillUpdate()
+        skill.icon_link = await self.media_service.upload_image(icon_name, icon_file)
+
+        return await self.skill_repo.update(skill_id, skill)
 
     async def check_if_skill_exist(self, skill_name: str):
         skill = await self.skill_repo.find({"name": skill_name})
@@ -88,9 +94,3 @@ class SkillService:
     def _set_resource_item_id(resource: SkillResource, item: SkillResourceItem):
         log.info(f"item id missing for resource: [{resource.name}]")
         item.id = BaseRepository.generate_uuid()
-
-    async def update_skill_icon(self, skill_id: str, icon_name: str, icon_file: IO):
-        skill = SkillUpdate()
-        skill.icon_link = await self.media_service.upload_image(icon_name, icon_file)
-
-        return await self.skill_repo.update(skill_id, skill)
