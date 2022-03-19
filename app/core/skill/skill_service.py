@@ -6,6 +6,7 @@ import structlog
 from app.config import settings
 from app.core.media.media_service import MediaService
 from app.core.skill.model.base import SkillCreate, SkillUpdate
+from app.core.skill.model.resource import SkillResource, SkillResourceItem
 from app.database import get_db_client
 from app.repositories.base import BaseRepository
 from app.repositories.skill import SkillRepository, SkillAlreadyExistException
@@ -74,17 +75,17 @@ class SkillService:
                         self._set_resource_item_id(resource, item)
 
     @staticmethod
-    def _set_resource_added_date(resource):
+    def _set_resource_added_date(resource: SkillResource):
         log.info(f"resource added date missing for resource: [{resource.name}]")
         resource.resource_added_date = datetime.utcnow()
 
     @staticmethod
-    def _set_resource_id(skill, resource):
+    def _set_resource_id(skill, resource: SkillResource):
         log.info(f"resource id missing for skill: [{skill.name}]")
         resource.id = BaseRepository.generate_uuid()
 
     @staticmethod
-    def _set_resource_item_id(resource, item):
+    def _set_resource_item_id(resource: SkillResource, item: SkillResourceItem):
         log.info(f"item id missing for resource: [{resource.name}]")
         item.id = BaseRepository.generate_uuid()
 
