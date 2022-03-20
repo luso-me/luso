@@ -19,8 +19,6 @@ class MediaService:
         self.s3_url = f"https://{self.bucket_name}.s3.{self.region}.amazonaws.com"
 
     async def upload_image(self, image_name: str, bytes_: IO) -> str:
-        log.info(f"Uploading image, {image_name} to S3")
-
         suffix = ""
         if self.random_suffix:
             suffix = shortuuid.random()
@@ -28,8 +26,11 @@ class MediaService:
         basename, ext = os.path.splitext(image_name)
 
         if suffix:
-            self.bucket.upload_fileobj(bytes_, f"{basename}-{suffix}{ext}")
-            return f"{self.s3_url}/{basename}-{suffix}{ext}"
+            filename = f"{basename}-{suffix}{ext}"
         else:
-            self.bucket.upload_fileobj(bytes_, f"{basename}{ext}")
-            return f"{self.s3_url}/{basename}{ext}"
+            filename = f"{basename}{ext}"
+
+        log.info(f"Uploading image, {filename} to S3")
+        self.bucket.upload_fileobj(bytes_, filename)
+
+        return f"{self.s3_url}/{filename}"
