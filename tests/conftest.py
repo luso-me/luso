@@ -9,8 +9,8 @@ from pytest import MonkeyPatch
 
 mp = MonkeyPatch()
 mp.setenv("TOKEN_SECRET_KEY", "123")
-mp.setenv("ICONS_S3_BUCKET", "mybucket")
-mp.setenv("ICONS_S3_BUCKET_REGION", "eu-west-1")
+mp.setenv("ICONS_S3_BUCKET", "some-bucket")
+mp.setenv("ICONS_S3_BUCKET_REGION", "some-region")
 
 
 @pytest.fixture(scope="session")

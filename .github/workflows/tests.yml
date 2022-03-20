@@ -36,8 +36,8 @@ jobs:
       # Workaround for required env vars
       env:
         TOKEN_SECRET_KEY: 1234
-        ICONS_S3_BUCKET: mybucket
-        ICONS_S3_BUCKET_REGION: eu-west-1
+        ICONS_S3_BUCKET: some-bucket
+        ICONS_S3_BUCKET_REGION: some-region
       run: |
         poetry run pytest -m "not integration"
   build-and-push-image:

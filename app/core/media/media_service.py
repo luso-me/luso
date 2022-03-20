@@ -24,13 +24,23 @@ class MediaService:
             suffix = shortuuid.random()
 
         basename, ext = os.path.splitext(image_name)
-
-        if suffix:
-            filename = f"{basename}-{suffix}{ext}"
-        else:
-            filename = f"{basename}{ext}"
-
-        log.info(f"Uploading image, {filename} to S3")
-        self.bucket.upload_fileobj(bytes_, filename)
+        filename = self._determine_filename(basename, ext, suffix)
+        self._upload_object(bytes_, ext, filename)
 
         return f"{self.s3_url}/{filename}"
+
+    def _determine_filename(self, basename, ext, suffix):
+        if suffix:
+            return f"{basename}-{suffix}{ext}"
+        else:
+            return f"{basename}{ext}"
+
+    def _upload_object(self, bytes_, ext, filename):
+        log.info(f"Uploading image, {filename} to S3")
+
+        if ext == ".svg":
+            self.bucket.upload_fileobj(
+                bytes_, filename, ExtraArgs={"ContentType": "image/svg+xml"}
+            )
+        else:
+            self.bucket.upload_fileobj(bytes_, filename)
