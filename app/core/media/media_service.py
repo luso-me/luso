@@ -26,9 +26,10 @@ class MediaService:
             suffix = shortuuid.random()
 
         basename, ext = os.path.splitext(image_name)
-        self.bucket.upload_fileobj(bytes_, f"{basename}.{ext}")
 
         if suffix:
+            self.bucket.upload_fileobj(bytes_, f"{basename}-{suffix}{ext}")
             return f"{self.s3_url}/{basename}-{suffix}{ext}"
         else:
+            self.bucket.upload_fileobj(bytes_, f"{basename}{ext}")
             return f"{self.s3_url}/{basename}{ext}"
