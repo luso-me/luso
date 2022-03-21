@@ -5,6 +5,13 @@ import pytest
 from fastapi import FastAPI
 from httpx import AsyncClient
 
+from pytest import MonkeyPatch
+
+mp = MonkeyPatch()
+mp.setenv("TOKEN_SECRET_KEY", "123")
+mp.setenv("ICONS_S3_BUCKET", "some-bucket")
+mp.setenv("ICONS_S3_BUCKET_REGION", "some-region")
+
 
 @pytest.fixture(scope="session")
 def event_loop(request) -> Generator:

@@ -1,3 +1,5 @@
+import os
+from datetime import datetime
 from typing import IO
 
 import structlog
@@ -5,6 +7,7 @@ import structlog
 from app.config import settings
 from app.core.media.media_service import MediaService
 from app.core.skill.model.base import SkillCreate, SkillUpdate
+from app.core.skill.model.resource import SkillResource, SkillResourceItem
 from app.database import get_db_client
 from app.repositories.base import BaseRepository
 from app.repositories.skill import SkillRepository, SkillAlreadyExistException
@@ -18,9 +21,7 @@ class SkillService:
             db_client_factory=get_db_client, db_name="luso", collection_name="skills"
         )
         self.media_service = MediaService(
-            region=settings.icons_s3_bucket_region,
-            bucket_name=settings.icons_s3_bucket,
-            random_suffix=True,
+            region=settings.icons_s3_bucket_region, bucket_name=settings.icons_s3_bucket
         )
 
     async def list_skills(self, limit: int = 100):
@@ -43,14 +44,29 @@ class SkillService:
             )
             raise SkillAlreadyExistException(f"Skill [{skill.name}] already exist")
 
-        self._set_missing_resource_ids(skill)
+        self._set_default_values(skill)
 
-        await self.skill_repo.create(skill)
+        return await self.skill_repo.create(skill)
 
     async def update_skill(self, skill_id: str, skill: SkillUpdate):
-        self._set_missing_resource_ids(skill)
+        self._set_default_values(skill)
 
-        await self.skill_repo.update(skill_id, skill)
+        return await self.skill_repo.update(skill_id, skill)
+
+    async def update_skill_icon(
+        self, skill_id: str, skill_name: str, icon_name: str, icon_file: IO
+    ):
+        skill = SkillUpdate()
+        icon_name = self._generate_icon_name(skill_name, icon_name)
+        skill.icon_link = await self.media_service.upload_image(icon_name, icon_file)
+
+        return await self.skill_repo.update(skill_id, skill)
+
+    def _generate_icon_name(self, skill_name: str, icon_name: str):
+        new_icon_name = skill_name.lower().replace(" ", "-")
+        basename, ext = os.path.splitext(icon_name)
+
+        return f"{new_icon_name}{ext}"
 
     async def check_if_skill_exist(self, skill_name: str):
         skill = await self.skill_repo.find({"name": skill_name})
@@ -61,20 +77,28 @@ class SkillService:
 
         return False
 
-    @classmethod
-    def _set_missing_resource_ids(cls, skill):
+    def _set_default_values(self, skill):
         if skill.resources is not None:
             for resource in skill.resources:
+                if not resource.resource_added_date:
+                    self._set_resource_added_date(resource)
                 if not resource.id:
-                    log.info(f"resource id missing for skill: [{skill.name}]")
-                    resource.id = BaseRepository.generate_uuid()
+                    self._set_resource_id(skill, resource)
                 for item in resource.items:
                     if not item.id:
-                        log.info(f"item id missing for resource: [{resource.name}]")
-                        item.id = BaseRepository.generate_uuid()
+                        self._set_resource_item_id(resource, item)
 
-    async def update_skill_icon(self, skill_id: str, icon_name: str, icon_file: IO):
-        skill = SkillUpdate()
-        skill.icon_link = await self.media_service.upload_image(icon_name, icon_file)
+    @staticmethod
+    def _set_resource_added_date(resource: SkillResource):
+        log.info(f"resource added date missing for resource: [{resource.name}]")
+        resource.resource_added_date = datetime.utcnow()
 
-        return await self.skill_repo.update(skill_id, skill)
+    @staticmethod
+    def _set_resource_id(skill, resource: SkillResource):
+        log.info(f"resource id missing for skill: [{skill.name}]")
+        resource.id = BaseRepository.generate_uuid()
+
+    @staticmethod
+    def _set_resource_item_id(resource: SkillResource, item: SkillResourceItem):
+        log.info(f"item id missing for resource: [{resource.name}]")
+        item.id = BaseRepository.generate_uuid()
