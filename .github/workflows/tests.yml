@@ -39,7 +39,7 @@ jobs:
         ICONS_S3_BUCKET: some-bucket
         ICONS_S3_BUCKET_REGION: some-region
       run: |
-        poetry run pytest -m "not integration"
+        poetry run pytest tests
   build-and-push-image:
     needs: build
     runs-on: ubuntu-latest
