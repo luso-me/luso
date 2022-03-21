@@ -4,6 +4,27 @@ from app.core.skill.model.base import SkillCreate
 from app.core.skill.model.resource import SkillResource, SkillResourceItem
 from app.core.skill.skill_service import SkillService
 
+skill_service = SkillService()
+
+
+def test_generate_icon_name():
+    icon_name = "file.svg"
+
+    result = skill_service._generate_icon_name("skill-x", icon_name)
+    assert result == "skill-x.svg"
+
+    result = skill_service._generate_icon_name("Skill X", icon_name)
+    assert result == "skill-x.svg"
+
+    result = skill_service._generate_icon_name("Skill X Y", icon_name)
+    assert result == "skill-x-y.svg"
+
+    result = skill_service._generate_icon_name("Skill X:Y", icon_name)
+    assert result == "skill-x:y.svg"
+
+    result = skill_service._generate_icon_name("SkillX", icon_name)
+    assert result == "skillx.svg"
+
 
 def test_set_default_values():
     r1 = _create_resource("r1")
@@ -17,7 +38,7 @@ def test_set_default_values():
         active=True,
         resources=[r1, r2],
     )
-    SkillService()._set_default_values(skill)
+    skill_service._set_default_values(skill)
 
     assert type(r1.resource_added_date) == datetime
     assert type(r2.resource_added_date) == datetime

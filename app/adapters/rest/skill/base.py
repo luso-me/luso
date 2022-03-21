@@ -2,7 +2,7 @@ from http import HTTPStatus
 from typing import List, Optional
 
 import structlog
-from fastapi import File, HTTPException, status, APIRouter, Depends, UploadFile
+from fastapi import Form, File, HTTPException, status, APIRouter, Depends, UploadFile
 
 from app.adapters.dependencies.auth import get_current_user
 from app.core.skill.model.base import SkillCreate, SkillRead, SkillUpdate
@@ -100,9 +100,12 @@ async def delete_skill(
 @router.post("/{skill_id}/icon")
 async def skill_icon_upload(
     skill_id: str,
+    skill_name: str = Form(...),
     file: UploadFile = File(...),
     current_user: UserRead = Depends(get_current_user),
     skill_service: SkillService = Depends(SkillService),
 ):
-    log.info("file upload", filename=file.filename)
-    return await skill_service.update_skill_icon(skill_id, file.filename, file.file)
+    log.info(f"Received icon [{file.filename}] for skill [{skill_name}] upload.")
+    return await skill_service.update_skill_icon(
+        skill_id, skill_name, file.filename, file.file
+    )

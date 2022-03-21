@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from typing import IO
 
@@ -20,9 +21,7 @@ class SkillService:
             db_client_factory=get_db_client, db_name="luso", collection_name="skills"
         )
         self.media_service = MediaService(
-            region=settings.icons_s3_bucket_region,
-            bucket_name=settings.icons_s3_bucket,
-            random_suffix=True,
+            region=settings.icons_s3_bucket_region, bucket_name=settings.icons_s3_bucket
         )
 
     async def list_skills(self, limit: int = 100):
@@ -54,11 +53,20 @@ class SkillService:
 
         return await self.skill_repo.update(skill_id, skill)
 
-    async def update_skill_icon(self, skill_id: str, icon_name: str, icon_file: IO):
+    async def update_skill_icon(
+        self, skill_id: str, skill_name: str, icon_name: str, icon_file: IO
+    ):
         skill = SkillUpdate()
+        icon_name = self._generate_icon_name(skill_name, icon_name)
         skill.icon_link = await self.media_service.upload_image(icon_name, icon_file)
 
         return await self.skill_repo.update(skill_id, skill)
+
+    def _generate_icon_name(self, skill_name: str, icon_name: str):
+        new_icon_name = skill_name.lower().replace(" ", "-")
+        basename, ext = os.path.splitext(icon_name)
+
+        return f"{new_icon_name}{ext}"
 
     async def check_if_skill_exist(self, skill_name: str):
         skill = await self.skill_repo.find({"name": skill_name})
