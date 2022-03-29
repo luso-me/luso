@@ -8,7 +8,7 @@ GITHUB_CLIENT_ID=<github client id> (see notes on how to find it)
 GITHUB_CLIENT_SECRET=<github client secret> (see notes on how to find it)
 TOKEN_SECRET_KEY=<any random string> (see notes on how to generate)
 ICONS_S3_BUCKET=mybucket
-ICONS_S3_BUCKET_REGION=af-south-1
+ICONS_S3_BUCKET_REGION=eu-west-1
 ```
 
 ## Dev Support

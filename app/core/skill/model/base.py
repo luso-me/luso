@@ -6,7 +6,6 @@ from pydantic import BaseModel, Field
 from app.core.skill.model.resource import SkillResource
 
 resource_categories = ["Book", "Website", "Course", "Other"]
-
 skill_categories = ["Languages & Frameworks", "Platforms", "Tools", "Techniques"]
 
 
@@ -24,7 +23,12 @@ class SkillFields:
     repo_link = Field(description="Repo of skill")
     icon_link = Field(description="Icon link")
 
-    tags = Field(description="List of tags", example=["cncf::Data Engineering"])
+    tags = Field(
+        description="List of tags",
+        example=["cncf::Data Engineering"],
+        default_factory=list,
+    )
+
     category = Field(description="Category of the Skill")
     active = Field(description="Is skill active")
     resources = Field(description="List of skill resources", default_factory=list)

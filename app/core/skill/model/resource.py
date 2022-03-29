@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import List, Optional
 
 from pydantic import BaseModel
+from pydantic.fields import Field
 
 
 class DurationRange(BaseModel):
@@ -11,7 +12,7 @@ class DurationRange(BaseModel):
 
 
 class SkillResourceItem(BaseModel):
-    id: str
+    id: str = Field(default="")
     name: str
     description: str
     web_link: Optional[str]
@@ -19,7 +20,7 @@ class SkillResourceItem(BaseModel):
 
 
 class SkillResource(BaseModel):
-    id: str
+    id: str = Field(default="")
     name: str
     authors: str
     description: str
@@ -27,9 +28,9 @@ class SkillResource(BaseModel):
     category: str
     resource_authored_date: Optional[datetime]
     resource_added_date: Optional[datetime]
-    tags: Optional[List[str]]
-    community_rating: Optional[int]
+    tags: Optional[List[str]] = Field(default_factory=list)
+    community_rating: Optional[int] = Field(default=0)
     duration: Optional[str]
     estimated_effort: Optional[DurationRange]
-    intended_levels: Optional[List[str]]
-    items: Optional[List[SkillResourceItem]]
+    intended_levels: Optional[List[str]] = Field(default_factory=list)
+    items: Optional[List[SkillResourceItem]] = Field(default_factory=list)
