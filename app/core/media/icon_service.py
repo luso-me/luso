@@ -1,5 +1,5 @@
 import hashlib
-import random
+import io
 
 import svgwrite
 
@@ -8,7 +8,7 @@ class IconService:
     def __init__(self):
         pass
 
-    def _get_acronym(self, text: str):
+    async def _get_acronym(self, text: str):
         text_parts = text.split(" ")
         acronym = ""
         for part in text_parts:
@@ -16,25 +16,28 @@ class IconService:
 
         return acronym
 
-    def _generate_colour(self, text: str):
+    async def _generate_colour(self, text: str):
 
         hash_str = str(int(hashlib.sha1(text.encode("utf-8")).hexdigest(), 16))
         colour_str = hash_str[-9:]
 
         return tuple(int(colour_str[(3 * i) : (3 * (i + 1))]) % 255 for i in range(3))
 
-    def generate_icon(self, text: str):
+    async def generate_icon(self, text: str) -> io.BytesIO:
         if not text:
             raise ValueError("Text empty")
-        colour = self._generate_colour(text)
+        colour = await self._generate_colour(text)
 
-        text = self._get_acronym(text)
+        text = await self._get_acronym(text)
 
         text_size = len(text)
 
-        base_size = 40
+        base_size = 20
         width = base_size * text_size
         height = base_size * 2
+
+        if width < height:
+            width = height
 
         dwg = svgwrite.Drawing("test.svg", (width, height), debug=True)
         dwg.add(
@@ -58,4 +61,10 @@ class IconService:
             )
         )
 
-        dwg.save()
+        icon_obj = io.StringIO()
+
+        dwg.write(icon_obj)
+
+        icon_obj.seek(0)
+
+        return io.BytesIO(icon_obj.getvalue().encode("utf-8"))

@@ -1,6 +1,12 @@
+import shutil
+
 from app.core.media.icon_service import IconService
 
 
-def test_generate_icon():
+async def test_generate_icon():
     icon_service = IconService()
-    icon_service.generate_icon("C")
+    with open("c.svg", "w") as outfile:
+        icon = await icon_service.generate_icon("CS GO")
+        icon.seek(0)
+
+    assert icon
