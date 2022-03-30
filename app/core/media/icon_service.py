@@ -1,7 +1,7 @@
 import hashlib
 import io
 
-import svgwrite
+import svgwrite  # type: ignore
 
 
 class IconService:
