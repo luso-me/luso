@@ -1,7 +1,7 @@
 from typing import List
 
 import structlog
-from fastapi import HTTPException, status, Depends, APIRouter
+from fastapi import HTTPException, status, Depends, APIRouter, Security
 
 from app.adapters.dependencies.auth import get_current_user, user_repository
 from app.core.user import user_service
@@ -22,7 +22,7 @@ router = APIRouter(prefix="/users")
 async def create_user(
     user: UserCreate,
     user_repo: UserRepository = Depends(user_repository),
-    current_user: UserRead = Depends(get_current_user),
+    _: UserRead = Security(get_current_user, scopes=["user:write"]),
 ):
     return await user_repo.create(user)
 
@@ -31,13 +31,15 @@ async def create_user(
 async def list_users(
     limit: int = 100,
     user_repo: UserRepository = Depends(user_repository),
-    current_user: UserRead = Depends(get_current_user),
+    _: UserRead = Security(get_current_user, scopes=["user:read:*"]),
 ):
     return await user_repo.list(limit)
 
 
 @router.get("/me", response_model=UserRead)
-async def read_users_me(current_user: UserRead = Depends(get_current_user)):
+async def read_users_me(
+    current_user: UserRead = Security(get_current_user, scopes=["user:read:*"])
+):
     return current_user
 
 
@@ -47,7 +49,7 @@ async def read_users_me(current_user: UserRead = Depends(get_current_user)):
 async def show_user(
     user_id: str,
     user_repo: UserRepository = Depends(user_repository),
-    current_user: UserRead = Depends(get_current_user),
+    _: UserRead = Security(get_current_user, scopes=["user:read:{user_id}"]),
 ):
     if (user := await user_repo.get(user_id)) is not None:
         return user
@@ -57,7 +59,9 @@ async def show_user(
 
 @router.put("/{user_id}", response_description="Update a user", response_model=UserRead)
 async def update_user(
-    user_id: str, user: UserUpdate, current_user: UserRead = Depends(get_current_user)
+    user_id: str,
+    user: UserUpdate,
+    _: UserRead = Security(get_current_user, scopes=["user:write:{user_id}"]),
 ):
     log.info(f"Attempting to update user: {user}")
     return await user_service.update_user(user_id, user)
@@ -67,6 +71,6 @@ async def update_user(
 async def delete_user(
     user_id: str,
     user_repo: UserRepository = Depends(user_repository),
-    current_user: UserRead = Depends(get_current_user),
+    _: UserRead = Security(get_current_user, scopes=["user:delete:{user_id}"]),
 ):
     await user_repo.delete(user_id)

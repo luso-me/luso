@@ -38,6 +38,7 @@ class UserFields:
     score = Field(
         description="User Score", default_factory=lambda: UserScore(gold=0, points=0)
     )
+    scopes = Field(description="Users scopes", default_factory=list)
 
 
 class UserUpdate(BaseModel):
@@ -46,6 +47,7 @@ class UserUpdate(BaseModel):
     skills: Optional[List[UserSkill]] = UserFields.skills
     plans: Optional[List[SkillPlan]] = UserFields.plans
     score: Optional[UserScore] = None
+    scopes: Optional[List[str]] = UserFields.scopes
 
 
 class UserCreate(UserUpdate):
