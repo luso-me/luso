@@ -83,9 +83,9 @@ def check_permission(token_scopes: List[str], required_scopes: List[str], params
                     if id_ in token_resource_id:
                         return
 
-            log.debug("not matching permissions for resource found")
+            log.debug("no matching permissions for resource found")
 
         except KeyError as e:
-            log.debug("error when looking for action/permission", error=e)
+            log.debug("error when looking for resource and action", error=e)
 
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
