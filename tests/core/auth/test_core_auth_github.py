@@ -9,7 +9,7 @@ from app.core.auth.exceptions import GithubCredentialsException
 
 
 class MockGettableDict(dict):
-    __getattr__, __setattr__ = dict.get, dict.__setitem__
+    __getattr__, __setattr__ = dict.get, dict.__setitem__  # type: ignore
 
 
 def test_github_login():
@@ -28,7 +28,7 @@ async def test_github_callback():
         "app.core.auth.github_service.get_github_user", new=AsyncMock()
     ) as get_github_user_patch:
         fetch_token_patch.return_value = {"access_token": "123"}
-        get_github_user_patch.return_value = MockGettableDict(id=1)
+        get_github_user_patch.return_value = MockGettableDict(id=1, scopes=[])
 
         token = await github.github_callback("some code")
 

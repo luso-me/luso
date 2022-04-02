@@ -1,10 +1,18 @@
+import pytest
+from fastapi import HTTPException
+
 from app.adapters.dependencies.auth import check_permission
-from app.core.user.model.base import UserRead
 
 
 def test_check_permissions():
 
-    token_scopes = ["user:*"]
-    required_scopes = ["user:read", "user:write"]
+    token_scopes = ["user:read:123", "skill:read:*"]
 
-    check_permission(token_scopes, required_scopes)
+    check_permission(token_scopes, ["user:read:{user_id}"], {"user_id": "123"})
+
+    check_permission(token_scopes, ["skill:read:test"], {})
+
+    check_permission(token_scopes, ["user:read:*"], {})
+
+    with pytest.raises(HTTPException):
+        check_permission(token_scopes, ["skill:write:test"], {})

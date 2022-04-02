@@ -117,8 +117,8 @@ async def github_create_user(user_data: dict) -> UserRead:
 
     user.scopes = DEFAULT_PERMISSIONS + [
         f"user:read:{user.id}",
-        f"user:write:{user.id}",
-        f"user:delete:{user.id}",
+        # f"user:write:{user.id}", # disable write to prevent user from modifying permissions
+        # f"user:delete:{user.id}", # same as above
     ]
 
     return await user_repo.update(user.id, user)
