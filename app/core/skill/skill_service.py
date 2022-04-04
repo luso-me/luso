@@ -6,6 +6,7 @@ import structlog
 
 from app.config import settings
 from app.core.media.media_service import MediaService
+from app.core.media.icon_service import IconService
 from app.core.skill.model.base import SkillCreate, SkillUpdate
 from app.core.skill.model.resource import SkillResource, SkillResourceItem
 from app.database import get_db_client
@@ -23,6 +24,7 @@ class SkillService:
         self.media_service = MediaService(
             region=settings.icons_s3_bucket_region, bucket_name=settings.icons_s3_bucket
         )
+        self.icon_service = IconService()
 
     async def list_skills(self, limit: int = 100):
         return await self.skill_repo.list(limit)
@@ -45,6 +47,7 @@ class SkillService:
             raise SkillAlreadyExistException(f"Skill [{skill.name}] already exist")
 
         self._set_default_values(skill)
+        await self._set_missing_icon(skill)
 
         return await self.skill_repo.create(skill)
 
@@ -102,3 +105,9 @@ class SkillService:
     def _set_resource_item_id(resource: SkillResource, item: SkillResourceItem):
         log.info(f"item id missing for resource: [{resource.name}]")
         item.id = BaseRepository.generate_uuid()
+
+    async def _set_missing_icon(self, skill: SkillCreate):
+        skill.icon_link = await self.media_service.upload_image(
+            self._generate_icon_name(skill.name, "default.svg"),
+            await self.icon_service.generate_icon(skill.name),
+        )
