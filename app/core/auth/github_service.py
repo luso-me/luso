@@ -25,6 +25,8 @@ user_repo = UserRepository(
     db_client_factory=get_db_client, db_name="luso", collection_name="users"
 )
 
+DEFAULT_PERMISSIONS = [f"skill:read:*"]
+
 
 def github_login_url():
     auth_url, state = github_client.create_authorization_url(
@@ -44,13 +46,13 @@ async def github_callback(code: str) -> str:
         github_user = await get_user_info(access_token=github_access_token)
         user = await get_github_user(github_user)
 
-        jwt_payload = JWTPayload(sub=user.id)
+        jwt_payload = JWTPayload(sub=user.id, scopes=user.scopes)
         return await create_access_token(payload=jwt_payload)
     else:
         raise GithubCredentialsException()
 
 
-async def get_github_user(github_user):
+async def get_github_user(github_user) -> UserRead:
     users = await user_repo.find({"github_user_id": str(github_user["id"])})
 
     log.info(f"Github user info {github_user}")
@@ -107,6 +109,16 @@ async def get_user_email(access_token) -> Optional[str]:
 async def github_create_user(user_data: dict) -> UserRead:
     log.info(f"Creating new user {user_data}")
     user = UserCreate(
-        github_user_id=user_data["id"], name=user_data["name"], email=user_data["email"]
+        github_user_id=user_data["id"],
+        username=user_data["name"],
+        email=user_data["email"],
     )
-    return await user_repo.create(user)
+    user = await user_repo.create(user)
+
+    user.scopes = DEFAULT_PERMISSIONS + [
+        f"user:read:{user.id}",
+        # f"user:write:{user.id}", # disable write to prevent user from modifying permissions
+        # f"user:delete:{user.id}", # same as above
+    ]
+
+    return await user_repo.update(user.id, user)

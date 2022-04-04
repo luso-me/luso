@@ -20,8 +20,12 @@ async def create_user(user: UserCreate):
 
 async def update_user(user_id: str, user: UserUpdate):
     _set_ids(user)
-
+    _remove_scopes(user)
     await user_repo.update(user_id, user)
+
+
+def _remove_scopes(user: UserUpdate):
+    user.scopes = None
 
 
 def _set_ids(user):
