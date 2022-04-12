@@ -5,8 +5,8 @@ from typing import IO
 import structlog
 
 from app.config import settings
-from app.core.media.media_service import MediaService
 from app.core.media.icon_service import IconService
+from app.core.media.media_service import MediaService
 from app.core.skill.model.base import SkillCreate, SkillUpdate
 from app.core.skill.model.resource import SkillResource, SkillResourceItem
 from app.database import get_db_client
@@ -26,7 +26,7 @@ class SkillService:
         )
         self.icon_service = IconService()
 
-    async def list_skills(self, limit: int = 100):
+    async def list_skills(self, limit: int = 1000):
         return await self.skill_repo.list(limit)
 
     async def find_skill(self, skill_name, limit=100):
@@ -66,7 +66,7 @@ class SkillService:
         return await self.skill_repo.update(skill_id, skill)
 
     def _generate_icon_name(self, skill_name: str, icon_name: str):
-        new_icon_name = skill_name.lower().replace(" ", "-")
+        new_icon_name = skill_name.lower()
         basename, ext = os.path.splitext(icon_name)
 
         return f"{new_icon_name}{ext}"

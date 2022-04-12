@@ -14,16 +14,19 @@ def test_generate_icon_name():
     assert result == "skill-x.svg"
 
     result = skill_service._generate_icon_name("Skill X", icon_name)
-    assert result == "skill-x.svg"
+    assert result == "skill x.svg"
 
     result = skill_service._generate_icon_name("Skill X Y", icon_name)
-    assert result == "skill-x-y.svg"
+    assert result == "skill x y.svg"
 
     result = skill_service._generate_icon_name("Skill X:Y", icon_name)
-    assert result == "skill-x:y.svg"
+    assert result == "skill x:y.svg"
 
     result = skill_service._generate_icon_name("SkillX", icon_name)
     assert result == "skillx.svg"
+
+    result = skill_service._generate_icon_name("c++", icon_name)
+    assert result == "c++.svg"
 
 
 def test_set_default_values():
