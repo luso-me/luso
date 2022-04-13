@@ -1,5 +1,7 @@
 import os.path
+import urllib
 from typing import IO
+from urllib.parse import quote_plus
 
 import boto3
 import shortuuid  # type: ignore
@@ -22,7 +24,9 @@ class MediaService:
         basename, ext = os.path.splitext(image_name)
         self._upload_object(bytes_, ext, image_name)
 
-        return f"{self.s3_url}/{image_name}"
+        return (
+            f"""{self.s3_url}/{urllib.parse.quote_plus(image_name, safe="!-_.*'()")}"""
+        )
 
     def _upload_object(self, bytes_, ext, filename):
         log.info(f"Uploading image [{filename}] to S3")
