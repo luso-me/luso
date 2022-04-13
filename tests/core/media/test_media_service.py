@@ -18,6 +18,7 @@ s3_url = f"https://{bucket}.s3.{region}.amazonaws.com"
         ("test++.png", f"{s3_url}/test%2B%2B.png"),
         ("test.png", f"{s3_url}/test.png"),
         ("test#.png", f"{s3_url}/test%23.png"),
+        ("~test*()!.png", f"{s3_url}/~test*()!.png"),
     ],
 )
 @mock.patch("boto3.resource")

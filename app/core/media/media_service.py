@@ -25,7 +25,7 @@ class MediaService:
         self._upload_object(bytes_, ext, image_name)
 
         return (
-            f"""{self.s3_url}/{urllib.parse.quote_plus(image_name, safe="~()*!.'")}"""
+            f"""{self.s3_url}/{urllib.parse.quote_plus(image_name, safe="!-_.*'()")}"""
         )
 
     def _upload_object(self, bytes_, ext, filename):
