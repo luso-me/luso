@@ -4,8 +4,8 @@ import structlog
 from fastapi import HTTPException, status, Depends, APIRouter, Security
 
 from app.adapters.dependencies.auth import get_current_user, user_repository
-from app.core.user import user_service
 from app.core.user.model.base import UserCreate, UserUpdate, UserRead
+from app.core.user.user_service import UserService
 from app.repositories.user import UserRepository
 
 log = structlog.get_logger()
@@ -62,6 +62,7 @@ async def update_user(
     user_id: str,
     user: UserUpdate,
     _: UserRead = Security(get_current_user, scopes=["user:write:{user_id}"]),
+    user_service=Depends(UserService),
 ):
     log.info(f"Attempting to update user: {user}")
     return await user_service.update_user(user_id, user)
