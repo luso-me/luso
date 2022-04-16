@@ -1,7 +1,9 @@
+from typing import List, Optional, Dict
+
 import structlog
 
 from app.core.user.model.base import UserUpdate, UserCreate, UserRead
-from app.core.user.model.skill_plan import SkillPlan
+from app.core.user.model.skill_plan import SkillPlan, SkillPlanObjective
 from app.core.user.model.user_score import UserScore
 from app.database import get_db_client
 from app.repositories.base import BaseRepository
@@ -12,13 +14,6 @@ log = structlog.get_logger()
 
 class UserService:
     def __init__(self):
-        self.transition_points = {
-            ("Todo", "Done"): UserScore(gold=1, points=1),
-            ("In progress", "Done"): UserScore(gold=1, points=1),
-            ("Done", "In progress"): UserScore(gold=-1, points=-1),
-            ("Done", "Todo"): UserScore(gold=-1, points=-1),
-        }
-
         self.user_repo = UserRepository(
             db_client_factory=get_db_client, db_name="luso", collection_name="users"
         )
@@ -34,7 +29,9 @@ class UserService:
         self._set_ids(user)
         self._remove_scopes(user)
 
+        log.debug(f"updating user points", points=user.score)
         self._set_user_points(old_user, user)
+        log.debug(f"updating user points", points=user.score)
 
         await self.user_repo.update(user_id, user)
 
@@ -51,41 +48,64 @@ class UserService:
                     if not objective.id:
                         objective.id = BaseRepository.generate_uuid()
 
-    def _set_user_points(self, old_user: UserRead, updated_user: UserUpdate):
-        updated_user.score = old_user.score
+    def _set_user_points(self, current_user: UserRead, updated_user: UserUpdate):
+        updated_user.score = current_user.score
 
-        if old_user.plans == updated_user.plans:
-            return
-
-        current_plans = {p.id: p for p in old_user.plans}
-        new_plans = {p.id: p for p in updated_user.plans}
-
-        for p_id, p in new_plans.items():
-            log.debug(p)
-            updated_user.score += self._calculate_user_points(
-                current_plans.get(p_id), p
-            )
-
-    def _calculate_user_points(
-        self, old_skill_plan: SkillPlan, new_skill_plan: SkillPlan
-    ):
-        if old_skill_plan is None:
-            log.debug("skill plan did not exist in db")
-            if new_skill_plan.status == "Done":  # use enum?
-                log.debug("skill was marked as done")
-                return UserScore(gold=1, points=1)
-            return UserScore(gold=0, points=0)
-        return self._calculate_score(
-            old_status=old_skill_plan.status, new_status=new_skill_plan.status
+        current_plan_objective_map = self._generate_plan_objective_map(
+            current_user.plans
+        )
+        updated_plan_objective_map = self._generate_plan_objective_map(
+            updated_user.plans
         )
 
-    def _calculate_score(self, old_status: str, new_status: str):
-        points = self.transition_points.get((old_status, new_status))
-        log.debug(f"transition {old_status} -> {new_status} assigning points {points}")
-        if points:
-            return points
-        else:
-            log.debug(
-                f"skill plan transition for {old_status} -> {new_status} does not exist"
+        for p_id, p_obj in updated_plan_objective_map.items():
+            curr_plan = current_plan_objective_map.get(p_id)
+            if curr_plan is None:
+                log.debug(f"updated plan does not exist in db", plan_id=p_id)
+                continue
+
+            for obj_id, obj in p_obj.items():
+                curr_obj = curr_plan.get(obj_id)
+                if curr_obj is None:
+                    log.debug(
+                        "updated plan objective does not exist in db", obj_id=obj_id
+                    )
+
+                updated_user.score += self._calculate_user_points(curr_obj, obj)
+
+    def _generate_plan_objective_map(self, user_plan: List[SkillPlan]):
+        plan_objective_map: Dict[str, dict] = {}
+        for up in user_plan:
+            plan_objective_map[up.id] = {}
+            for obj in up.objectives:
+                plan_objective_map[up.id][obj.id] = obj
+        return plan_objective_map
+
+    def _calculate_user_points(
+        self,
+        current_objective: SkillPlanObjective,
+        update_objective: SkillPlanObjective,
+    ) -> UserScore:
+        if current_objective is None:
+            return self._calculate_score(
+                current_status=None, updated_status=update_objective.status
             )
-            return UserScore(gold=0, points=0)
+        return self._calculate_score(
+            current_status=current_objective.status,
+            updated_status=update_objective.status,
+        )
+
+    def _calculate_score(
+        self, current_status: Optional[str], updated_status: str
+    ) -> UserScore:
+        points = UserScore(gold=0, points=0)
+        if current_status == "Done":
+            points += UserScore(gold=-1, points=-1)
+
+        if updated_status == "Done":
+            points += UserScore(gold=1, points=1)
+        log.debug(
+            f"calculating score for {current_status} -> {updated_status} score {points}"
+        )
+
+        return points
