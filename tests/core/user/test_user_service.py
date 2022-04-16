@@ -77,7 +77,7 @@ def test_update_user_score(user_service, current_status, new_status, expected):
         ],
     )
 
-    user_service._set_user_points(user_db, user_update)
+    user_service._set_user_score(user_db, user_update)
 
     assert user_update.score == expected
 
@@ -147,6 +147,6 @@ def test_update_user_score_new_objective(user_service, new_status, expected):
         ],
     )
 
-    user_service._set_user_points(user_db, user_update)
+    user_service._set_user_score(user_db, user_update)
 
     assert user_update.score == expected

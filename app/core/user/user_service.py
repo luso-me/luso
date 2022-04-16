@@ -30,7 +30,7 @@ class UserService:
         self._remove_scopes(user)
 
         log.debug(f"updating user points", points=user.score)
-        self._set_user_points(old_user, user)
+        self._set_user_score(old_user, user)
         log.debug(f"updating user points", points=user.score)
 
         await self.user_repo.update(user_id, user)
@@ -48,7 +48,7 @@ class UserService:
                     if not objective.id:
                         objective.id = BaseRepository.generate_uuid()
 
-    def _set_user_points(self, current_user: UserRead, updated_user: UserUpdate):
+    def _set_user_score(self, current_user: UserRead, updated_user: UserUpdate):
         updated_user.score = current_user.score
 
         current_plan_objective_map = self._generate_plan_objective_map(
@@ -58,20 +58,30 @@ class UserService:
             updated_user.plans
         )
 
-        for p_id, p_obj in updated_plan_objective_map.items():
-            curr_plan = current_plan_objective_map.get(p_id)
-            if curr_plan is None:
-                log.debug(f"updated plan does not exist in db", plan_id=p_id)
+        for updated_plan_id, updated_objectives in updated_plan_objective_map.items():
+            current_plan = current_plan_objective_map.get(updated_plan_id)
+            if current_plan is None:
+                log.debug(f"updated plan does not exist in db", plan_id=updated_plan_id)
                 continue
 
-            for obj_id, obj in p_obj.items():
-                curr_obj = curr_plan.get(obj_id)
-                if curr_obj is None:
-                    log.debug(
-                        "updated plan objective does not exist in db", obj_id=obj_id
-                    )
+            self._calculate_and_update_user_score(
+                updated_objectives, current_plan, updated_user
+            )
 
-                updated_user.score += self._calculate_user_points(curr_obj, obj)
+    def _calculate_and_update_user_score(
+        self, updated_objectives, current_plan, updated_user
+    ):
+        for updated_objective_id, updated_objective in updated_objectives.items():
+            current_objective = current_plan.get(updated_objective_id)
+            if current_objective is None:
+                log.debug(
+                    "updated plan objective does not exist in db",
+                    objective=updated_objective,
+                )
+
+            updated_user.score += self._calculate_user_points(
+                current_objective, updated_objective
+            )
 
     def _generate_plan_objective_map(self, user_plan: List[SkillPlan]):
         plan_objective_map: Dict[str, dict] = {}
