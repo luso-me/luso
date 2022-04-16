@@ -33,7 +33,7 @@ jobs:
         poetry install
     - name: Analysing the code with mypy
       run: |
-       poetry run mypy --namespace-packages app
+       poetry run mypy --no-strict-optional --namespace-packages app
     - name: Run pytest
       # Workaround for required env vars
       env:
