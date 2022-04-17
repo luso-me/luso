@@ -1,0 +1,87 @@
+{
+  "name": "test-skill-multiple-resources",
+  "description": "test-skill-multiple-resources-description",
+  "web_link": "https://test-skill-multiple-resources.org/",
+  "repo_link": "https://github.com/test-skill-multiple-resources",
+  "icon_link": "",
+  "tags": [],
+  "category": "test-category",
+  "resources": [
+    {
+      "name": "test-skill-multiple-resources in 24 Hours",
+      "authors": "Mr Skywalker",
+      "description": "test-skill-multiple-resources from Zero to Hero",
+      "web_link": "http://24-hour-test-skill-multiple-resources.com",
+      "category": "test-category",
+      "resource_authored_date": "2019-04-06T02:58:28.820Z",
+      "resource_added_date": "2019-12-13T01:58:26.820Z",
+      "tags": [],
+      "community_rating": 4.6,
+      "duration": "",
+      "estimated_effort": {
+        "min": "",
+        "max": "",
+        "period": ""
+      },
+      "intended_levels": [],
+      "items": [
+        {
+          "name": "Chapter 1: Welcome Tour",
+          "description": "What we going to be covering in this course",
+          "web_link": "http://24-hour-test-skill-multiple-resources.com/chapter1.html",
+          "duration": "PT15M"
+        },
+        {
+          "name": "Chapter 2: How to get the best out of this course",
+          "description": "This is a fast-paced course and we want you to get the best out of it",
+          "web_link": "http://24-hour-test-skill-multiple-resources.com/chapter2.html",
+          "duration": "PT15M"
+        },
+        {
+          "name": "Chapter 3: Setup",
+          "description": "We want to set you up for success, so you need the right tools",
+          "web_link": "http://24-hour-test-skill-multiple-resources.com/chapter3.html",
+          "duration": "PT30M"
+        }
+      ]
+    },
+    {
+      "name": "test-skill-multiple-resources in amazing skills",
+      "authors": "Mr Vader",
+      "description": "test-skill-multiple-resources from Zero to Hero",
+      "web_link": "http://amazing-skill-test-skill-multiple-resources.com",
+      "category": "test-category",
+      "resource_authored_date": "2020-11-13T00:55:31.820Z",
+      "resource_added_date": "2021-11-17T00:55:31.820Z",
+      "tags": [],
+      "community_rating": 4,
+      "duration": "P56D",
+      "estimated_effort": {
+        "min": "PT120M",
+        "max": "PT240M",
+        "period": "week"
+      },
+      "intended_levels": [],
+      "items": [
+        {
+          "name": "Module 1: Welcome",
+          "description": "What we going to be covering in this course",
+          "web_link": "http://amazing-skill-test-skill-multiple-resources.com/module1.html",
+          "duration": "PT45M"
+        },
+        {
+          "name": "Module 2: Lets get started",
+          "description": "This is a fast-paced course and we want you to get the best out of it",
+          "web_link": "http://amazing-skill-test-skill-multiple-resources.com/module2.html",
+          "duration": "PT55M"
+        },
+        {
+          "name": "Module 3: Hello World",
+          "description": "We want to set you up for success, so you need the right tools",
+          "web_link": "http://amazing-skill-test-skill-multiple-resources.com/module3.html",
+          "duration": "PT15M"
+        }
+      ]
+    }
+  ]
+}

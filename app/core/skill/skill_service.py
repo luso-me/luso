@@ -1,5 +1,3 @@
-import os
-from datetime import datetime
 from typing import IO
 
 import structlog
@@ -7,10 +5,8 @@ import structlog
 from app.config import settings
 from app.core.media.icon_service import IconService
 from app.core.media.media_service import MediaService
-from app.core.skill.model.base import SkillCreate, SkillUpdate
-from app.core.skill.model.resource import SkillResource, SkillResourceItem
+from app.core.skill.model.base import SkillCreate, SkillUpdate, SkillRead
 from app.database import get_db_client
-from app.repositories.base import BaseRepository
 from app.repositories.skill import SkillRepository, SkillAlreadyExistException
 
 log = structlog.get_logger()
@@ -27,18 +23,23 @@ class SkillService:
         self.icon_service = IconService()
 
     async def list_skills(self, limit: int = 1000):
+        log.info(f"Fetching [{limit}] skills")
         return await self.skill_repo.list(limit)
 
     async def find_skill(self, skill_name, limit=100):
+        log.info(f"Attempting to find skill with name [{skill_name}]")
         return await self.skill_repo.find({"name": skill_name}, limit=limit)
 
     async def get_skill(self, skill_id: str):
+        log.info(f"Attempting to get skill with id [{skill_id}]")
         return await self.skill_repo.get(skill_id)
 
     async def delete_skill(self, skill_id: str):
+        log.info(f"Deleting skill [{skill_id}]")
         await self.skill_repo.delete(skill_id)
 
     async def create_skill(self, skill: SkillCreate):
+        log.info(f"Attempting to create skill [{skill}]")
         if await self.check_if_skill_exist(skill.name):
             log.error(
                 f"Unable to create skill with name: [{skill.name}] because "
@@ -46,68 +47,36 @@ class SkillService:
             )
             raise SkillAlreadyExistException(f"Skill [{skill.name}] already exist")
 
-        self._set_default_values(skill)
+        skill.set_default_values(skill)
         await self._set_missing_icon(skill)
 
         return await self.skill_repo.create(skill)
 
     async def update_skill(self, skill_id: str, skill: SkillUpdate):
-        self._set_default_values(skill)
+        log.info(f"Updating skill [{skill_id}] with [{skill}]")
+        skill.set_default_values(skill)
 
         return await self.skill_repo.update(skill_id, skill)
 
     async def update_skill_icon(
         self, skill_id: str, skill_name: str, icon_name: str, icon_file: IO
-    ):
-        skill = SkillUpdate()
-        icon_name = self._generate_icon_name(skill_name, icon_name)
+    ) -> SkillRead:
+        log.info(f"Updating icon for skill [{skill_name}] with id [{skill_id}]")
+
+        skill = await self.get_skill(skill_id)
+        icon_name = skill.generate_icon_name(skill_name, icon_name)
         skill.icon_link = await self.media_service.upload_image(icon_name, icon_file)
 
         return await self.skill_repo.update(skill_id, skill)
 
-    def _generate_icon_name(self, skill_name: str, icon_name: str):
-        new_icon_name = skill_name.lower()
-        basename, ext = os.path.splitext(icon_name)
-
-        return f"{new_icon_name}{ext}"
-
     async def check_if_skill_exist(self, skill_name: str):
+        log.info(f"Checking if skill with name [{skill_name}] exists")
         skill = await self.skill_repo.find({"name": skill_name})
-        log.info(f"Skill is {skill}")
 
-        if skill:
-            return True
-
-        return False
-
-    def _set_default_values(self, skill):
-        if skill.resources is not None:
-            for resource in skill.resources:
-                if not resource.resource_added_date:
-                    self._set_resource_added_date(resource)
-                if not resource.id:
-                    self._set_resource_id(skill, resource)
-                for item in resource.items:
-                    if not item.id:
-                        self._set_resource_item_id(resource, item)
-
-    @staticmethod
-    def _set_resource_added_date(resource: SkillResource):
-        log.info(f"resource added date missing for resource: [{resource.name}]")
-        resource.resource_added_date = datetime.utcnow()
-
-    @staticmethod
-    def _set_resource_id(skill, resource: SkillResource):
-        log.info(f"resource id missing for skill: [{skill.name}]")
-        resource.id = BaseRepository.generate_uuid()
-
-    @staticmethod
-    def _set_resource_item_id(resource: SkillResource, item: SkillResourceItem):
-        log.info(f"item id missing for resource: [{resource.name}]")
-        item.id = BaseRepository.generate_uuid()
+        return True if skill else False
 
     async def _set_missing_icon(self, skill: SkillCreate):
         skill.icon_link = await self.media_service.upload_image(
-            self._generate_icon_name(skill.name, "default.svg"),
+            skill.generate_icon_name(skill.name, "default.svg"),
             await self.icon_service.generate_icon(skill.name),
         )

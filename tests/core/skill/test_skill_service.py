@@ -1,78 +1,33 @@
-from datetime import datetime
+import io
+from unittest import mock
 
-from app.core.skill.model.base import SkillCreate
-from app.core.skill.model.resource import SkillResource, SkillResourceItem
+import pytest
+
 from app.core.skill.skill_service import SkillService
+from tests.test_helper import create_skill_multiple_resources
 
 skill_service = SkillService()
 
 
-def test_generate_icon_name():
-    icon_name = "file.svg"
+@pytest.mark.asyncio
+@mock.patch("app.core.media.media_service.MediaService.upload_image")
+@mock.patch("app.repositories.skill.SkillRepository.update")
+async def test_update_skill_icon(mock_media_service, mock_skill_repo):
+    # mock_media_service.return_value = "https://s3.com/some-icon-link.svg"
+    mock_skill_repo.return_value = _create_skill()
 
-    result = skill_service._generate_icon_name("skill-x", icon_name)
-    assert result == "skill-x.svg"
+    # step 1: prove that the current code fails
 
-    result = skill_service._generate_icon_name("Skill X", icon_name)
-    assert result == "skill x.svg"
+    # get the resources on the return value
 
-    result = skill_service._generate_icon_name("Skill X Y", icon_name)
-    assert result == "skill x y.svg"
-
-    result = skill_service._generate_icon_name("Skill X:Y", icon_name)
-    assert result == "skill x:y.svg"
-
-    result = skill_service._generate_icon_name("SkillX", icon_name)
-    assert result == "skillx.svg"
-
-    result = skill_service._generate_icon_name("c++", icon_name)
-    assert result == "c++.svg"
-
-
-def test_set_default_values():
-    r1 = _create_resource("r1")
-    r2 = _create_resource("r2")
-
-    skill = SkillCreate(
-        description="s-desc-123",
-        web_link="s-link",
-        category="s-cat",
-        name="test-skills",
-        active=True,
-        resources=[r1, r2],
+    img_content = io.BytesIO(b"hello world: \x00\x01")
+    x = await skill_service.update_skill_icon(
+        "123", "some-skill", "some_icon", img_content
     )
-    skill_service._set_default_values(skill)
+    assert len(x.resources) == 2
 
-    assert type(r1.resource_added_date) == datetime
-    assert type(r2.resource_added_date) == datetime
-
-    assert len(r1.id) == 22
-    assert len(r1.items[0].id) == 22
-    assert len(r1.items[1].id) == 22
-
-    assert len(r2.id) == 22
-    assert len(r2.items[0].id) == 22
-    assert len(r2.items[1].id) == 22
+    # step 2: change the code so that it passes
 
 
-def _create_resource(identifier: str):
-    return SkillResource(
-        name=identifier,
-        description=f"{identifier}-desc",
-        category="r-cat",
-        authors=f"{identifier}-auth",
-        web_link=f"{identifier}-link",
-        items=_create_items(2, identifier),
-    )
-
-
-def _create_items(count: int, identifier: str):
-    items = []
-    for i in range(count):
-        items.append(
-            SkillResourceItem(
-                name=f"{identifier}-item-{i}", description=f"{identifier}-desc-{i}"
-            )
-        )
-
-    return items
+def _create_skill():
+    return create_skill_multiple_resources()
