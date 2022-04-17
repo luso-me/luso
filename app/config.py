@@ -1,3 +1,4 @@
+import os
 from typing import Optional, List
 
 from pydantic import BaseSettings
@@ -14,6 +15,7 @@ class AppSettings(BaseSettings):
     token_algorithm: str = "HS256"
     icons_s3_bucket: str
     icons_s3_bucket_region: str
+    base_dir: str = os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + "/../")
 
 
 settings = AppSettings()
