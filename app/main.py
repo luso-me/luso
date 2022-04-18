@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi.middleware.cors import CORSMiddleware
 import structlog
 
@@ -13,13 +15,17 @@ from app.config import settings
 log = structlog.get_logger()
 
 
+def _extract_cors() -> List[str]:
+    return settings.cors_allowed_origins.split(",")
+
+
 def get_application() -> FastAPI:
     application = FastAPI()
 
     # TODO: Add logging configuration
     application.add_middleware(
         middleware_class=CORSMiddleware,
-        allow_origins=settings.cors_allowed_origins,
+        allow_origins=_extract_cors(),
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
