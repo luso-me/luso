@@ -10,10 +10,10 @@ from app.core.user.model.user_skill import UserSkill
 statuses = ["Todo", "In Progress", "Done"]
 
 user_skill_ratings = [
-    "Beginner (typically 0 - 3 years xp)",
-    "Intermediate (typically 4 - 7 years xp)",
-    "Advanced (typically 7 - 12 years xp)",
-    "Expert (typically 12+ years xp)",
+    "Beginner",
+    "Intermediate",
+    "Advanced",
+    "Expert",
 ]
 
 time_horizons = [

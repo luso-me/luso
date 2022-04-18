@@ -22,7 +22,7 @@ class SkillService:
         )
         self.icon_service = IconService()
 
-    async def list_skills(self, limit: int = 1000):
+    async def list_skills(self, limit: int = 100):
         log.info(f"Fetching [{limit}] skills")
         return await self.skill_repo.list(limit)
 
