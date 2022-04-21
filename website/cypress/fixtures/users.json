@@ -1,0 +1,64 @@
+[
+  {
+    "id": "300",
+    "username": "laa#1240",
+    "github_user_id": "",
+    "display_name": "",
+    "email": "laa@skywalker.com",
+    "password": "yes",
+    "active": true,
+    "score": {
+      "gold": 100,
+      "points": 50
+    },
+    "skills": [
+      {
+        "skill_id": "100",
+        "user_rating": "Beginner (typically 0 - 3 years xp)",
+        "score": 29,
+        "confidence": 30,
+        "notes": "i love it!",
+        "used": [
+          {
+            "from_date": "2005-01-01",
+            "to_date": "2008-01-01",
+            "at": "University"
+          },
+          {
+            "from_date": "2010-10-01",
+            "to_date": "2015-08-04",
+            "at": "Groogle"
+          }
+        ]
+      }
+    ],
+    "plans": [
+      {
+        "id": "500",
+        "plan_name": "Operation Hammer",
+        "skill_id": "100",
+        "start_date": "2022-01-07T21:00:04.846Z",
+        "end_date": "2022-04-07T21:00:04.846Z",
+        "time_horizon": "3 - 6 months",
+        "notes": "I want to get great at Airflowz",
+        "status": "In Progress",
+        "objectives": [
+          {
+            "id": "700",
+            "resource_id": "200",
+            "resource_item_id": "600",
+            "start_date": "2022-01-22T21:00:04.846Z",
+            "end_date": "2022-01-31T21:00:04.846Z",
+            "status": "In Progress"
+          },
+          {
+            "id": "701",
+            "resource_id": "201",
+            "resource_item_id": "610",
+            "status": "Todo"
+          }
+        ]
+      }
+    ]
+  }
+]

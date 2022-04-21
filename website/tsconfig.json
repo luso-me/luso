@@ -1,0 +1,19 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "include": [
+    "src/**/*",
+    "./jest-setup.ts",
+  ],
+  "exclude": [
+    "node_modules/*",
+    "public/*"
+  ],
+  "compilerOptions": {
+    "allowJs": true, // allows js to also be compiled to esm syntax
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2020", // bump to ES2020 for Node 14 as per README
+    "importsNotUsedAsValues": "remove",
+    "types": ["jest", "node", "cypress", "@testing-library/cypress"],
+
+  }
+}

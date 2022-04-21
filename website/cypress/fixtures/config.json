@@ -1,0 +1,22 @@
+[
+  {
+    "id": "400",
+    "name": "resource_categories",
+    "value": [
+      "Book",
+      "Website",
+      "Course",
+      "Other"
+    ]
+  },
+  {
+    "id": "401",
+    "name": "skill_categories",
+    "value": [
+      "Languages & Frameworks",
+      "Platforms",
+      "Tools",
+      "Techniques"
+    ]
+  }
+]
