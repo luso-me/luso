@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10"]
+        python-version: ["3.9"]
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -31,9 +31,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install poetry
         poetry install
+      working-directory: server
     - name: Analysing the code with mypy
       run: |
        poetry run mypy --no-strict-optional --namespace-packages app
+      working-directory: server
     - name: Run pytest
       # Workaround for required env vars
       env:
@@ -42,6 +44,7 @@ jobs:
         ICONS_S3_BUCKET_REGION: some-region
       run: |
         poetry run pytest tests
+      working-directory: server
   build-and-push-image:
     needs: build
     runs-on: ubuntu-latest
@@ -73,7 +76,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: .
+          context: server/.
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
