@@ -59,3 +59,6 @@ A: Make sure that you activated your virtual env with `poetry shell`
 # Coding Standards
 
 Code is automatically formatted with black before checkin
+
+
+# Update IntelliJ instructions to mark `server` as root
