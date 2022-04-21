@@ -4,9 +4,9 @@ from datetime import datetime, timezone
 import pytest
 from fastapi.security import HTTPAuthorizationCredentials
 
-from server.app.core.auth.auth_service import create_access_token, get_payload
-from server.app.core.auth.exceptions import InvalidCredentialsException
-from server.app.core.auth.model.base import JWTPayload
+from app.core.auth.auth_service import create_access_token, get_payload
+from app.core.auth.exceptions import InvalidCredentialsException
+from app.core.auth.model.base import JWTPayload
 import base64
 
 

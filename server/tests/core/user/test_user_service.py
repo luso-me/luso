@@ -2,10 +2,10 @@ from datetime import datetime
 
 import pytest
 
-from server.app.core.user.model.base import UserRead, UserUpdate
-from server.app.core.user.model.skill_plan import SkillPlan, SkillPlanObjective
-from server.app.core.user.model.user_score import UserScore
-from server.app.core.user.user_service import UserService
+from app.core.user.model.base import UserRead, UserUpdate
+from app.core.user.model.skill_plan import SkillPlan, SkillPlanObjective
+from app.core.user.model.user_score import UserScore
+from app.core.user.user_service import UserService
 
 
 @pytest.fixture

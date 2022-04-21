@@ -3,7 +3,7 @@ from unittest import mock
 
 import pytest
 
-from server.app.core.media.media_service import MediaService
+from app.core.media.media_service import MediaService
 
 bucket = "some-bucket"
 region = "some-region"

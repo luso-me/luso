@@ -3,8 +3,8 @@ from http import HTTPStatus
 from fastapi import APIRouter
 from fastapi.responses import RedirectResponse
 
-from server.app.core.auth import github_service as github_core
-from server.app.core.auth.model.base import Token
+from app.core.auth import github_service as github_core
+from app.core.auth.model.base import Token
 
 router = APIRouter(prefix="/github")
 

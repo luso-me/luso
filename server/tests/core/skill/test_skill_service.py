@@ -3,7 +3,7 @@ from unittest import mock
 
 import pytest
 
-from server.app.core.skill.skill_service import SkillService
+from app.core.skill.skill_service import SkillService
 from tests.test_helper import create_skill_multiple_resources
 
 skill_service = SkillService()

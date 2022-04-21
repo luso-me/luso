@@ -7,11 +7,11 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer, SecurityS
 from jose import JWTError  # type: ignore
 from starlette.requests import Request
 
-from server.app.adapters.dependencies.db import user_repository
-from server.app.core.auth.auth_service import get_payload
-from server.app.core.auth.exceptions import InvalidCredentialsException
-from server.app.core.user.model.base import UserRead
-from server.app.repositories.user import UserRepository
+from app.adapters.dependencies.db import user_repository
+from app.core.auth.auth_service import get_payload
+from app.core.auth.exceptions import InvalidCredentialsException
+from app.core.user.model.base import UserRead
+from app.repositories.user import UserRepository
 
 auth_scheme = HTTPBearer()
 

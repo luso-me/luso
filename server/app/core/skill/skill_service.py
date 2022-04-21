@@ -2,12 +2,12 @@ from typing import IO
 
 import structlog
 
-from server.app.config import settings
-from server.app.core.media.icon_service import IconService
-from server.app.core.media.media_service import MediaService
-from server.app.core.skill.model.base import SkillCreate, SkillUpdate, SkillRead
-from server.app.database import get_db_client
-from server.app.repositories.skill import SkillRepository, SkillAlreadyExistException
+from app.config import settings
+from app.core.media.icon_service import IconService
+from app.core.media.media_service import MediaService
+from app.core.skill.model.base import SkillCreate, SkillUpdate, SkillRead
+from app.database import get_db_client
+from app.repositories.skill import SkillRepository, SkillAlreadyExistException
 
 log = structlog.get_logger()
 

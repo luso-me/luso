@@ -1,5 +1,5 @@
 import json
-from server.app.core.skill.model.base import SkillUpdate
+from app.core.skill.model.base import SkillUpdate
 import os
 from typing import Any
 
@@ -7,7 +7,7 @@ test_skills = "test_resources/skills"
 
 
 def file_to_json(path) -> Any:
-    from server.app.config import settings
+    from app.config import settings
 
     with open(os.path.join(settings.base_dir, path), "r") as f:
         data = f.read()

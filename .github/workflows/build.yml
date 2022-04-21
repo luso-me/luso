@@ -14,6 +14,10 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
+defaults:
+  run:
+    working-directory: server
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,11 +35,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install poetry
         poetry install
-      working-directory: server
     - name: Analysing the code with mypy
       run: |
        poetry run mypy --no-strict-optional --namespace-packages app
-      working-directory: server
     - name: Run pytest
       # Workaround for required env vars
       env:
@@ -44,7 +46,6 @@ jobs:
         ICONS_S3_BUCKET_REGION: some-region
       run: |
         poetry run pytest tests
-      working-directory: server
   build-and-push-image:
     needs: build
     runs-on: ubuntu-latest

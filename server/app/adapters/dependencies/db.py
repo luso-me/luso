@@ -1,8 +1,8 @@
 from typing import AsyncGenerator
 
-from server.app.database import get_db_client
-from server.app.repositories.skill import SkillRepository
-from server.app.repositories.user import UserRepository
+from app.database import get_db_client
+from app.repositories.skill import SkillRepository
+from app.repositories.user import UserRepository
 
 
 async def user_repository() -> AsyncGenerator[UserRepository, None]:

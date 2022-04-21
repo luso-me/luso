@@ -2,12 +2,12 @@ import asyncio
 import json
 from typing import List
 
-from server.app.core.skill.model.base import SkillCreate, SkillRead
-from server.app.core.skill.skill_service import SkillService
-from server.app.core.user import user_service
-from server.app.core.user.model.base import UserCreate
-from server.app.database import get_db_client
-from server.app.repositories.skill import SkillRepository
+from app.core.skill.model.base import SkillCreate, SkillRead
+from app.core.skill.skill_service import SkillService
+from app.core.user import user_service
+from app.core.user.model.base import UserCreate
+from app.database import get_db_client
+from app.repositories.skill import SkillRepository
 
 skill_repo = SkillRepository(
     db_client_factory=get_db_client, db_name="luso", collection_name="skills"

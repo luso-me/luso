@@ -3,10 +3,10 @@ from typing import List
 import structlog
 from fastapi import HTTPException, status, Depends, APIRouter, Security
 
-from server.app.adapters.dependencies.auth import get_current_user, user_repository
-from server.app.core.user.model.base import UserCreate, UserUpdate, UserRead
-from server.app.core.user.user_service import UserService
-from server.app.repositories.user import UserRepository
+from app.adapters.dependencies.auth import get_current_user, user_repository
+from app.core.user.model.base import UserCreate, UserUpdate, UserRead
+from app.core.user.user_service import UserService
+from app.repositories.user import UserRepository
 
 log = structlog.get_logger()
 

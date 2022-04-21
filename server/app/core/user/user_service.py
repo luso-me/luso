@@ -2,12 +2,12 @@ from typing import List, Optional, Dict
 
 import structlog
 
-from server.app.core.user.model.base import UserUpdate, UserCreate, UserRead
-from server.app.core.user.model.skill_plan import SkillPlan, SkillPlanObjective
-from server.app.core.user.model.user_score import UserScore
-from server.app.database import get_db_client
-from server.app.repositories.base import BaseRepository
-from server.app.repositories.user import UserRepository
+from app.core.user.model.base import UserUpdate, UserCreate, UserRead
+from app.core.user.model.skill_plan import SkillPlan, SkillPlanObjective
+from app.core.user.model.user_score import UserScore
+from app.database import get_db_client
+from app.repositories.base import BaseRepository
+from app.repositories.user import UserRepository
 
 log = structlog.get_logger()
 

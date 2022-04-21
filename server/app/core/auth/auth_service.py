@@ -5,9 +5,9 @@ from authlib.integrations.httpx_client import AsyncOAuth2Client  # type: ignore
 from fastapi.security import HTTPAuthorizationCredentials
 from jose import jwt, JWTError  # type: ignore
 
-from server.app.config import settings
-from server.app.core.auth.exceptions import InvalidCredentialsException
-from server.app.core.auth.model.base import JWTPayload
+from app.config import settings
+from app.core.auth.exceptions import InvalidCredentialsException
+from app.core.auth.model.base import JWTPayload
 
 log = structlog.get_logger()
 

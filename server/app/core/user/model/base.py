@@ -3,9 +3,9 @@ from typing import List, Optional
 import pydantic
 from pydantic import BaseModel, Field
 
-from server.app.core.user.model.skill_plan import SkillPlan
-from server.app.core.user.model.user_score import UserScore
-from server.app.core.user.model.user_skill import UserSkill
+from app.core.user.model.skill_plan import SkillPlan
+from app.core.user.model.user_score import UserScore
+from app.core.user.model.user_skill import UserSkill
 
 statuses = ["Todo", "In Progress", "Done"]
 

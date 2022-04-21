@@ -7,7 +7,7 @@ import shortuuid  # type: ignore
 import structlog
 from pydantic import BaseModel, Field
 
-from server.app.core.skill.model.resource import SkillResource, SkillResourceItem
+from app.core.skill.model.resource import SkillResource, SkillResourceItem
 
 log = structlog.get_logger()
 resource_categories = ["Book", "Website", "Course", "Other"]

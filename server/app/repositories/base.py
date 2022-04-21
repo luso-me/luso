@@ -5,7 +5,7 @@ import shortuuid  # type: ignore
 import structlog
 from pydantic import BaseModel
 
-from server.app.repositories.exceptions import (
+from app.repositories.exceptions import (
     DocumentNotFoundException,
     DocumentCouldNotBeCreatedException,
 )

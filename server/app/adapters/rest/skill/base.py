@@ -13,10 +13,10 @@ from fastapi import (
     Security,
 )
 
-from server.app.adapters.dependencies.auth import get_current_user
-from server.app.core.skill.model.base import SkillCreate, SkillRead, SkillUpdate
-from server.app.core.skill.skill_service import SkillService
-from server.app.core.user.model.base import UserRead
+from app.adapters.dependencies.auth import get_current_user
+from app.core.skill.model.base import SkillCreate, SkillRead, SkillUpdate
+from app.core.skill.skill_service import SkillService
+from app.core.user.model.base import UserRead
 
 log = structlog.get_logger()
 

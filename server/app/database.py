@@ -1,6 +1,6 @@
 from motor.motor_asyncio import AsyncIOMotorClient  # type: ignore
 
-from server.app.config import settings
+from app.config import settings
 
 client: AsyncIOMotorClient = None
 

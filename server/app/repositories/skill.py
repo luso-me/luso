@@ -1,7 +1,7 @@
 from typing import Type
 
-from server.app.core.skill.model.base import SkillRead, SkillUpdate, SkillCreate
-from server.app.repositories.base import BaseRepository
+from app.core.skill.model.base import SkillRead, SkillUpdate, SkillCreate
+from app.repositories.base import BaseRepository
 
 
 class SkillRepository(BaseRepository[SkillCreate, SkillRead, SkillUpdate]):

@@ -1,6 +1,6 @@
 import shutil
 
-from server.app.core.media.icon_service import IconService
+from app.core.media.icon_service import IconService
 
 
 async def test_generate_icon():

@@ -1,7 +1,7 @@
 from typing import Type
 
-from server.app.core.user.model.base import UserCreate, UserRead, UserUpdate
-from server.app.repositories.base import BaseRepository
+from app.core.user.model.base import UserCreate, UserRead, UserUpdate
+from app.repositories.base import BaseRepository
 
 
 class UserRepository(BaseRepository[UserCreate, UserRead, UserUpdate]):

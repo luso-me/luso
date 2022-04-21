@@ -1,7 +1,7 @@
-from server.app.core.skill.model.base import SkillUpdate, SkillCreate
+from app.core.skill.model.base import SkillUpdate, SkillCreate
 from datetime import datetime
 
-from server.app.core.skill.model.resource import SkillResource, SkillResourceItem
+from app.core.skill.model.resource import SkillResource, SkillResourceItem
 
 
 def test_generate_icon_name():

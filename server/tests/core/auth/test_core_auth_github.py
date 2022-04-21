@@ -3,9 +3,9 @@ from urllib.parse import urlparse, parse_qs
 
 import pytest
 
-from server.app.adapters.rest.auth import github
-from server.app.core.auth import github_service
-from server.app.core.auth.exceptions import GithubCredentialsException
+from app.adapters.rest.auth import github
+from app.core.auth import github_service
+from app.core.auth.exceptions import GithubCredentialsException
 
 
 class MockGettableDict(dict):

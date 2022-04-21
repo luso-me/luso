@@ -1,7 +1,7 @@
 import pytest
 from fastapi import HTTPException
 
-from server.app.adapters.dependencies.auth import check_permission
+from app.adapters.dependencies.auth import check_permission
 
 
 def test_check_permissions():

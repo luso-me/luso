@@ -5,10 +5,10 @@ from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from server.app.adapters.rest.auth.routes import router as auth_router
-from server.app.adapters.rest.skill.routes import router as skill_router
-from server.app.adapters.rest.user.routes import router as user_router
-from server.app.config import settings
+from app.adapters.rest.auth.routes import router as auth_router
+from app.adapters.rest.skill.routes import router as skill_router
+from app.adapters.rest.user.routes import router as user_router
+from app.config import settings
 
 log = structlog.get_logger()
 
