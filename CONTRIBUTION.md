@@ -276,9 +276,16 @@ This ensures that your working branch has the latest changes from `luso.me/luso`
 
 #### Website
 
-##### create local config
+* To run unit tests:
 
-name: cypress.env.json
+```sh
+$/website> npm run test
+```
+
+Make sure the linter does not report any issues and that all tests pass. Please do not 
+submit patches that fail either check.
+
+* Create `cypress.env.json` for running integration tests
 
 content:
 
@@ -289,13 +296,6 @@ content:
   "userId": "<your_user_id>"
 }
 ```
-
-```sh
-$/website> npm run test
-```
-
-Make sure the linter does not report any issues and that all tests pass. Please do not 
-submit patches that fail either check.
 
 ##### Server
 
