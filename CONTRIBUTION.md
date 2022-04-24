@@ -148,9 +148,40 @@ $ git remote add upstream https://github.com/luso.me/luso.git
 $ git fetch upstream
 ```
 
-#### TODO: Step 2: Build
+#### Step 2: Build
 
-BEGIN HERE
+##### Website
+
+- create .env file in the `website/` directory and set the following env variables:
+
+```
+API_URL=http://localhost:5000
+ROLLUP_WATCH=true
+```
+
+##### Server
+
+- create .env file in the `server/` directory and set the following env variables:
+
+```shell
+MONGO_CONNECTION_URL=mongodb://localhost:27017
+GITHUB_CLIENT_ID=<github client id> (see notes on how to find it)
+GITHUB_CLIENT_SECRET=<github client secret> (see notes on how to find it)
+TOKEN_SECRET_KEY=<any random string> (see notes on how to generate)
+ICONS_S3_BUCKET=mybucket
+ICONS_S3_BUCKET_REGION=eu-west-1
+```
+
+- To activate the virtual env from your shell
+  ```
+  poetry shell
+  ```
+- To find GITHUB_CLIENT_ID do ...
+- To find GITHUB_CLIENT_SECRET do ...
+- TOKEN_SECRET_KEY generation
+  ```shell
+  openssl rand -hex 32
+  ```
 
 #### Step 3: Branch
 
@@ -241,25 +272,36 @@ $ git rebase upstream/master
 
 This ensures that your working branch has the latest changes from `luso.me/luso` master.
 
-### TODO: Step 7: Test
+### Step 7: Test
 
----
+#### Website
 
-Bug fixes and features should always come with tests. A [testing guide](testing.md) has
-been provided to make the process easier. Looking at other tests to see how they
-should be structured can also help.
+##### create local config
 
-Before submitting your changes in a pull request, always run the full
-test suite. To run the tests:
+name: cypress.env.json
 
-```sh
-$ npm run test
+content:
+
+```json
+{
+  "baseUrl": "http://localhost:7000",
+  "jwtAccessToken": "<get_valid_jwt_token_from_svelte_store>",
+  "userId": "<your_user_id>"
+}
 ```
 
-Make sure the linter does not report any issues and that all tests pass.
-Please do not submit patches that fail either check.
+```sh
+$/website> npm run test
+```
 
----
+Make sure the linter does not report any issues and that all tests pass. Please do not 
+submit patches that fail either check.
+
+##### Server
+
+```sh
+$/server> pytest tests
+```
 
 ### Step 8: Push
 
@@ -349,16 +391,16 @@ These are the style guidelines for coding in Luso.
 
 * End files with a newline.
 * Place requires in the following order:
-  ** Built in Node Modules (such as path)
-  ** Local Modules (using relative paths)
+  * Built in Node Modules (such as path)
+  * Local Modules (using relative paths)
 * Place class properties in the following order:
-  ** Class methods and properties (methods starting with a @)
-  ** Instance methods and properties
+  * Class methods and properties (methods starting with a @)
+  * Instance methods and properties
 * Avoid platform-dependent code:
-  ** Use path.join() to concatenate filenames.
-  ** Use os.tmpdir() rather than /tmp when you need to reference the temporary directory.
+  * Use path.join() to concatenate filenames.
+  * Use os.tmpdir() rather than /tmp when you need to reference the temporary directory.
 * Using a plain return when returning explicitly at the end of a function.
-  ** Not return null, return undefined, null or undefined
+  * Not return null, return undefined, null or undefined
 
 #### Python
 
