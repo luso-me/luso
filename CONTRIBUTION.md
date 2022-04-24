@@ -17,11 +17,11 @@ we would really appreciate your contribution:
 * [Source Code](#source-code)
     * [Issues](#issues)
     * [Pull Requests](#pull-requests)
-* [Discussions](#discussions)
+* Discussions
     * Feature Requests & Ideas
     * Q & A
     * Community participation
-* [Content](#content)
+* Content
     * Resources
     * Artwork
 
@@ -49,8 +49,8 @@ For any issue, there are fundamentally three ways an individual can contribute:
 
 ### Asking for General Help
 
-[Where can I get more help?](README.md#where-can-i-get-more-help) has a list of resources 
-for getting programming help, reporting security issues, contributing, and more. 
+[Where can I get more help?](README.md#where-can-i-get-more-help) has a list of resources
+for getting programming help, reporting security issues, contributing, and more.
 
 Please use the [issue tracker](https://github.com/luso-me/luso/issues) for bugs only!
 
@@ -118,7 +118,7 @@ dependencies, and tools contained in the `luso.me/luso` repository.
 #### Prerequisites
 
 * Docker (for Mongo)
-  * `docker run --name lusodb --rm -d -p 27017:27017 mongo:4.4.6`
+    * `docker run --name lusodb --rm -d -p 27017:27017 mongo:4.4.6`
 * Python >= 3.9.
 * Node.js >= 14.
 
@@ -134,9 +134,7 @@ $ git remote add upstream https://github.com/luso.me/luso.git
 $ git fetch upstream
 ```
 
-#### Step 2: Build
-
-TODO
+#### TODO: Step 2: Build
 
 #### Step 3: Branch
 
@@ -151,7 +149,18 @@ $ git checkout -b my-branch -t upstream/master
 
 #### Step 4: Code
 
-TODO
+Most pull requests opened against this repository include changes to either the Python 
+code in the `server/` directory, the TypeScript/Svelte code in the `website/` directory 
+or the documentation in `docs/` directory.
+
+Please be sure to run the following linters from time to on any code changes to ensure 
+that you follow the project's code style:
+
+* For Python - run `black` in the `server/` directory.
+* For TypeScript/Svelte - run `npm run lint` in the `website/` directory.
+
+See coding style for more information about best practice when modifying code in different
+parts of the project.
 
 #### Step 5: Commit
 
@@ -204,4 +213,122 @@ Other things to keep in mind when writing a commit message:
 2. Keep the second line blank.
 3. Wrap all other lines at 72 columns.
 
+### Step 6: Rebase
 
+Once you have committed your changes, it is a good idea to use `git rebase`
+(not `git merge`) to synchronize your work with the main repository.
+
+```sh
+$ git fetch upstream
+$ git rebase upstream/master
+```
+
+This ensures that your working branch has the latest changes from `luso.me/luso` master.
+
+### TODO: Step 7: Test
+
+---
+
+Bug fixes and features should always come with tests. A [testing guide](testing.md) has
+been provided to make the process easier. Looking at other tests to see how they
+should be structured can also help.
+
+Before submitting your changes in a pull request, always run the full
+test suite. To run the tests:
+
+```sh
+$ npm run test
+```
+
+Make sure the linter does not report any issues and that all tests pass.
+Please do not submit patches that fail either check.
+
+If you are updating tests and want to run a single spec to check it:
+
+```sh
+$ npm run test -match=menu
+```
+
+The above would only run spec modules matching `menu`, which is useful for
+anyone who's working on tests that would otherwise be at the very end of
+the testing cycle.
+
+---
+
+### Step 8: Push
+
+Once your commits are ready to go **_with passing tests and linting_**
+begin the process of opening a pull request by pushing your working branch
+to your fork on GitHub.
+
+```sh
+$ git push origin my-branch
+```
+
+### Step 9: Opening the Pull Request
+
+From within GitHub, opening a new pull request will present you with a template
+that should be filled out. It can be found
+[here](https://github.com/luso.me/luso/blob/master/.github/PULL_REQUEST_TEMPLATE.md).
+
+If you do not adequately complete this template, your PR may be delayed in being merged as
+maintainers seek more information or clarify ambiguities.
+
+### Step 10: Discuss and update
+
+You will probably get feedback or requests for changes to your pull request.
+This is a big part of the submission process so don't be discouraged! Some
+contributors may sign off on the pull request right away. Others may have
+detailed comments or feedback. This is a necessary part of the process
+in order to evaluate whether the changes are correct and necessary.
+
+To make changes to an existing pull request, make the changes to your local
+branch, add a new commit with those changes, and push those to your fork.
+GitHub will automatically update the pull request.
+
+```sh
+$ git add my/changed/files
+$ git commit
+$ git push origin my-branch
+```
+
+There are a number of more advanced mechanisms for managing commits using
+`git rebase` that can be used, but are beyond the scope of this guide.
+
+Feel free to post a comment in the pull request to ping reviewers if you are
+awaiting an answer on something. If you encounter words or acronyms that
+seem unfamiliar, refer to this [glossary](docs/glossary.md).
+
+#### Approval and Request Changes Workflow
+
+Whenever a maintainer reviews a pull request they may request changes. These may be
+small, such as fixing a typo, or may involve substantive changes. Such requests are
+intended to be helpful, but at times may come across as abrupt or unhelpful, especially
+if they do not include concrete suggestions on *how* to change them.
+
+Try not to be discouraged. If you feel that a review is unfair, say so or seek
+the input of another project contributor. Often such comments are the result of
+a reviewer having taken insufficient time to review and are not ill-intended.
+Such difficulties can often be resolved with a bit of patience. That said,
+reviewers should be expected to provide helpful feedback.
+
+### Step 11: Landing
+
+In order to land, a pull request needs to be reviewed and approved by
+at least one Maintainer and pass CI. After that, if there are no
+objections from other contributors, the pull request can be merged.
+
+Congratulations and thanks for your contribution!
+
+### Continuous Integration Testing
+
+Every pull request is tested on the Continuous Integration (CI) system to confirm that
+it works.
+
+Ideally, the pull request will pass ("be green") on GitHub actions.
+This means that all tests pass and there are no linting errors.
+Each CI failure must be manually inspected to determine the cause.
+
+CI starts automatically when you open a pull request, but only
+core maintainers can restart a CI run. If you believe CI is giving a
+false negative, ask a maintainer to restart the tests.
