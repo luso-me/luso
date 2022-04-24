@@ -5,18 +5,19 @@ import {MissionObjective, MissionPlan} from "../types/web/user";
 import {userInfoStore} from "../stores";
 
 class UserService {
-
   updateUserInfoStore() {
-    this.me().then(user=>{
-      userInfoStore.update(u => {
-        u.id = user.id;
-        u.gold = user.score.gold;
-        u.points = user.score.points;
-        return u;
+    this.me()
+      .then((user) => {
+        userInfoStore.update((u) => {
+          u.id = user.id;
+          u.gold = user.score.gold;
+          u.points = user.score.points;
+          return u;
+        });
       })
-    }).catch((err)=>{
-        console.log("failed to update user", err)
-    })
+      .catch((err) => {
+        console.log("failed to update user", err);
+      });
   }
 
   getAll(): Promise<any> {
@@ -48,13 +49,13 @@ class UserService {
       return 0;
     }
 
-    const done = spos.filter(c => c.status === "Done").length;
+    const done = spos.filter((c) => c.status === "Done").length;
 
     return Math.trunc((done / spos.length) * 100) / 100;
   }
 
   createMissionPlan(skills: Skill[], sp: SkillPlan) {
-    const skill: Skill[] = skills.filter(s => s.id === sp.skill_id);
+    const skill: Skill[] = skills.filter((s) => s.id === sp.skill_id);
 
     if (skill.length === 0) {
       throw new Error("Skill could not be found");
@@ -70,7 +71,7 @@ class UserService {
     mp.start_date = sp.start_date;
     mp.end_date = sp.end_date;
 
-    sp.objectives.forEach(skillPlanObjective => {
+    sp.objectives.forEach((skillPlanObjective) => {
       mp.objectives.push(this.createMissionObjective(skill[0], skillPlanObjective));
     });
 
@@ -80,8 +81,12 @@ class UserService {
   createMissionObjective(skill: Skill, spo: SkillPlanObjective) {
     let mo = new MissionObjective();
 
-    const resource: SkillResource[] = skill.resources.filter(r => r.id === spo.resource_id);
-    const resourceItem = resource[0].items.filter(ri => ri.id === spo.resource_item_id);
+    const resource: SkillResource[] = skill.resources.filter(
+      (r) => r.id === spo.resource_id
+    );
+    const resourceItem = resource[0].items.filter(
+      (ri) => ri.id === spo.resource_item_id
+    );
 
     mo.id = spo.id;
     mo.resource_id = spo.resource_id;

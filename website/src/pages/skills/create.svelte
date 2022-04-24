@@ -1,16 +1,16 @@
 <script lang="ts">
-  import Card, {Content} from '@smui/card';
-  import Textfield from '@smui/textfield';
-  import IconButton from '@smui/icon-button';
-  import HelperText from '@smui/textfield/helper-text';
-  import CharacterCounter from '@smui/textfield/character-counter';
-  import Button, {Icon, Label} from '@smui/button';
-  import DataTable, {Body, Cell as TableCell, Head, Row} from '@smui/data-table';
-  import Dialog, {Actions, Content as DialogContent, Header, Title} from '@smui/dialog';
+  import Card, {Content} from "@smui/card";
+  import Textfield from "@smui/textfield";
+  import IconButton from "@smui/icon-button";
+  import HelperText from "@smui/textfield/helper-text";
+  import CharacterCounter from "@smui/textfield/character-counter";
+  import Button, {Icon, Label} from "@smui/button";
+  import DataTable, {Body, Cell as TableCell, Head, Row} from "@smui/data-table";
+  import Dialog, {Actions, Content as DialogContent, Header, Title} from "@smui/dialog";
   import Select, {Option} from "@smui/select";
   import {Skill, SkillResource, SkillResourceItem} from "../../types/api/skill";
   import SkillService from "../../services/skill-service";
-  import {goto} from '@roxi/routify';
+  import {goto} from "@roxi/routify";
   import StarRating from "svelte-star-rating/src/StarRating.svelte";
   import Slider from "@smui/slider";
   import FormField from "@smui/form-field";

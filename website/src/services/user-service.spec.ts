@@ -14,7 +14,7 @@ test("should calculate progress", () => {
   let sp3 = new SkillPlanObjective().createDefaultInstance();
   sp3.status = statuses[2];
 
-  let result = userService.calculateProgress([sp1, sp2, sp3])
+  let result = userService.calculateProgress([sp1, sp2, sp3]);
   expect(result).toBe(0.33);
 
   // empty array
@@ -24,7 +24,6 @@ test("should calculate progress", () => {
   // all done
   sp1.status = statuses[2];
   sp2.status = statuses[2];
-  result = userService.calculateProgress([sp1, sp2, sp3])
+  result = userService.calculateProgress([sp1, sp2, sp3]);
   expect(result).toBe(1);
 });
-

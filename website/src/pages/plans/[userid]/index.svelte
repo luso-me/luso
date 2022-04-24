@@ -2,13 +2,13 @@
   import {SkillPlanObjective, User} from "../../../types/api/user";
   import ToolTip, {Wrapper} from "@smui/tooltip";
   import {onMount} from "svelte";
-  import LayoutGrid, {Cell} from '@smui/layout-grid';
-  import Card, {Actions, Content} from '@smui/card';
+  import LayoutGrid, {Cell} from "@smui/layout-grid";
+  import Card, {Actions, Content} from "@smui/card";
   import UserService from "../../../services/user-service";
   import Button, {Icon, Label} from "@smui/button";
   import DataTable, {Body, Cell as TableCell, Head, Row} from "@smui/data-table";
   import LinearProgress from "@smui/linear-progress";
-  import {goto, params, url} from '@roxi/routify';
+  import {goto, params, url} from "@roxi/routify";
   import TabBar from "@smui/tab-bar";
   import Tab, {Icon as TabIcon, Label as TabLabel} from "@smui/tab";
   import {DateTime, Duration} from "luxon";

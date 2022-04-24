@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Button, {Icon, Label} from '@smui/button';
+  import Button, {Icon, Label} from "@smui/button";
   import {goto} from "@roxi/routify";
   import Select, {Option} from "@smui/select";
-  import FullCalendar, {PluginDef} from 'svelte-fullcalendar';
-  import dayGridPlugin from '@fullcalendar/daygrid';
-  import timeGridPlugin from '@fullcalendar/timegrid';
-  import interactionPlugin from '@fullcalendar/interaction';
+  import FullCalendar, {PluginDef} from "svelte-fullcalendar";
+  import dayGridPlugin from "@fullcalendar/daygrid";
+  import timeGridPlugin from "@fullcalendar/timegrid";
+  import interactionPlugin from "@fullcalendar/interaction";
   import LayoutGrid, {Cell} from "@smui/layout-grid";
   import FormField from "@smui/form-field";
   import Radio from "@smui/radio";

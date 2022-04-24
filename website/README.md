@@ -1,10 +1,12 @@
-# Luso
+# Local Dev
 
-# Project Goal
+- create .env file in the same directory as this file with the following contents
 
-Helping you manage* improving your technical skills, in a fun and engaging way.
+```
+API_URL=http://localhost:5000
+ROLLUP_WATCH=true
+```
 
-*manage = plan, execute & track
 
 ## Starting Local Server
 
@@ -32,17 +34,14 @@ name: cypress.env.json
 
 content:
 
+```json
 {
   "baseUrl": "http://localhost:7000",
-  "jwtAccessToken": "<get_valid_jwt_token_from_svelte_store>"
+  "jwtAccessToken": "<get_valid_jwt_token_from_svelte_store>",
   "userId": "<your_user_id>"
 }
+```
 
-# Local Dev
-
-- create .env file in the same directory as this file with the following contents
-
-API_URL=http://localhost:5000
 
 # axios
 

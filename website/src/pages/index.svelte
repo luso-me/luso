@@ -12,10 +12,10 @@
   Dashboard Here
 {:else}
   <LayoutGrid>
-    <Hero/>
-    <Features/>
-    <Mechanics/>
-    <Drivers/>
-    <Faq/>
+    <Hero />
+    <Features />
+    <Mechanics />
+    <Drivers />
+    <Faq />
   </LayoutGrid>
 {/if}

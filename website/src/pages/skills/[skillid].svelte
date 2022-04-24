@@ -1,16 +1,16 @@
 <script lang="ts">
-  import Card, {Content} from '@smui/card';
-  import DataTable, {Body, Cell as TableCell, Head, Row} from '@smui/data-table';
-  import IconButton from '@smui/icon-button';
+  import Card, {Content} from "@smui/card";
+  import DataTable, {Body, Cell as TableCell, Head, Row} from "@smui/data-table";
+  import IconButton from "@smui/icon-button";
   import {Skill, SkillResource, SkillResourceItem} from "../../types/api/skill";
   import SkillService from "../../services/skill-service"
   import {onMount} from "svelte";
-  import {params} from '@roxi/routify'
+  import {params} from "@roxi/routify";
   import StarRating from "svelte-star-rating/src/StarRating.svelte";
   import {longHumanizer, shortHumanizer} from "../../utils/date-utils";
   import {Duration} from "luxon";
   import Button, {Icon, Label} from "@smui/button";
-  import Dialog, {Actions, Content as DialogContent, Header, Title} from '@smui/dialog';
+  import Dialog, {Actions, Content as DialogContent, Header, Title} from "@smui/dialog";
 
   let skillResourceOpen = false;
 

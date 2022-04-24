@@ -9,7 +9,7 @@ const axiosAPI: AxiosInstance = axios.create({
 let token = <Token>{};
 authStore.subscribe((value) => (token=value))
 
-const apiRequest = (method, url: string, data?: any) => {
+const apiRequest = (method: any, url: string, data?: any) => {
   const headers = {
     authorization: "Bearer " + token.access_token,
     "Content-type": "application/json",
@@ -26,7 +26,7 @@ const apiRequest = (method, url: string, data?: any) => {
   .catch(err => {
     if (err.response.status === 401) {
       console.log(err.response.status + ' re-directing to /auth/github');
-      window.location.href = '/auth/github';
+      window.location.href = "/auth/github";
     }
     return Promise.reject(err);
   });

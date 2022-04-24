@@ -30,23 +30,23 @@ y.items.push(y4, y5, y6);
 
 
 test("test unchecked all", () => {
-  let master = [x1, x2, x3];
-  let checked = [];
-  let added = [x1, x2, x3];
-  let expected = [];
+  const master = [x1, x2, x3];
+  const checked: SkillResourceItem[] = [];
+  const added = [x1, x2, x3];
+  const expected = [];
 
-  let result = doStuff(master, checked, added)
+  const result = doStuff(master, checked, added)
 
   expect(result.length).toBe(expected.length);
 });
 
 test("test checked none multiple addeds", () => {
-  let master = [x1, x2, x3];
-  let checked = [x1, x3];
-  let added = [x1, x2, x3];
-  let expected = [x1, x3];
+  const master = [x1, x2, x3];
+  const checked = [x1, x3];
+  const added = [x1, x2, x3];
+  const expected = [x1, x3];
 
-  let result = doStuff(master, checked, added)
+  const result = doStuff(master, checked, added)
 
   expect(result.length).toBe(expected.length);
   expect(result[0]).toBe(expected[0]);
@@ -54,12 +54,12 @@ test("test checked none multiple addeds", () => {
 });
 
 test("test swap multiple addeds", () => {
-  let master = [x1, x2, x3];
-  let checked = [x1, x3];
-  let added = [x2, y4];
-  let expected = [x1, x3, y4];
+  const master = [x1, x2, x3];
+  const checked = [x1, x3];
+  const added = [x2, y4];
+  const expected = [x1, x3, y4];
 
-  let result = doStuff(master, checked, added)
+  const result = doStuff(master, checked, added)
 
   expect(result.length).toBe(expected.length);
   expect(result[0]).toBe(expected[2]);
@@ -68,24 +68,24 @@ test("test swap multiple addeds", () => {
 });
 
 test("test swap single added", () => {
-  let master = [x1, x2, x3];
-  let checked = [x1];
-  let added = [x2];
-  let expected = [x1];
+  const master = [x1, x2, x3];
+  const checked = [x1];
+  const added = [x2];
+  const expected = [x1];
 
-  let result = doStuff(master, checked, added)
+  const result = doStuff(master, checked, added)
 
   expect(result.length).toBe(1);
   expect(result[0]).toBe(expected[0]);
 });
 
 test("test empty added", () => {
-  let master = [x1, x2];
-  let checked = [x1];
-  let added = [];
-  let expected = [x1];
+  const master = [x1, x2];
+  const checked = [x1];
+  const added: SkillResourceItem[] = [];
+  const expected = [x1];
 
-  let result = doStuff(master, checked, added)
+  const result = doStuff(master, checked, added)
 
   expect(result.length).toBe(1);
   expect(result[0]).toBe(expected[0]);
@@ -95,7 +95,7 @@ function doStuff(master: SkillResourceItem[],
                  checked: SkillResourceItem[],
                  added: SkillResourceItem[]) {
 
-  let masterChecked = master.filter(i => !checked.map(s => s.id).includes(i.id));
+  const masterChecked = master.filter(i => !checked.map(s => s.id).includes(i.id));
   added = added.filter(a => !masterChecked.includes(a));
 
   checked.forEach(i => {

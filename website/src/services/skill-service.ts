@@ -1,7 +1,6 @@
 import API from "../api";
 
 class SkillService {
-
   getAll(): Promise<any> {
     return API.get("/skills?limit=1000");
   }
@@ -21,7 +20,6 @@ class SkillService {
   delete(id: any): Promise<any> {
     return API.delete(`/skills/${id}`);
   }
-
 }
 
 export default SkillService;

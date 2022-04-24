@@ -14,22 +14,21 @@ export const shortHumanizer = humanizeDuration.humanizer({
       h: () => "h",
       m: () => "m",
       s: () => "s",
-      ms: () => "ms",
-    },
-  },
+      ms: () => "ms"
+    }
+  }
 });
 
 export const longHumanizer = humanizeDuration.humanizer({
   largest: 1,
-  round: false,
+  round: false
 });
 
 export class DateUtils {
-
   static determineEndDateForTimeHorizon(time_horizon: string, now: DateTime) {
     // because we get a string back from the server and not doing any forced conversion
     // into DateTime type
-    if (typeof now === 'string') {
+    if (typeof now === "string") {
       now = DateTime.fromISO(now);
     }
 

@@ -3,9 +3,9 @@ import {statuses} from "./const";
 
 
 export class UserSkillUsed {
-  from_date: string;
-  to_date?: string;
-  at: string;
+  from_date: string = "";
+  to_date?: string = "";
+  at: string = "";
 
   createDefaultInstance() {
     this.at = "";
@@ -17,12 +17,12 @@ export class UserSkillUsed {
 }
 
 export class UserSkill {
-  skill_id: string;
-  user_rating: string;
-  score: number;
-  confidence: number;
-  notes: string;
-  used: UserSkillUsed[];
+  skill_id: string = "";
+  user_rating: string = "";
+  score: number = 0;
+  confidence: number = 0;
+  notes: string = "";
+  used: UserSkillUsed[] = [];
 
   createDefaultInstance() {
     this.notes = "";
@@ -38,16 +38,16 @@ export interface UserScore {
 }
 
 export class User {
-  id: string;
-  username: string;
-  github_user_id: string;
-  display_name: string;
-  active: boolean;
+  id: string = "";
+  username: string = "";
+  github_user_id: string = "";
+  display_name: string = "";
+  active!: boolean;
   email?: string;
   password?: string;
   skills?: UserSkill[];
-  plans?: SkillPlan[];
-  score: UserScore;
+  plans: SkillPlan[] = [];
+  score!: UserScore;
 
   createDefaultInstance() {
     this.plans = [];
@@ -69,12 +69,12 @@ export interface UserInfo {
 }
 
 export class SkillPlanObjective {
-  id: string;
-  resource_id: string;
-  resource_item_id: string;
-  start_date: DateTime;
-  end_date: DateTime;
-  status: string;
+  id: string = "";
+  resource_id: string = "";
+  resource_item_id: string = "";
+  start_date!: DateTime;
+  end_date!: DateTime;
+  status: string = "";
 
   createDefaultInstance() {
     this.id = "";
@@ -85,15 +85,15 @@ export class SkillPlanObjective {
 
 export class SkillPlan {
 
-  id: string;
-  plan_name: string;
-  skill_id: string;
-  start_date: DateTime;
-  end_date: DateTime;
-  time_horizon: string;
-  notes: string;
-  status: string;
-  objectives: SkillPlanObjective[];
+  id: string = "";
+  plan_name: string = "";
+  skill_id: string = "";
+  start_date!: DateTime;
+  end_date!: DateTime;
+  time_horizon: string = "";
+  notes: string = "";
+  status: string = "";
+  objectives: SkillPlanObjective[] = [];
 
   createDefaultInstance() {
     this.plan_name = "";

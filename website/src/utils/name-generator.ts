@@ -1,11 +1,10 @@
 export class NameGenerator {
-
-  static capitalizeFirst(str) {
+  static capitalizeFirst(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  static getRandomInt(max) {
-    return Math.floor(Math.random() * (max));
+  static getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
   }
 
   static generateName() {
@@ -15,6 +14,6 @@ export class NameGenerator {
     const randomName1 = this.capitalizeFirst(name1[this.getRandomInt(name1.length)]);
     const randomName2 = this.capitalizeFirst(name2[this.getRandomInt(name2.length)]);
 
-    return randomName1 + ' ' + randomName2;
+    return randomName1 + " " + randomName2;
   }
 }

@@ -2,13 +2,13 @@
 
   import ToolTip, {Wrapper} from "@smui/tooltip";
   import {onMount} from "svelte";
-  import DataTable, {Body, Cell as TableCell, Head, Row} from '@smui/data-table';
-  import IconButton from '@smui/icon-button';
-  import Button, {Icon, Label} from '@smui/button';
-  import LayoutGrid, {Cell} from '@smui/layout-grid';
-  import Card, {Content} from '@smui/card';
+  import DataTable, {Body, Cell as TableCell, Head, Row} from "@smui/data-table";
+  import IconButton from "@smui/icon-button";
+  import Button, {Icon, Label} from "@smui/button";
+  import LayoutGrid, {Cell} from "@smui/layout-grid";
+  import Card, {Content} from "@smui/card";
   import SkillService from "../../services/skill-service";
-  import {goto, url} from '@roxi/routify';
+  import {goto, url} from "@roxi/routify";
   import {Skill} from "../../types/api/skill";
   import jwtDecode from "jwt-decode";
   import {authStore} from "../../stores";

@@ -1,20 +1,20 @@
 <script lang="ts">
 
-  import {Title} from '@smui/dialog';
+  import {Title} from "@smui/dialog";
   import {Skill} from "../../../types/api/skill";
   import {User} from "../../../types/api/user";
   import {UserSkill} from "../../../types/api/user";
   import {onMount} from "svelte";
-  import LayoutGrid, {Cell} from '@smui/layout-grid';
-  import Card, {Content} from '@smui/card';
+  import LayoutGrid, {Cell} from "@smui/layout-grid";
+  import Card, {Content} from "@smui/card";
   import UserService from "../../../services/user-service";
   import SkillService from "../../../services/skill-service";
   import Button, {Icon, Label} from "@smui/button";
-  import {url, goto, params} from '@roxi/routify';
+  import {url, goto, params} from "@roxi/routify";
   import {skillCategories} from "../../../types/api/const";
   import Paper from "@smui/paper";
   import {PortfolioItem} from "../../../types/web/skill";
-  import Chip, {Set, Text} from '@smui/chips';
+  import Chip, {Set, Text} from "@smui/chips";
 
   let open = false;
   let user: User = new User().createDefaultInstance();

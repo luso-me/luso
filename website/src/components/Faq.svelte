@@ -1,17 +1,15 @@
 <script lang="ts">
   import {Cell} from "@smui/layout-grid";
-  import Accordion, {Content, Header, Panel} from '@smui-extra/accordion';
-  import IconButton, {Icon} from '@smui/icon-button';
+  import Accordion, {Content, Header, Panel} from "@smui-extra/accordion";
+  import IconButton, {Icon} from "@smui/icon-button";
 </script>
 
-<Cell class="faq-heading text-center"
-      spanDevices={{ desktop: 6, tablet: 6, phone: 4 }}>
-  <hr/>
+<Cell class="faq-heading text-center" spanDevices={{desktop: 6, tablet: 6, phone: 4}}>
+  <hr />
   <h1 class="text-center">Frequently Asked Questions</h1>
 </Cell>
 
-<Cell class="faq-items"
-      spanDevices={{ desktop: 6, tablet: 4, phone: 4 }}>
+<Cell class="faq-items" spanDevices={{desktop: 6, tablet: 4, phone: 4}}>
   <Accordion multiple>
     <Panel>
       <Header>
@@ -22,13 +20,13 @@
         </IconButton>
       </Header>
       <Content>
-        Skill in our world means any tool, practice or process related to IT,
-        past & present included.
-        Each Skill is categorized into one of four categories as per the wonderful
+        Skill in our world means any tool, practice or process related to IT, past &
+        present included. Each Skill is categorized into one of four categories as per
+        the wonderful
         <a href="https://www.thoughtworks.com/radar" target="_blank">
           ThoughtWorks Technology Radar.
         </a>
-        <br/><br/>
+        <br /><br />
         The categories are:
         <li>
           <a href="https://www.thoughtworks.com/radar/techniques" target="_blank">
@@ -36,9 +34,7 @@
           </a>
         </li>
         <li>
-          <a href="https://www.thoughtworks.com/radar/tools" target="_blank">
-            Tools
-          </a>
+          <a href="https://www.thoughtworks.com/radar/tools" target="_blank"> Tools </a>
         </li>
         <li>
           <a href="https://www.thoughtworks.com/radar/platforms" target="_blank">
@@ -46,8 +42,10 @@
           </a>
         </li>
         <li>
-          <a href="https://www.thoughtworks.com/radar/languages-and-frameworks"
-             target="_blank">
+          <a
+            href="https://www.thoughtworks.com/radar/languages-and-frameworks"
+            target="_blank"
+          >
             Languages & Frameworks
           </a>
         </li>
@@ -62,9 +60,9 @@
         </IconButton>
       </Header>
       <Content>
-        A Skill Resource or Resource means any educational resource that contributes
-        to helping you learn a particular skill.
-        <br/><br/>
+        A Skill Resource or Resource means any educational resource that contributes to
+        helping you learn a particular skill.
+        <br /><br />
 
         For example:
         <li>Books</li>
@@ -75,9 +73,7 @@
     </Panel>
     <Panel>
       <Header>
-        <strong>
-          Does Luso plan on creating its own Resources?
-        </strong>
+        <strong> Does Luso plan on creating its own Resources? </strong>
         <IconButton slot="icon" toggle>
           <Icon class="material-icons" on>expand_less</Icon>
           <Icon class="material-icons">expand_more</Icon>
@@ -86,7 +82,7 @@
       <Content>
         No. We believe that there is already a sufficient amount of Educational
         Resources available, for whatever skill you want to learn.
-        <br/><br/>
+        <br /><br />
         One of our core functions is to act as a Resource aggregator & verifier.
       </Content>
     </Panel>

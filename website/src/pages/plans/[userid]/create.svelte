@@ -1,10 +1,10 @@
 <script lang="ts">
-  import DataTable, {Body, Cell as TableCell, Head, Row} from '@smui/data-table';
-  import IconButton from '@smui/icon-button';
-  import Textfield from '@smui/textfield';
+  import DataTable, {Body, Cell as TableCell, Head, Row} from "@smui/data-table";
+  import IconButton from "@smui/icon-button";
+  import Textfield from "@smui/textfield";
   import Select, {Option} from "@smui/select";
   import {Skill, SkillResource, SkillResourceItem} from "../../../types/api/skill";
-  import HelperText from '@smui/textfield/helper-text';
+  import HelperText from "@smui/textfield/helper-text";
   import {onMount} from "svelte";
   import LayoutGrid, {Cell} from "@smui/layout-grid";
   import Button, {Icon, Label} from "@smui/button";
@@ -15,14 +15,14 @@
   import ToolTip, {Wrapper} from "@smui/tooltip";
   import {DateTime, Duration} from "luxon";
   import {NameGenerator} from "../../../utils/name-generator";
-  import {goto} from '@roxi/routify'
+  import {goto} from "@roxi/routify";
   import {userInfoStore} from "../../../stores";
   import SkillService from "../../../services/skill-service";
   import {statuses, timeHorizons} from "../../../types/api/const";
   import {defaultDuration} from "../../../types/web/date";
   import {DateUtils, longHumanizer, shortHumanizer} from "../../../utils/date-utils";
-  import Dialog, {Actions, Content as DialogContent, Header, Title} from '@smui/dialog';
-  import Card, {Actions as CardActions, Content} from '@smui/card';
+  import Dialog, {Actions, Content as DialogContent, Header, Title} from "@smui/dialog";
+  import Card, {Actions as CardActions, Content} from "@smui/card";
   import {MissionObjective} from "../../../types/web/user";
 
   let skillResourceOpen = false;

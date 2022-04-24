@@ -1,4 +1,4 @@
-import {get, writable} from 'svelte/store'
+import {writable} from "svelte/store";
 import type {Token} from "./types/api/token";
 import {UserInfo} from "./types/api/user";
 

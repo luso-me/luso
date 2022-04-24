@@ -1,12 +1,12 @@
 <script lang="ts">
-  import DataTable, {Body, Cell as TableCell, Head, Row} from '@smui/data-table';
-  import IconButton from '@smui/icon-button';
-  import Textfield from '@smui/textfield';
-  import Dialog, {Actions, Content as DialogContent, Header, Title} from '@smui/dialog';
+  import DataTable, {Body, Cell as TableCell, Head, Row} from "@smui/data-table";
+  import IconButton from "@smui/icon-button";
+  import Textfield from "@smui/textfield";
+  import Dialog, {Actions, Content as DialogContent, Header, Title} from "@smui/dialog";
   import Select, {Option} from "@smui/select";
-  import HelperText from '@smui/textfield/helper-text';
+  import HelperText from "@smui/textfield/helper-text";
   import {onMount} from "svelte";
-  import Card, {Actions as CardActions, Content} from '@smui/card';
+  import Card, {Actions as CardActions, Content} from "@smui/card";
   import Button, {Icon, Label} from "@smui/button";
   import {User, UserSkill, UserSkillUsed} from "../../../../../types/api/user";
   import UserService from "../../../../../services/user-service";

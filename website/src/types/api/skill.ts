@@ -3,11 +3,11 @@ import {estimatedEfforts, resourceCategories} from "./const";
 import {defaultDuration} from "../web/date";
 
 export class SkillResourceItem {
-  id: string;
-  name: string;
-  description: string;
-  web_link?: string;
-  duration: string;
+  id: string = "";
+  name: string = "";
+  description: string = "";
+  web_link?: string = "";
+  duration: string = "";
 
   createDefaultInstance() {
     this.id = "";
@@ -27,20 +27,20 @@ export interface DurationRange {
 }
 
 export class SkillResource {
-  id: string;
-  name: string;
-  authors: string;
-  description: string;
-  web_link: string;
-  category: string;
-  resource_authored_date: DateTime;
-  resource_added_date: DateTime;
-  tags: string[];
+  id: string = "";
+  name: string = "";
+  authors: string = "";
+  description: string = "";
+  web_link: string = "";
+  category: string = "";
+  resource_authored_date?: DateTime;
+  resource_added_date?: DateTime;
+  tags: string[] = [];
   community_rating?: number;
-  duration: string;
-  estimated_effort: DurationRange;
-  intended_levels: string[];
-  items: SkillResourceItem[];
+  duration: string = "";
+  estimated_effort?: DurationRange;
+  intended_levels: string[] = [];
+  items: SkillResourceItem[] = [];
 
   createDefaultInstance() {
     this.id = "";
@@ -66,16 +66,16 @@ export class SkillResource {
 }
 
 export class Skill {
-  id: string;
-  name: string;
-  description: string;
-  web_link: string;
-  repo_link?: string;
-  icon_link: string;
-  tags: string[];
-  category: string;
-  active: boolean;
-  resources: SkillResource[];
+  id: string = "";
+  name: string = "";
+  description: string = "";
+  web_link: string = "";
+  repo_link?: string = "";
+  icon_link: string = "";
+  tags: string[] = [];
+  category: string = "";
+  active?: boolean;
+  resources: SkillResource[] = [];
 
   createDefaultInstance() {
     this.name = "";

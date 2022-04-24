@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {goto, params} from '@roxi/routify'
+  import {goto, params} from "@roxi/routify";
   import AuthService from "../../../services/github-auth-service";
   import {authStore} from "../../../stores";
 
