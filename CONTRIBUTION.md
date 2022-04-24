@@ -27,6 +27,12 @@ we would really appreciate your contribution:
 
 # Source Code
 
+## Technologies Used
+
+* Website: [Svelte](https://svelte.dev/) / [TypeScript](https://www.typescriptlang.org/)
+* Server: [Python](https://www.python.org/)
+* Database: [Mongo](https://www.mongodb.com/)
+
 ## Issues
 
 Issues are created [here](https://github.com/luso-me/luso/issues/new).
@@ -120,7 +126,15 @@ dependencies, and tools contained in the `luso.me/luso` repository.
 * Docker (for Mongo)
     * `docker run --name lusodb --rm -d -p 27017:27017 mongo:4.4.6`
 * Python >= 3.9.
+    * poetry
 * Node.js >= 14.
+    * yarn
+
+#### Tutorial
+
+If you have never created a pull request before, welcome :tada:. [Here is a great
+tutorial](https://app.egghead.io/playlists/how-to-contribute-to-an-open-source-project-on-github)
+on how to create a pull request.
 
 #### Step 1: Fork
 
@@ -136,6 +150,8 @@ $ git fetch upstream
 
 #### TODO: Step 2: Build
 
+BEGIN HERE
+
 #### Step 3: Branch
 
 To keep your development environment organized, create local branches to
@@ -149,11 +165,11 @@ $ git checkout -b my-branch -t upstream/master
 
 #### Step 4: Code
 
-Most pull requests opened against this repository include changes to either the Python 
-code in the `server/` directory, the TypeScript/Svelte code in the `website/` directory 
+Most pull requests opened against this repository include changes to either the Python
+code in the `server/` directory, the TypeScript/Svelte code in the `website/` directory
 or the documentation in `docs/` directory.
 
-Please be sure to run the following linters from time to on any code changes to ensure 
+Please be sure to run the following linters from time to on any code changes to ensure
 that you follow the project's code style:
 
 * For Python - run `black` in the `server/` directory.
@@ -216,7 +232,7 @@ Other things to keep in mind when writing a commit message:
 ### Step 6: Rebase
 
 Once you have committed your changes, it is a good idea to use `git rebase`
-(not `git merge`) to synchronize your work with the main repository.
+(not `git merge`) to synchronize your work with the repository.
 
 ```sh
 $ git fetch upstream
@@ -242,16 +258,6 @@ $ npm run test
 
 Make sure the linter does not report any issues and that all tests pass.
 Please do not submit patches that fail either check.
-
-If you are updating tests and want to run a single spec to check it:
-
-```sh
-$ npm run test -match=menu
-```
-
-The above would only run spec modules matching `menu`, which is useful for
-anyone who's working on tests that would otherwise be at the very end of
-the testing cycle.
 
 ---
 
@@ -332,3 +338,58 @@ Each CI failure must be manually inspected to determine the cause.
 CI starts automatically when you open a pull request, but only
 core maintainers can restart a CI run. If you believe CI is giving a
 false negative, ask a maintainer to restart the tests.
+
+## Other Items
+
+### Style Guides
+
+These are the style guidelines for coding in Luso.
+
+#### General Code
+
+* End files with a newline.
+* Place requires in the following order:
+  ** Built in Node Modules (such as path)
+  ** Local Modules (using relative paths)
+* Place class properties in the following order:
+  ** Class methods and properties (methods starting with a @)
+  ** Instance methods and properties
+* Avoid platform-dependent code:
+  ** Use path.join() to concatenate filenames.
+  ** Use os.tmpdir() rather than /tmp when you need to reference the temporary directory.
+* Using a plain return when returning explicitly at the end of a function.
+  ** Not return null, return undefined, null or undefined
+
+#### Python
+
+For Python, we follow the `black` Coding Style. 
+
+#### Typescript
+
+For TypeScript, we have both:
+* a formatter which you can run with `npm run prelint`.
+* a linter which you can run with `npm run lint`.
+
+### Versions
+
+Version numbers consists of a major version, minor version and a release number. For
+more info see [SemVer](http://semver.org).
+
+All version tags starts with “v”, so version 0.8.0 has the tag v0.8.0.
+
+### Feature branches
+
+Major new features are worked on in dedicated branches. There's no strict naming
+requirement for these branches.
+
+Feature branches are removed once they've been merged into a release branch.
+
+### Tags
+
+- Tags are used exclusively for tagging releases. A release tag is
+  named with the format ``vX.Y.Z`` -- for example ``v2.3.1``.
+
+- Experimental releases contain an additional identifier ``vX.Y.Z-id`` --
+  for example ``v3.0.0-rc1``.
+
+- Experimental tags may be removed after the official release.
