@@ -10,7 +10,7 @@
 ## Table of Contents
 
 * [What does this project do?](#What-does-this-project-do?)
-* [Why is this project useful?](#Why-is-this project-useful?)
+* [Why is this project useful?](#Why-is-this-project-useful?)
 * [How do I get started?](#How-do-I-get-started?)
 * [Where can I get more help?](#Where-can-I-get-more-help?)
 
