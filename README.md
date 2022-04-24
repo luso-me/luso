@@ -10,7 +10,7 @@
 ## Table of Contents
 
 * [What does this project do?](#What-does-this-project-do?)
-* [Why is this project useful?](#Why-is-this project useful?)
+* [Why is this project useful?](#Why-is-this project-useful?)
 * [How do I get started?](#How-do-I-get-started?)
 * [Where can I get more help?](#Where-can-I-get-more-help?)
 
@@ -43,7 +43,7 @@ locations:
 
 * [GitHub Discussions](https://github.com/luso-me/luso/discussions) has categories for:
     * Q & A
-    * Ideas & Feature Requests
+    * Feature Requests & Ideas
     * And more!
 * [Luso's Discord server](https://discord.gg/ddgdhWPQFC) has channels for:
     * Getting help
