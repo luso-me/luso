@@ -39,6 +39,8 @@
             <Label>Add Skill</Label>
           </Button>
         </Cell>
+      {:else}
+        Don
       {/if}
       <Cell span="{12}">
         <DataTable class="luso-width-100-percent">
