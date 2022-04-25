@@ -39,6 +39,19 @@
             <Label>Add Skill</Label>
           </Button>
         </Cell>
+      {:else}
+        <Cell span="{12}">
+          <Button href="https://github.com/luso-me/luso-technology/issues/new?assignees=&labels=&template=add-skill.yml"
+                  target="_blank" variant="raised">
+            <Icon class="material-icons">help</Icon>
+            <Label>Don't see your Skill listed?</Label>
+          </Button>
+          <Button href="https://github.com/luso-me/luso-technology/issues/new?assignees=&labels=&template=change-skill.yml"
+                  target="_blank" variant="raised">
+            <Icon class="material-icons">help</Icon>
+            <Label>Found a mistake?</Label>
+          </Button>
+        </Cell>
       {/if}
       <Cell span="{12}">
         <DataTable class="luso-width-100-percent">

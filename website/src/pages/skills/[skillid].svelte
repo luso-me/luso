@@ -2,7 +2,7 @@
   import Card, {Content} from "@smui/card";
   import DataTable, {Body, Cell as TableCell, Head, Row} from "@smui/data-table";
   import IconButton from "@smui/icon-button";
-  import {Skill, SkillResource, SkillResourceItem} from "../../types/api/skill";
+  import {Skill, SkillResource} from "../../types/api/skill";
   import SkillService from "../../services/skill-service"
   import {onMount} from "svelte";
   import {params} from "@roxi/routify";
@@ -11,12 +11,14 @@
   import {Duration} from "luxon";
   import Button, {Icon, Label} from "@smui/button";
   import Dialog, {Actions, Content as DialogContent, Header, Title} from "@smui/dialog";
+  import jwtDecode from "jwt-decode";
+  import {authStore} from "../../stores";
+  import LayoutGrid, {Cell} from "@smui/layout-grid";
 
   let skillResourceOpen = false;
 
   let skill: Skill = new Skill().createDefaultInstance();
   let selectedSkillResource: SkillResource = new SkillResource().createDefaultInstance();
-  let selectedSkillResourceItemsDialog: SkillResourceItem[] = [];
   const skillService: SkillService = new SkillService();
 
   onMount(async () => {
@@ -27,76 +29,100 @@
     skillResourceOpen = true;
     selectedSkillResource = resource;
   }
+
+  function canUserWriteSkill() {
+    return jwtDecode($authStore.access_token)["scopes"].includes('skill:write:*');
+  }
 </script>
 
 <h1 class="ml-4">Show Skill</h1>
 
-<Card variant="outlined">
+<Card variant="outlined" class="luso-background-light">
   <Content>
-    <div>
-      Name: {skill.name}
-    </div>
+    <Card>
+      <Content>
+        <h4>Details</h4>
+        <div>
+          Name: {skill.name}
+        </div>
 
-    <div>
-      Description: {skill.description}
-    </div>
+        <div>
+          Description: {skill.description}
+        </div>
 
-    <div>
-      Web Link: <a href="{skill.web_link}" target="_blank">{skill.web_link}</a>
-    </div>
+        <div>
+          Web Link: <a href="{skill.web_link}" target="_blank">{skill.web_link}</a>
+        </div>
 
-    <div>
-      Repo Link: <a href="{skill.repo_link}" target="_blank">{skill.repo_link}</a>
-    </div>
+        <div>
+          Repo Link: <a href="{skill.repo_link}" target="_blank">{skill.repo_link}</a>
+        </div>
 
-    <div>
-      Category: {skill.category}
-    </div>
+        <div>
+          Category: {skill.category}
+        </div>
+      </Content>
+    </Card>
 
-    <div>
-      <DataTable class="luso-width-100-percent">
-        <Head>
-          <Row>
-            <TableCell>Name</TableCell>
-            <TableCell>Authors</TableCell>
-            <TableCell>Rating</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>Duration</TableCell>
-            <TableCell>Est. Effort</TableCell>
-          </Row>
-        </Head>
-        <Body>
-        {#if skill.resources}
-          {#each skill.resources as resource (resource.name)}
-            <Row>
-              <TableCell>
-                <a on:click={() => openSkillResourceDialog(resource)}>
-                  {resource.name}
-                </a>
-              </TableCell>
-              <TableCell>
-                {resource.authors}
-              </TableCell>
-              <TableCell>
-                <StarRating rating={resource.community_rating}/>
-              </TableCell>
-              <TableCell>{resource.category}</TableCell>
-              <TableCell>
-                {longHumanizer(Duration.fromISO(resource.duration))}
-              </TableCell>
-              <TableCell>
-                {shortHumanizer(Duration.fromISO(resource.estimated_effort?.min))}
-                -
-                {shortHumanizer(Duration.fromISO(resource.estimated_effort?.max))}
-                /
-                {resource.estimated_effort?.period}
-              </TableCell>
-            </Row>
-          {/each}
+    <Card class="mt-4">
+      <Content>
+        {#if !canUserWriteSkill()}
+          <Button href="https://github.com/luso-me/luso-technology/issues/new?assignees=&labels=&template=add-resource.yml"
+                  target="_blank" variant="raised">
+            <Icon class="material-icons">help</Icon>
+            <Label>Don't see a great Resource listed?</Label>
+          </Button>
+          <Button href="https://github.com/luso-me/luso-technology/issues/new?assignees=&labels=&template=change-resource.yml"
+                  target="_blank" variant="raised">
+            <Icon class="material-icons">help</Icon>
+            <Label>Found a mistake?</Label>
+          </Button>
         {/if}
-        </Body>
-      </DataTable>
-    </div>
+        <h4>Resources</h4>
+        <DataTable class="luso-width-100-percent">
+          <Head>
+            <Row>
+              <TableCell>Name</TableCell>
+              <TableCell>Authors</TableCell>
+              <TableCell>Rating</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell>Duration</TableCell>
+              <TableCell>Est. Effort</TableCell>
+            </Row>
+          </Head>
+          <Body>
+          {#if skill.resources}
+            {#each skill.resources as resource (resource.name)}
+              <Row>
+                <TableCell>
+                  <a on:click={() => openSkillResourceDialog(resource)}>
+                    {resource.name}
+                  </a>
+                </TableCell>
+                <TableCell>
+                  {resource.authors}
+                </TableCell>
+                <TableCell>
+                  <StarRating rating={resource.community_rating} />
+                </TableCell>
+                <TableCell>{resource.category}</TableCell>
+                <TableCell>
+                  {longHumanizer(Duration.fromISO(resource.duration))}
+                </TableCell>
+                <TableCell>
+                  {shortHumanizer(Duration.fromISO(resource.estimated_effort?.min))}
+                  -
+                  {shortHumanizer(Duration.fromISO(resource.estimated_effort?.max))}
+                  /
+                  {resource.estimated_effort?.period}
+                </TableCell>
+              </Row>
+            {/each}
+          {/if}
+          </Body>
+        </DataTable>
+      </Content>
+    </Card>
   </Content>
 </Card>
 
@@ -130,7 +156,8 @@
     </div>
     <div class="luso-flex">
       Overall Rating:
-      <StarRating style="margin-bottom: 0;" rating={selectedSkillResource.community_rating}/>
+      <StarRating style="margin-bottom: 0;"
+                  rating={selectedSkillResource.community_rating} />
     </div>
     <div>
       Duration: {shortHumanizer(Duration.fromISO(selectedSkillResource.duration).toMillis())}

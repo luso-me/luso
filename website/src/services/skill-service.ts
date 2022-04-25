@@ -1,11 +1,12 @@
 import API from "../api";
+import {Skill} from "../types/api/skill";
 
 class SkillService {
-  getAll(): Promise<any> {
+  getAll(): Promise<Skill[]> {
     return API.get("/skills?limit=1000");
   }
 
-  get(id: any): Promise<any> {
+  get(id: any): Promise<Skill> {
     return API.get(`/skills/${id}`);
   }
 

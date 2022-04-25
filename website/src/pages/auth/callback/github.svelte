@@ -10,4 +10,4 @@
   });
 </script>
 
-<h1 class="ml-4">Login you in...</h1>
+<h1 class="ml-4">Busy logging you in...</h1>

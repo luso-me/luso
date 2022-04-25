@@ -27,18 +27,15 @@
   } from "../../../types/api/const";
   import {onMount} from "svelte";
   import {LusoDuration} from "../../../types/web/date";
-  import UserService from "../../../services/user-service";
 
   let skill: Skill = new Skill().createDefaultInstance();
   let skillResource: SkillResource = new SkillResource().createDefaultInstance();
   let skillResourceItem: SkillResourceItem = new SkillResourceItem().createDefaultInstance();
   let openSkillResource = false;
-  let openSkillResourceItem = false;
   let skillResourceDuration: LusoDuration = new LusoDuration().createDefaultInstance();
   let skillResourceMinDuration: LusoDuration = new LusoDuration().createDefaultInstance();
   let skillResourceMaxDuration: LusoDuration = new LusoDuration().createDefaultInstance();
   let skillResourceItemDuration: LusoDuration = new LusoDuration().createDefaultInstance();
-  const userService: UserService = new UserService();
   const skillService: SkillService = new SkillService();
 
   let pageTabs = [
