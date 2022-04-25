@@ -51,7 +51,7 @@ For any issue, there are fundamentally three ways an individual can contribute:
 
 3. By helping to resolve the issue: This can be done by demonstrating that the issue is
    not a bug or is fixed; but more often, by opening a pull request that changes the
-   source in luso.me/luso repository in a concrete and reviewable manner.
+   source in luso-me/luso repository in a concrete and reviewable manner.
 
 ### Asking for General Help
 
@@ -99,7 +99,7 @@ minimal quality and functional guidelines of the Luso project.
 ## Pull Requests
 
 Pull Requests are the way concrete changes are made to the code, documentation,
-dependencies, and tools contained in the `luso.me/luso` repository.
+dependencies, and tools contained in the `luso-me/luso` repository.
 
 * [Setting up your local environment](#setting-up-your-local-environment)
     * [Prerequisites](#prerequisites)
@@ -138,13 +138,13 @@ on how to create a pull request.
 
 #### Step 1: Fork
 
-Fork the project [on GitHub](https://github.com/luso.me/luso) and clone your fork
+Fork the project [on GitHub](https://github.com/luso-me/luso) and clone your fork
 locally.
 
 ```sh
 $ git clone git@github.com:username/luso.git
 $ cd luso
-$ git remote add upstream https://github.com/luso.me/luso.git
+$ git remote add upstream https://github.com/luso-me/luso.git
 $ git fetch upstream
 ```
 
@@ -270,7 +270,7 @@ $ git fetch upstream
 $ git rebase upstream/master
 ```
 
-This ensures that your working branch has the latest changes from `luso.me/luso` master.
+This ensures that your working branch has the latest changes from `luso-me/luso` master.
 
 ### Step 7: Test
 
@@ -317,7 +317,7 @@ $ git push origin my-branch
 
 From within GitHub, opening a new pull request will present you with a template
 that should be filled out. It can be found
-[here](https://github.com/luso.me/luso/blob/master/.github/PULL_REQUEST_TEMPLATE.md).
+[here](https://github.com/luso-me/luso/blob/master/.github/PULL_REQUEST_TEMPLATE.md).
 
 If you do not adequately complete this template, your PR may be delayed in being merged as
 maintainers seek more information or clarify ambiguities.
