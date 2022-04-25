@@ -31,7 +31,7 @@ you move your skills to the next level.
 
 ## How do I get started?
 
-Please visit our [Contribution](CONTRIBUTION.md) page for guidance on how to get started.
+Please visit our [Contributing](CONTRIBUTING.md) page for guidance on how to get started.
 
 ## Where can I get more help?
 
