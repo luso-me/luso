@@ -213,7 +213,8 @@
           <Content>
             <h4>Skill Resources</h4>
             <div>
-              <Button on:click$preventDefault={onSkillResourceAdd} variant="raised">
+              <Button on:click$preventDefault={onSkillResourceAdd} variant="raised"
+                      class="mb-3">
                 <Icon class="material-icons">add</Icon>
                 <Label>Add Skill Resource</Label>
               </Button>
