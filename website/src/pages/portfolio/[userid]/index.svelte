@@ -16,10 +16,7 @@
   import {PortfolioItem} from "../../../types/web/skill";
   import Chip, {Set, Text} from "@smui/chips";
 
-  let open = false;
   let user: User = new User().createDefaultInstance();
-  let userSkill: UserSkill = new UserSkill().createDefaultInstance();
-  let selectedSkill: Skill = new Skill().createDefaultInstance();
   let skills: Skill[] = [];
   let portfolioItems: PortfolioItem[] = [];
   const userService: UserService = new UserService();

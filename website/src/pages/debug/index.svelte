@@ -94,7 +94,7 @@
 
   const handleOnClick = event => {
     const name = event.target.name;
-    console.log('clicked name:' + name)
+    console.log(`clicked name: ${name}`)
   };
 
   /* Auth */

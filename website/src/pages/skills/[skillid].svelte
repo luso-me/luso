@@ -2,7 +2,7 @@
   import Card, {Content} from "@smui/card";
   import DataTable, {Body, Cell as TableCell, Head, Row} from "@smui/data-table";
   import IconButton from "@smui/icon-button";
-  import {Skill, SkillResource, SkillResourceItem} from "../../types/api/skill";
+  import {Skill, SkillResource} from "../../types/api/skill";
   import SkillService from "../../services/skill-service"
   import {onMount} from "svelte";
   import {params} from "@roxi/routify";
@@ -16,7 +16,6 @@
 
   let skill: Skill = new Skill().createDefaultInstance();
   let selectedSkillResource: SkillResource = new SkillResource().createDefaultInstance();
-  let selectedSkillResourceItemsDialog: SkillResourceItem[] = [];
   const skillService: SkillService = new SkillService();
 
   onMount(async () => {

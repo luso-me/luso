@@ -7,6 +7,7 @@ on:
     tags:
       - 'v*.*.*'
   pull_request:
+    types: [ opened, synchronize, reopened ]
     branches:
       - 'master'
 
@@ -26,6 +27,8 @@ jobs:
         python-version: ["3.9"]
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -46,6 +49,11 @@ jobs:
         ICONS_S3_BUCKET_REGION: some-region
       run: |
         poetry run pytest tests
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   build-and-push-image:
     needs: build
     runs-on: ubuntu-latest

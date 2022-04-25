@@ -31,7 +31,6 @@
   let skillResource: SkillResource = new SkillResource().createDefaultInstance();
   let skillResourceItem: SkillResourceItem = new SkillResourceItem().createDefaultInstance();
   let openSkillResource = false;
-  let openSkillResourceItem = false;
   let skillResourceDuration: LusoDuration = new LusoDuration().createDefaultInstance();
   let skillResourceMinDuration: LusoDuration = new LusoDuration().createDefaultInstance();
   let skillResourceMaxDuration: LusoDuration = new LusoDuration().createDefaultInstance();

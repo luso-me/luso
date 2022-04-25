@@ -20,15 +20,15 @@ class UserService {
       });
   }
 
-  getAll(): Promise<any> {
+  getAll(): Promise<User[]> {
     return API.get("/users");
   }
 
-  get(id: any): Promise<any> {
+  get(id: any): Promise<User> {
     return API.get(`/users/${id}`);
   }
 
-  me(): Promise<any> {
+  me(): Promise<User> {
     return API.get(`/users/me`);
   }
 

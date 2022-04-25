@@ -35,7 +35,6 @@
   let selectedSkillResource: SkillResource = new SkillResource().createDefaultInstance();
   let selectedSkillResourceItemsDialog: SkillResourceItem[] = [];
   let missionObjectives: MissionObjective[] = [];
-  let skillPlanObjectives: SkillPlanObjective[] = [];
   const userService: UserService = new UserService();
   const skillService: SkillService = new SkillService();
 
@@ -144,16 +143,6 @@
     missionObjective.status = statuses[0];
 
     return missionObjective;
-  }
-
-  function _createSkillPlanObjective(missionObjective: MissionObjective): SkillPlanObjective {
-    let objective: SkillPlanObjective = new SkillPlanObjective().createDefaultInstance();
-
-    objective.resource_id = missionObjective.resource_id;
-    objective.resource_item_id = missionObjective.resource_item_id;
-    objective.status = missionObjective.status;
-
-    return objective;
   }
 
   function removeObjective(objective: SkillPlanObjective) {

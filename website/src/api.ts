@@ -1,4 +1,4 @@
-import axios, {AxiosInstance} from "axios";
+import axios, {AxiosInstance, Method} from "axios";
 import {authStore} from "./stores";
 import {Token} from "./types/api/token";
 
@@ -9,7 +9,7 @@ const axiosAPI: AxiosInstance = axios.create({
 let token = <Token>{};
 authStore.subscribe((value) => (token=value))
 
-const apiRequest = (method: any, url: string, data?: any) => {
+const apiRequest = (method: Method, url: string, data?: any) => {
   const headers = {
     authorization: "Bearer " + token.access_token,
     "Content-type": "application/json",
