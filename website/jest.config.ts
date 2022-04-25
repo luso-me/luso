@@ -22,7 +22,8 @@ const config: Config.InitialOptions = {
     "./jest-setup.ts",
     "@testing-library/jest-dom/extend-expect"
   ],
-  moduleDirectories: ["node_modules", "src"]
+  moduleDirectories: ["node_modules", "src"],
+  testPathIgnorePatterns: ["<rootDir>/cypress/"],
 }
 
 export default config;
