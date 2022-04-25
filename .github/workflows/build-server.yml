@@ -3,13 +3,11 @@ name: Builder
 on:
   push:
     branches:
-      - '**'
+      - 'master'
     tags:
       - 'v*.*.*'
   pull_request:
     types: [ opened, synchronize, reopened ]
-    branches:
-      - 'master'
 
 env:
   REGISTRY: ghcr.io
@@ -49,11 +47,6 @@ jobs:
         ICONS_S3_BUCKET_REGION: some-region
       run: |
         poetry run pytest tests
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   build-and-push-image:
     needs: build
     runs-on: ubuntu-latest
